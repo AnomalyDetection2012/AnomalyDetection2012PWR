@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GUIMainWindow</class>
+ <widget class="QMainWindow" name="GUIMainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>454</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Wykrywanie Anomalii - Metoda losowa</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QGraphicsView" name="scaleView">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>0</y>
+      <width>81</width>
+      <height>391</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QGraphicsView" name="resultView">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>0</y>
+      <width>711</width>
+      <height>411</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="dimensionChoiceBox">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>390</y>
+      <width>76</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuPlik">
+    <property name="title">
+     <string>Plik</string>
+    </property>
+    <addaction name="actionReadLearningSet"/>
+    <addaction name="actionReadTestData"/>
+   </widget>
+   <widget class="QMenu" name="menuMetody">
+    <property name="title">
+     <string>Metody</string>
+    </property>
+   </widget>
+   <addaction name="menuPlik"/>
+   <addaction name="menuMetody"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionReadLearningSet">
+   <property name="text">
+    <string>Wczytaj ciąg uczący</string>
+   </property>
+  </action>
+  <action name="actionReadTestData">
+   <property name="text">
+    <string>Wczytaj ciąg testowy</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>actionReadLearningSet</sender>
+   <signal>triggered()</signal>
+   <receiver>GUIMainWindow</receiver>
+   <slot>readLearnFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>209</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionReadTestData</sender>
+   <signal>triggered()</signal>
+   <receiver>GUIMainWindow</receiver>
+   <slot>readTestFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>209</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dimensionChoiceBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>GUIMainWindow</receiver>
+   <slot>chooseDimension(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>42</x>
+     <y>492</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>216</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>readLearnFile()</slot>
+  <slot>readTestFile()</slot>
+  <slot>chooseDimension(int)</slot>
+ </slots>
+</ui>
