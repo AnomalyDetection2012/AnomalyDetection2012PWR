@@ -138,11 +138,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BAYES\class_variable.cpp" />
-    <ClCompile Include="DataRecord.cpp" />
-    <ClCompile Include="DataRecordTable.cpp" />
-    <ClCompile Include="Dataset.cpp" />
-    <ClCompile Include="DatasetConnector.cpp" />
-    <ClCompile Include="datasetControler.cpp" />
+    <ClCompile Include="Dataset\DataRecord.cpp" />
+    <ClCompile Include="Dataset\DataRecordTable.cpp" />
+    <ClCompile Include="Dataset\Dataset.cpp" />
+    <ClCompile Include="Dataset\DatasetConnector.cpp" />
+    <ClCompile Include="Dataset\datasetControler.cpp" />
+    <ClCompile Include="Dataset\InfoTable.cpp" />
     <ClCompile Include="Debug\moc_guimainwindow.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -151,7 +152,6 @@
     </ClCompile>
     <ClCompile Include="DENSITY\densitymethod.cpp" />
     <ClCompile Include="guimainwindow.cpp" />
-    <ClCompile Include="InfoTable.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="method.cpp" />
     <ClCompile Include="BAYES\naive_bayes.cpp" />
@@ -171,11 +171,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BAYES\class_variable.h" />
-    <ClInclude Include="DataRecord.h" />
-    <ClInclude Include="DataRecordTable.h" />
-    <ClInclude Include="Dataset.h" />
-    <ClInclude Include="DatasetConnector.h" />
-    <ClInclude Include="datasetControler.h" />
+    <ClInclude Include="Dataset\DataRecord.h" />
+    <ClInclude Include="Dataset\DataRecordTable.h" />
+    <ClInclude Include="Dataset\Dataset.h" />
+    <ClInclude Include="Dataset\DatasetConnector.h" />
+    <ClInclude Include="Dataset\datasetControler.h" />
+    <ClInclude Include="Dataset\InfoTable.h" />
     <ClInclude Include="DENSITY\densitymethod.h" />
     <CustomBuild Include="guimainwindow.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);%(AdditionalInputs)</AdditionalInputs>
@@ -188,7 +189,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ConfigurationName)\moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="GeneratedFiles\ui_guimainwindow.h" />
-    <ClInclude Include="InfoTable.h" />
     <ClInclude Include="method.h" />
     <ClInclude Include="BAYES\naive_bayes.h" />
     <ClInclude Include="NEIGHBOUR\nearest_neighbor.h" />
