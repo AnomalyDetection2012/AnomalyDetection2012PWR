@@ -1,3 +1,6 @@
+#ifndef DATARECORD_H
+#define DATARECORD_H
+
 #include <vector>
 
 class DataRecord
@@ -12,3 +15,4 @@ public:
 	std::vector<int> infoAddress;
 };
 
+#endif // DATARECORD_H
