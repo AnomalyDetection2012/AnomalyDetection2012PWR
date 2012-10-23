@@ -1,3 +1,6 @@
+#ifndef INFOTABLE_H
+#define INFOTABLE_H
+
 #include <vector>
 
 class InfoTable
@@ -13,3 +16,4 @@ public:
 	std::vector<std::string> get(int id);
 };
 
+#endif // INFOTABLE_H
