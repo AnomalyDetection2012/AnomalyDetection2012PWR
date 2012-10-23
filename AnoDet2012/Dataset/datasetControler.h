@@ -6,8 +6,9 @@ public:
 	DatasetControler(std::string name, std::vector<std::vector<std::string>> &infoTablesHeaders, std::vector<std::string> &dataNames, std::vector<std::string> &noninformativeDataNames);
 	~DatasetControler(void);
 	Dataset *dataset;
-	int newInfo(std::string tableName, std::vector<std::string> &infoRecord);
-	int newRecord(); // TODO w jaki sposob beda przychodzic dane o powiazaniach pomiar - informacje
+	int newInfo(std::string tableName, int id, std::vector<std::string> &infoRecord);
+	int newRecord(time_t time, std::vector<double> &data, std::vector<double> &noninformativeData, std::vector<int> &infos, bool isAnomaly);
 	void checkNewData();
+	void checkAllData();
 };
 

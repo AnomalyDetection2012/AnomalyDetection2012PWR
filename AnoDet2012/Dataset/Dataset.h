@@ -14,9 +14,11 @@ public:
 	std::string name;
 	std::vector<InfoTable> infoTables;
 	DataRecordTable *dataTable;
-	int newInfo(std::string tableName, std::vector<std::string> &infoRecord);
-	int newRecord(); // TODO w jaki sposob beda przychodzic dane o powiazaniach pomiar - informacje
+	int newInfo(std::string tableName, int id, std::vector<std::string> &infoRecord);
+	int newRecord(time_t time, std::vector<double> &data, std::vector<double> &noninformativeData, std::vector<int> &infos, bool isAnomaly);
 	std::vector<std::vector<double>> getUncheckedData();
+	std::vector<std::vector<double>> getAllData();
+	void setCheckingStartingPoint(int x);
 	void saveResults(std::vector<bool> &anomalies);
 };
 

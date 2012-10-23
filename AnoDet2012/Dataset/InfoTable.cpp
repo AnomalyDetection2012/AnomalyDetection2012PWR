@@ -13,11 +13,15 @@ InfoTable::~InfoTable(void)
 {
 }
 
-int InfoTable::add(std::vector<std::string> &infoRecord){
+int InfoTable::add(int id, std::vector<std::string> &infoRecord){
+	ids.push_back(id);
 	values.push_back(infoRecord);
 	return values.size()-1;
 }
 
 vector<string> InfoTable::get(int id){
-	return values.at(id);
+	for(int i=0;i<ids.size();++i){
+		if(ids.at(i) == id)
+			return values.at(id);
+	}
 }

@@ -15,8 +15,9 @@ DataRecordTable::~DataRecordTable(void)
 {
 }
 
-void DataRecordTable::addRecord(time_t time, vector<double> &data, vector<double> &noninformativeData, vector<int> &infos, bool isAnomaly){
+int DataRecordTable::addRecord(time_t time, vector<double> &data, vector<double> &noninformativeData, vector<int> &infos, bool isAnomaly){
 	records.push_back(*(new DataRecord(time, data, noninformativeData, infos, isAnomaly)));
+	return records.size()-1;
 }
 
 void DataRecordTable::deleteBefore(time_t time){ // TODO co jesli nie sa posortowane wzgledem daty?
@@ -33,6 +34,15 @@ vector<vector<double>> DataRecordTable::getUncheckedRecordsData(){
 	vector<vector<double>> result;
 	vector<DataRecord>::iterator iter;
 	for(iter = records.begin()+lastChecked; iter != records.end(); ++iter){
+		result.push_back(iter->data);
+	}
+	return result;
+}
+
+vector<vector<double>> DataRecordTable::getAllRecordsData(){
+	vector<vector<double>> result;
+	vector<DataRecord>::iterator iter;
+	for(iter = records.begin(); iter != records.end(); ++iter){
 		result.push_back(iter->data);
 	}
 	return result;

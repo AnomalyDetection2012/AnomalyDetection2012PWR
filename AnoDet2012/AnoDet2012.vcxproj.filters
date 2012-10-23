@@ -104,22 +104,22 @@
     <ClCompile Include="Release\moc_topologymap.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="datasetControler.cpp">
+    <ClCompile Include="Dataset\DataRecord.cpp">
       <Filter>Source Files\Dataset</Filter>
     </ClCompile>
-    <ClCompile Include="Dataset.cpp">
+    <ClCompile Include="Dataset\DataRecordTable.cpp">
       <Filter>Source Files\Dataset</Filter>
     </ClCompile>
-    <ClCompile Include="DataRecord.cpp">
+    <ClCompile Include="Dataset\Dataset.cpp">
       <Filter>Source Files\Dataset</Filter>
     </ClCompile>
-    <ClCompile Include="InfoTable.cpp">
+    <ClCompile Include="Dataset\DatasetConnector.cpp">
       <Filter>Source Files\Dataset</Filter>
     </ClCompile>
-    <ClCompile Include="DataRecordTable.cpp">
+    <ClCompile Include="Dataset\datasetControler.cpp">
       <Filter>Source Files\Dataset</Filter>
     </ClCompile>
-    <ClCompile Include="DatasetConnector.cpp">
+    <ClCompile Include="Dataset\InfoTable.cpp">
       <Filter>Source Files\Dataset</Filter>
     </ClCompile>
   </ItemGroup>
@@ -163,22 +163,22 @@
     <ClInclude Include="GeneratedFiles\ui_guimainwindow.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="datasetControler.h">
+    <ClInclude Include="Dataset\DataRecord.h">
       <Filter>Header Files\Dataset</Filter>
     </ClInclude>
-    <ClInclude Include="Dataset.h">
+    <ClInclude Include="Dataset\InfoTable.h">
       <Filter>Header Files\Dataset</Filter>
     </ClInclude>
-    <ClInclude Include="DataRecord.h">
+    <ClInclude Include="Dataset\DataRecordTable.h">
       <Filter>Header Files\Dataset</Filter>
     </ClInclude>
-    <ClInclude Include="DataRecordTable.h">
+    <ClInclude Include="Dataset\Dataset.h">
       <Filter>Header Files\Dataset</Filter>
     </ClInclude>
-    <ClInclude Include="InfoTable.h">
+    <ClInclude Include="Dataset\DatasetConnector.h">
       <Filter>Header Files\Dataset</Filter>
     </ClInclude>
-    <ClInclude Include="DatasetConnector.h">
+    <ClInclude Include="Dataset\datasetControler.h">
       <Filter>Header Files\Dataset</Filter>
     </ClInclude>
   </ItemGroup>
@@ -186,8 +186,5 @@
     <CustomBuild Include="guimainwindow.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>
