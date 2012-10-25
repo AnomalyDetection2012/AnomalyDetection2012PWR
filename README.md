@@ -1,5 +1,7 @@
 AnomalyDetection2012PWR
 =======================
+
 Rafal
-Ba�ut :D
-prawie Adrian
+Balut :D
+(prawie) Adrian
+Pawel (ten drugi)
