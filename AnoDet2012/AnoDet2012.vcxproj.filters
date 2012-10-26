@@ -51,14 +51,44 @@
     <Filter Include="Source Files\Dataset">
       <UniqueIdentifier>{53b1a179-afae-420d-bda8-25137eb2149e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\SOM">
+      <UniqueIdentifier>{eae5f631-ba4e-46bc-8bbc-ce2fa40b8a40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SOM">
+      <UniqueIdentifier>{7527e53f-279e-4972-bd17-ad90fa1600ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\BAYES">
+      <UniqueIdentifier>{0af66a7a-9ca2-43fa-9c55-8dfa6e8d0117}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BAYES">
+      <UniqueIdentifier>{85cfe326-97c1-4bbe-9d62-e19b59c1a0e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DENSITY">
+      <UniqueIdentifier>{dd53fb3d-08a9-43a0-8671-a0d8e364bff9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DENSITY">
+      <UniqueIdentifier>{775cbf63-bb7b-4844-b16c-645246c4f2f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\NEIGHBOUR">
+      <UniqueIdentifier>{29cbb975-0ced-4911-a858-101cb5e7e078}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\NEIGHBOUR">
+      <UniqueIdentifier>{6b58877f-565b-4139-ae86-7be46e61f233}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\RANDOM">
+      <UniqueIdentifier>{a11179fe-8ae5-4660-bc1e-9c7e62d60b14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\RANDOM">
+      <UniqueIdentifier>{1cb80f85-8803-4a5c-90f3-a24fec8806d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\RBF">
+      <UniqueIdentifier>{b085374d-0269-4839-a16b-a02da85f9e65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\RBF">
+      <UniqueIdentifier>{e1d9759d-c8c4-4e19-9647-17175fde0b2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BAYES\class_variable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DENSITY\densitymethod.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="guimainwindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -66,30 +96,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="method.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BAYES\naive_bayes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NEIGHBOUR\nearest_neighbor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DENSITY\neighbor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SOM\neuron.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RANDOM\randommethod.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SOM\somnetwork.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NEIGHBOUR\space.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SOM\topologymap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Debug\moc_guimainwindow.cpp">
@@ -122,44 +128,44 @@
     <ClCompile Include="Dataset\InfoTable.cpp">
       <Filter>Source Files\Dataset</Filter>
     </ClCompile>
+    <ClCompile Include="SOM\neuron.cpp">
+      <Filter>Source Files\SOM</Filter>
+    </ClCompile>
+    <ClCompile Include="SOM\somnetwork.cpp">
+      <Filter>Source Files\SOM</Filter>
+    </ClCompile>
+    <ClCompile Include="SOM\topologymap.cpp">
+      <Filter>Source Files\SOM</Filter>
+    </ClCompile>
+    <ClCompile Include="BAYES\class_variable.cpp">
+      <Filter>Source Files\BAYES</Filter>
+    </ClCompile>
+    <ClCompile Include="BAYES\naive_bayes.cpp">
+      <Filter>Source Files\BAYES</Filter>
+    </ClCompile>
+    <ClCompile Include="DENSITY\densitymethod.cpp">
+      <Filter>Source Files\DENSITY</Filter>
+    </ClCompile>
+    <ClCompile Include="DENSITY\neighbor.cpp">
+      <Filter>Source Files\DENSITY</Filter>
+    </ClCompile>
+    <ClCompile Include="NEIGHBOUR\nearest_neighbor.cpp">
+      <Filter>Source Files\NEIGHBOUR</Filter>
+    </ClCompile>
+    <ClCompile Include="NEIGHBOUR\space.cpp">
+      <Filter>Source Files\NEIGHBOUR</Filter>
+    </ClCompile>
+    <ClCompile Include="RANDOM\randommethod.cpp">
+      <Filter>Source Files\RANDOM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BAYES\class_variable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DENSITY\densitymethod.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <CustomBuild Include="guimainwindow.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
     <ClInclude Include="method.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BAYES\naive_bayes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NEIGHBOUR\nearest_neighbor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DENSITY\neighbor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SOM\neuron.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RANDOM\randommethod.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SOM\somnetwork.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NEIGHBOUR\space.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <CustomBuild Include="SOM\topologymap.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <ClInclude Include="GeneratedFiles\ui_guimainwindow.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
@@ -181,10 +187,42 @@
     <ClInclude Include="Dataset\datasetControler.h">
       <Filter>Header Files\Dataset</Filter>
     </ClInclude>
+    <ClInclude Include="SOM\neuron.h">
+      <Filter>Header Files\SOM</Filter>
+    </ClInclude>
+    <ClInclude Include="SOM\somnetwork.h">
+      <Filter>Header Files\SOM</Filter>
+    </ClInclude>
+    <ClInclude Include="BAYES\class_variable.h">
+      <Filter>Header Files\BAYES</Filter>
+    </ClInclude>
+    <ClInclude Include="BAYES\naive_bayes.h">
+      <Filter>Header Files\BAYES</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="guimainwindow.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="SOM\topologymap.h">
+      <Filter>Header Files\SOM</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DENSITY\densitymethod.h">
+      <Filter>Header Files\DENSITY</Filter>
+    </ClInclude>
+    <ClInclude Include="DENSITY\neighbor.h">
+      <Filter>Header Files\DENSITY</Filter>
+    </ClInclude>
+    <ClInclude Include="NEIGHBOUR\nearest_neighbor.h">
+      <Filter>Header Files\NEIGHBOUR</Filter>
+    </ClInclude>
+    <ClInclude Include="NEIGHBOUR\space.h">
+      <Filter>Header Files\NEIGHBOUR</Filter>
+    </ClInclude>
+    <ClInclude Include="RANDOM\randommethod.h">
+      <Filter>Header Files\RANDOM</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
