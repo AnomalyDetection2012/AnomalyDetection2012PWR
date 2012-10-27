@@ -2,7 +2,7 @@
 
 using namespace std;
 
-DatasetControler::DatasetControler(string name, vector<vector<string>> &infoTablesHeaders, vector<string> &dataNames, vector<string> &noninformativeDataNames)
+DatasetControler::DatasetControler(string name, vector<vector<string> > &infoTablesHeaders, vector<string> &dataNames, vector<string> &noninformativeDataNames)
 {
 	dataset = new Dataset(name, infoTablesHeaders, dataNames, noninformativeDataNames);
 }
@@ -21,14 +21,14 @@ int DatasetControler::newRecord(time_t time, vector<double> &data, vector<double
 }
 
 void DatasetControler::checkNewData(){
-	vector<vector<double>> data = dataset->getUncheckedData();
+    vector<vector<double> > data = dataset->getUncheckedData();
 	vector<bool> results;
 	// TODO wysylanie do algorytmu
 	dataset->saveResults(results);
 }
 
 void DatasetControler::checkAllData(){
-	vector<vector<double>> data = dataset->getAllData();
+    vector<vector<double> > data = dataset->getAllData();
 	vector<bool> results;
 	// TODO wysylanie do algorytmu
 	dataset->setCheckingStartingPoint(0);

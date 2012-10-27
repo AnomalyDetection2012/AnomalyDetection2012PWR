@@ -4,14 +4,14 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql
 
 TARGET = AnoDet2012
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        guimainwindow.cpp \
+SOURCES += main.cpp \
+    guimainwindow.cpp \
     method.cpp \
     RANDOM\randommethod.cpp \
     SOM\neuron.cpp \
@@ -22,7 +22,15 @@ SOURCES += main.cpp\
     BAYES/naive_bayes.cpp \
     BAYES/class_variable.cpp \
     DENSITY/neighbor.cpp \
-    DENSITY/densitymethod.cpp
+    DENSITY/densitymethod.cpp \
+    Dataset/InfoTable.cpp \
+    Dataset/datasetControler.cpp \
+    Dataset/DatasetConnector.cpp \
+    Dataset/Dataset.cpp \
+    Dataset/DataRecordTable.cpp \
+    Dataset/DataRecord.cpp \
+    INCOMING_DATA_TRACKING/IncomingDataController.cpp \
+    INCOMING_DATA_TRACKING/IncomingDataConnector.cpp
 
 HEADERS  += guimainwindow.h \
     method.h \
@@ -35,6 +43,14 @@ HEADERS  += guimainwindow.h \
     BAYES/naive_bayes.h \
     BAYES/class_variable.h \
     DENSITY/neighbor.h \
-    DENSITY/densitymethod.h
+    DENSITY/densitymethod.h \
+    Dataset/InfoTable.h \
+    Dataset/datasetControler.h \
+    Dataset/DatasetConnector.h \
+    Dataset/Dataset.h \
+    Dataset/DataRecordTable.h \
+    Dataset/DataRecord.h \
+    INCOMING_DATA_TRACKING/IncomingDataController.h \
+    INCOMING_DATA_TRACKING/IncomingDataConnector.h
 
 FORMS    += guimainwindow.ui

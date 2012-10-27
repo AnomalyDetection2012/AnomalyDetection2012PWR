@@ -2,10 +2,10 @@
 
 using namespace std;
 
-Dataset::Dataset(string name, vector<vector<string>> &infoTablesHeaders, vector<string> &dataNames, vector<string> &noninformativeDataNames)
+Dataset::Dataset(string name, vector<vector<string> > &infoTablesHeaders, vector<string> &dataNames, vector<string> &noninformativeDataNames)
 {
 	this->name = name;
-	vector<vector<string>>::iterator headersIter;
+    vector<vector<string> >::iterator headersIter;
 	for(headersIter = infoTablesHeaders.begin(); headersIter != infoTablesHeaders.end(); ++headersIter){
 		vector<string> headers;
 		vector<string>::iterator iter;
@@ -36,11 +36,11 @@ int Dataset::newRecord(time_t time, vector<double> &data, vector<double> &noninf
 	return dataTable->addRecord(time, data, noninformativeData, infos, isAnomaly);
 }
 
-vector<vector<double>> Dataset::getUncheckedData(){
+vector<vector<double> > Dataset::getUncheckedData(){
 	return dataTable->getUncheckedRecordsData();
 }
 
-vector<vector<double>> Dataset::getAllData(){
+vector<vector<double> > Dataset::getAllData(){
 	return dataTable->getAllRecordsData();
 }
 

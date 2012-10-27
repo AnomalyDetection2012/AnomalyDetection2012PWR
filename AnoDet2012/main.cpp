@@ -1,5 +1,6 @@
 #include <QtGui/QApplication>
 #include "guimainwindow.h"
+#include "INCOMING_DATA_TRACKING/IncomingDataController.h"
 
 
 int main(int argc, char *argv[])
@@ -11,5 +12,7 @@ int main(int argc, char *argv[])
 //    w.randomTest(60);
     w.show();
 
+    IncomingDataController *incControl = new IncomingDataController("RAFAL-PC\\SQLEXPRESS","SCSWin","sa","tajnehaslo");
+    qDebug() << incControl->checkNewData();
     return a.exec();
 }

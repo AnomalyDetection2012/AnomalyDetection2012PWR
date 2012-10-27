@@ -152,6 +152,8 @@
     </ClCompile>
     <ClCompile Include="DENSITY\densitymethod.cpp" />
     <ClCompile Include="guimainwindow.cpp" />
+    <ClCompile Include="INCOMING_DATA_TRACKING\IncomingDataConnector.cpp" />
+    <ClCompile Include="INCOMING_DATA_TRACKING\IncomingDataController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="method.cpp" />
     <ClCompile Include="BAYES\naive_bayes.cpp" />
@@ -189,6 +191,8 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ConfigurationName)\moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="GeneratedFiles\ui_guimainwindow.h" />
+    <ClInclude Include="INCOMING_DATA_TRACKING\IncomingDataConnector.h" />
+    <ClInclude Include="INCOMING_DATA_TRACKING\IncomingDataController.h" />
     <ClInclude Include="method.h" />
     <ClInclude Include="BAYES\naive_bayes.h" />
     <ClInclude Include="NEIGHBOUR\nearest_neighbor.h" />

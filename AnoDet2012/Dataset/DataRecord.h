@@ -2,6 +2,7 @@
 #define DATARECORD_H
 
 #include <vector>
+#include <QDateTime>
 
 class DataRecord
 {

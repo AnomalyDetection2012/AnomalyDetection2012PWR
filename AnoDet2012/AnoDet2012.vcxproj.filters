@@ -87,6 +87,12 @@
     <Filter Include="Source Files\RBF">
       <UniqueIdentifier>{e1d9759d-c8c4-4e19-9647-17175fde0b2f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\INCOMING_DATA_TRACKING">
+      <UniqueIdentifier>{ad056c86-e7f7-4936-9954-4dab4dc38fd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\INCOMING_DATA_TRACKING">
+      <UniqueIdentifier>{5c99f5a6-9711-4d9c-bd5f-eac11ab8b762}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="guimainwindow.cpp">
@@ -158,6 +164,12 @@
     <ClCompile Include="RANDOM\randommethod.cpp">
       <Filter>Source Files\RANDOM</Filter>
     </ClCompile>
+    <ClCompile Include="INCOMING_DATA_TRACKING\IncomingDataConnector.cpp">
+      <Filter>Source Files\INCOMING_DATA_TRACKING</Filter>
+    </ClCompile>
+    <ClCompile Include="INCOMING_DATA_TRACKING\IncomingDataController.cpp">
+      <Filter>Source Files\INCOMING_DATA_TRACKING</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="guimainwindow.h">
@@ -223,6 +235,12 @@
     </ClInclude>
     <ClInclude Include="RANDOM\randommethod.h">
       <Filter>Header Files\RANDOM</Filter>
+    </ClInclude>
+    <ClInclude Include="INCOMING_DATA_TRACKING\IncomingDataConnector.h">
+      <Filter>Header Files\INCOMING_DATA_TRACKING</Filter>
+    </ClInclude>
+    <ClInclude Include="INCOMING_DATA_TRACKING\IncomingDataController.h">
+      <Filter>Header Files\INCOMING_DATA_TRACKING</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

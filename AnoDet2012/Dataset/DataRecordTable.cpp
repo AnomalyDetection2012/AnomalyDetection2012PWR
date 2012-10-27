@@ -30,8 +30,8 @@ void DataRecordTable::deleteBefore(time_t time){ // TODO co jesli nie sa posorto
 	lastChecked -= n;
 }
 
-vector<vector<double>> DataRecordTable::getUncheckedRecordsData(){
-	vector<vector<double>> result;
+vector<vector<double> > DataRecordTable::getUncheckedRecordsData(){
+    vector<vector<double> > result;
 	vector<DataRecord>::iterator iter;
 	for(iter = records.begin()+lastChecked; iter != records.end(); ++iter){
 		result.push_back(iter->data);
@@ -39,8 +39,8 @@ vector<vector<double>> DataRecordTable::getUncheckedRecordsData(){
 	return result;
 }
 
-vector<vector<double>> DataRecordTable::getAllRecordsData(){
-	vector<vector<double>> result;
+vector<vector<double> > DataRecordTable::getAllRecordsData(){
+    vector<vector<double> > result;
 	vector<DataRecord>::iterator iter;
 	for(iter = records.begin(); iter != records.end(); ++iter){
 		result.push_back(iter->data);
@@ -50,7 +50,7 @@ vector<vector<double>> DataRecordTable::getAllRecordsData(){
 
 void DataRecordTable::saveResults(vector<bool> &anomalies){
 	vector<DataRecord>::iterator iter;
-	int n=0;
+    unsigned n=0;
 	for(iter = records.begin()+lastChecked; iter != records.end() && n<anomalies.size(); ++iter){
 		iter->isAnomaly = anomalies.at(n);
 		++n;
