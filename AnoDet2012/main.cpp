@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
     w.show();
 
     IncomingDataController *incControl = new IncomingDataController("RAFAL-PC\\SQLEXPRESS","SCSWin","sa","tajnehaslo");
-    qDebug() << incControl->checkNewData();
+    incControl->startListening();
+
     return a.exec();
 }
