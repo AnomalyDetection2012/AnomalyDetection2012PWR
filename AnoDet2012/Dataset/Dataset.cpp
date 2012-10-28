@@ -30,6 +30,7 @@ int Dataset::newInfo(string tableName, int id, vector<string> &infoRecord){
 			return iter->add(id, infoRecord);
 		}
 	}
+    return NULL;
 }
 
 int Dataset::newRecord(time_t time, vector<double> &data, vector<double> &noninformativeData, vector<int> &infos, bool isAnomaly){

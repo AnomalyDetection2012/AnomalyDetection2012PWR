@@ -59,9 +59,9 @@ long IncomingDataController::getLastVersionID()
 DataRecord *IncomingDataController::getNewData()
 {
     if(!performDatabaseConnection())
-        return new DataRecord[0];
+        return NULL;//new DataRecord[0];
 
-    return new DataRecord[0];
+    return NULL;//new DataRecord[0];
 	
 }
 

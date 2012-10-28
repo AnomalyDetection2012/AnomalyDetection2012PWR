@@ -3,9 +3,9 @@
 #include "neuron.h"
 #include "topologymap.h"
 #include <vector>
-#include "method.h"
+#include "somdetection.h"
 
-class SOMNetwork : public Method
+class SOMNetwork : public SOMDetection
 {
 public:
     SOMNetwork(int width, int height, int inputs,double maxRad, double maxAlpha,double maxIter, TopologyMap &m);
