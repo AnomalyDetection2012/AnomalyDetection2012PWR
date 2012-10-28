@@ -4,9 +4,9 @@
 #include "class_variable.h"
 #include <vector>
 #include <string>
-#include "method.h"
+#include "bayesdetection.h"
 
-class NaiveBayes : public Method
+class NaiveBayes : public BayesDetection
 {
 
 private:

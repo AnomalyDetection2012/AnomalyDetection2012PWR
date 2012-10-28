@@ -3,9 +3,9 @@
 
 #include "QList"
 #include "neighbor.h"
-#include "method.h"
+#include "densitydetection.h"
 
-class DensityMethod : public Method
+class DensityMethod : public DensityDetection
 {
 private:
     QList<QList<double> > dataSet;

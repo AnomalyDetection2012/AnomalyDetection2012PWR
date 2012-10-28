@@ -2,7 +2,7 @@
 #define NEAREST_NEIGHBOR_H
 
 #include "space.h"
-#include "method.h"
+#include "neighbourdetection.h"
 #include <vector>
 #include <string>
 
@@ -20,7 +20,7 @@ struct distanceN
     bool operator ()(const distanceN &d1, const distanceN &d2) { return (d1.dst < d2.dst); }
 };
 
-class NearestNeighbor : public Method
+class NearestNeighbor : public NeighbourDetection
 {
 
 private:
