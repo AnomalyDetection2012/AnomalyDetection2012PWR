@@ -1,7 +1,7 @@
 #include "IncomingDataController.h"
 #include <sstream>
 
-static const QString statement_base = "SELECT CT.Rekord_ID, E.Obiekt_ID, E.Data, E.Typ_polaczenia FROM dbo.Rekord E JOIN CHANGETABLE(CHANGES dbo.Rekord, %1) AS CT ON E.Rekord_ID = CT.Rekord_ID WHERE CT.SYS_CHANGE_OPERATION='I' AND CT.SYS_CHANGE_VERSION < %2;";
+static const QString statement_base = "SELECT CT.Rekord_ID, E.Obiekt_ID, E.Data, E.Typ_polaczenia FROM dbo.Rekord E JOIN CHANGETABLE(CHANGES dbo.Rekord, %1) AS CT ON E.Rekord_ID = CT.Rekord_ID WHERE CT.SYS_CHANGE_OPERATION='I' AND CT.SYS_CHANGE_VERSION <= %2;";
 
 IncomingDataController::IncomingDataController(QString server, QString dbName, QString username, QString password)
 {
@@ -25,7 +25,7 @@ IncomingDataController::IncomingDataController(QString server, QString dbName, Q
         qDebug() << "The database connection was established successfully.";
     }
 
-    lastVersionID = 0;//getCurrVersionID();
+    lastVersionID = getCurrVersionID();
 }
 
 IncomingDataController::~IncomingDataController()
