@@ -30,7 +30,16 @@ SOURCES += main.cpp \
     Dataset/DataRecordTable.cpp \
     Dataset/DataRecord.cpp \
     INCOMING_DATA_TRACKING/IncomingDataController.cpp \
-    INCOMING_DATA_TRACKING/IncomingDataConnector.cpp
+    INCOMING_DATA_TRACKING/IncomingDataConnector.cpp \
+    RBF/OutputNeuron.cpp \
+    RBF/KMeans.cpp \
+    RBF/HiddenNeuron.cpp \
+    RBF/Cluster.cpp \
+    RBF/BIASNeuron.cpp \
+    RBF/main.cpp \
+    RBF/main.cpp \
+    RBF/KMeans.cpp \
+    RBF/RBFNetwork.cpp
 
 HEADERS  += guimainwindow.h \
     method.h \
@@ -51,6 +60,12 @@ HEADERS  += guimainwindow.h \
     Dataset/DataRecordTable.h \
     Dataset/DataRecord.h \
     INCOMING_DATA_TRACKING/IncomingDataController.h \
-    INCOMING_DATA_TRACKING/IncomingDataConnector.h
+    INCOMING_DATA_TRACKING/IncomingDataConnector.h \
+    RBF/OutputNeuron.h \
+    RBF/KMeans.h \
+    RBF/HiddenNeuron.h \
+    RBF/Cluster.h \
+    RBF/BIASNeuron.h \
+    RBF/RBFNetwork.h
 
 FORMS    += guimainwindow.ui
