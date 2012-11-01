@@ -2,7 +2,7 @@
 #include "KMeans.h"
 #include "OutputNeuron.h"
 #include "HiddenNeuron.h"
-#include "method.h"
+#include "../method.h"
 #include <vector>
 
 class RBFNetwork : public Method
@@ -22,7 +22,7 @@ public:
 	void addOutput();
 	void calculateOutputs();
 	void calculateOutputs(std::vector<double>& input);
-	double getLastOutput(int index);
+    double getLastOutputValue(int outputIndex);
 	void learnOutput(std::vector<double>& input, double setpoint, OutputNeuron* outputNeuron);
     void learnNetwork(std::vector<std::vector<double> >& inputs, std::vector<std::vector<double> >& setpointsForEachOutputNeuron);
 	void setInput(std::vector<double>& input);

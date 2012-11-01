@@ -12,7 +12,9 @@ int main(int argc, char *argv[])
 //    w.randomTest(60);
     w.show();
 
-    IncomingDataController *incControl = new IncomingDataController("RAFAL-PC\\SQLEXPRESS","SCSWin","sa","tajnehaslo");
-    qDebug() << incControl->checkNewData();
+    //IncomingDataController *incControl = new IncomingDataController("RAFAL-PC\\SQLEXPRESS","SCSWin","sa","tajnehaslo");
+    IncomingDataController *incControl = new IncomingDataController("BalutKomputer","SCSWin","sa","qwe123!");
+    incControl->startListening();
+
     return a.exec();
 }

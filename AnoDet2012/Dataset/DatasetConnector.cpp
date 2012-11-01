@@ -19,12 +19,14 @@ int DatasetConnector::newInfo(string tableName, int id, vector<string> &infoReco
 	if(datasetControler != NULL){
 		return datasetControler->newInfo(tableName, id, infoRecord);
 	}
+    return NULL;
 }
 
 int DatasetConnector::newRecord(time_t time, vector<double> &data, vector<double> &noninformativeData, vector<int> &infos, bool isAnomaly){
 	if(datasetControler != NULL){
 		return datasetControler->newRecord(time, data, noninformativeData, infos, isAnomaly);
 	}
+    return NULL;
 }
 
 void DatasetConnector::checkNewData(){

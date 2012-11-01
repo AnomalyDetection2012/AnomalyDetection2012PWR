@@ -24,4 +24,6 @@ vector<string> InfoTable::get(int id){
 		if(ids.at(i) == id)
 			return values.at(id);
 	}
+    vector<string> empty;
+    return empty;
 }

@@ -18,14 +18,15 @@ Cluster::~Cluster(void)
 {
 }
 
-void Cluster::calculateCenter(void){
-	if(!this->neighbours.isEmpty()){
+void Cluster::calculateCenter(void)
+{
+    if(!this->neighbours.isEmpty()){
 		this->center.clear();
 		for(int i=0;i<this->pointSize;++i){
 			this->center.push_back(0.0);
 		}
 		QList<vector<double>*>::iterator neighboursIterator;
-		for(neighboursIterator=this->neighbours.begin();neighboursIterator!=this->neighbours.end();++neighboursIterator){
+        for(neighboursIterator = this->neighbours.begin();neighboursIterator!=this->neighbours.end();++neighboursIterator){
 			vector<double> neighbour = **neighboursIterator;
 			for(int i=0; i<this->pointSize; ++i){
 				this->center[i]+=neighbour[i];
@@ -38,14 +39,15 @@ void Cluster::calculateCenter(void){
 		this->randomizeCenter(1000);
 	}
 }
-void Cluster::randomizeCenter(int precision){
+void Cluster::randomizeCenter(int precision)
+{
 	this->center.clear();
 	for(int a=0;a<this->pointSize;++a){
 		this->center.push_back(((double)(rand()%(precision+1)))/((double)precision));
 	}
 }
 void Cluster::calculateSigmaSquare(){
-	if(!this->neighbours.isEmpty()){
+    if(!this->neighbours.isEmpty()){
 		this->sigmaSquare = std::numeric_limits<double>().max();
 		double currentSigma=0.0;
 		QList<vector<double>*>::iterator neighboursIterator;
@@ -88,10 +90,5 @@ double Cluster::toCenterSquare(vector<double> *neighbour){
 	}
 }
 void Cluster::printNeighbours(){
-	/*QList<vector<double>*>::iterator neighboursIterator;
-	for(neighboursIterator=this->neighbours.begin();neighboursIterator!=this->neighbours.end();++neighboursIterator){
-		vector<double> neighbour = **neighboursIterator;
-		cout<<neighbour[0]<<" "<<neighbour[1]<<endl;
-	}*/
 	cout<<this->center[0]<<" "<<this->center[1]<<endl;
 }

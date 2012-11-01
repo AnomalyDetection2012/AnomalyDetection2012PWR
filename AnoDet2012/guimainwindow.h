@@ -8,11 +8,11 @@
 #include <QGraphicsTextItem>
 #include <QAction>
 #include <fstream>
-#include "RANDOM/randommethod.h"
-#include "SOM/somnetwork.h"
-#include "NEIGHBOUR/nearest_neighbor.h"
-#include "BAYES/naive_bayes.h"
-#include "DENSITY/densitymethod.h"
+#include "ANOMALY_DETECTION/RANDOM/randommethod.h"
+#include "ANOMALY_DETECTION/SOM/somnetwork.h"
+#include "ANOMALY_DETECTION/NEIGHBOUR/nearest_neighbor.h"
+#include "ANOMALY_DETECTION/BAYES/naive_bayes.h"
+#include "ANOMALY_DETECTION/DENSITY/densitymethod.h"
 
 using namespace std;
 
