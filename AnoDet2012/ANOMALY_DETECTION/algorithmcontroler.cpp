@@ -1,4 +1,5 @@
 #include "algorithmcontroler.h"
+#include "Dataset/DatasetConnector.h"
 
 AlgorithmControler::AlgorithmControler()
 {
@@ -6,6 +7,10 @@ AlgorithmControler::AlgorithmControler()
 
 AlgorithmControler::~AlgorithmControler()
 {
+}
+
+void AlgorithmControler::initialiseConnectors(ConnectorTracker *con){
+    dataset = con->dataset;
 }
 
 void AlgorithmControler::registerMethod(int i, Method &m){

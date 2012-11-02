@@ -1,3 +1,5 @@
+#ifndef DATASETCONTROLER_H
+#define DATASETCONTROLER_H
 #include "Dataset.h"
 
 class DatasetControler
@@ -12,3 +14,4 @@ public:
 	void checkAllData();
 };
 
+#endif // DATASETCONTROLER_H

@@ -1,3 +1,5 @@
+#ifndef DATASET_H
+#define DATASET_H
 #include "InfoTable.h"
 #include "DataRecordTable.h"
 
@@ -22,3 +24,4 @@ public:
 	void saveResults(std::vector<bool> &anomalies);
 };
 
+#endif // DATASET_H

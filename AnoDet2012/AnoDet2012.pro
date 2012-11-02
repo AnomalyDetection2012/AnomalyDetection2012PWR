@@ -42,7 +42,8 @@ SOURCES += main.cpp \
     ANOMALY_DETECTION/RBF/KMeans.cpp \
     ANOMALY_DETECTION/RBF/HiddenNeuron.cpp \
     ANOMALY_DETECTION/RBF/Cluster.cpp \
-    ANOMALY_DETECTION/RBF/BIASNeuron.cpp
+    ANOMALY_DETECTION/RBF/BIASNeuron.cpp \
+    connectortracker.cpp
 
 HEADERS  += guimainwindow.h \
     Dataset/InfoTable.h \
@@ -75,6 +76,7 @@ HEADERS  += guimainwindow.h \
     ANOMALY_DETECTION/RBF/KMeans.h \
     ANOMALY_DETECTION/RBF/HiddenNeuron.h \
     ANOMALY_DETECTION/RBF/Cluster.h \
-    ANOMALY_DETECTION/RBF/BIASNeuron.h
+    ANOMALY_DETECTION/RBF/BIASNeuron.h \
+    connectortracker.h
 
 FORMS    += guimainwindow.ui

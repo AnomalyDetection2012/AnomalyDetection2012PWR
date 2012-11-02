@@ -1,3 +1,5 @@
+#ifndef DATARECORDTABLE_H
+#define DATARECORDTABLE_H
 #include "DataRecord.h"
 #include "InfoTable.h"
 
@@ -17,4 +19,6 @@ public:
     std::vector<std::vector<double> > getAllRecordsData();
 	void saveResults(std::vector<bool> &anomalies);
 };
+
+#endif // DATARECORDTABLE_H
 

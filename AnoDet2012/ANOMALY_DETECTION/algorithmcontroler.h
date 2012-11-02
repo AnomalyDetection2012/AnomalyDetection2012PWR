@@ -2,6 +2,7 @@
 #define ALGORITHMCONTROLER_H
 #include <map>
 #include "method.h"
+#include "connectortracker.h"
 
 using namespace std;
 
@@ -10,6 +11,7 @@ class AlgorithmControler
 public:
     AlgorithmControler();
     ~AlgorithmControler();
+    void initialiseConnectors(ConnectorTracker *con);
     void registerMethod(int i, Method &m);
     Method *getMethod(int i);
     void learn(int method, vector< vector<double> > &set, vector<bool> &target, double *mins, double *maxs);
@@ -19,6 +21,7 @@ public:
 
 private:
     map<int, Method> methods;
+    DatasetConnector *dataset;
 };
 
 #endif // ALGORITHMCONTROLER_H

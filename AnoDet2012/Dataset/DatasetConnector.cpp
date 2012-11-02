@@ -1,4 +1,5 @@
 #include "DatasetConnector.h"
+#include "ANOMALY_DETECTION/algorithmcontroler.h"
 
 using namespace std;
 
@@ -9,6 +10,10 @@ DatasetConnector::DatasetConnector(void)
 
 DatasetConnector::~DatasetConnector(void)
 {
+}
+
+void DatasetConnector::initialiseConnectors(ConnectorTracker *con){
+    anomalyDetection = con->anomalyDetection;
 }
 
 void DatasetConnector::createDatasetControler(string name, vector<vector<string> > &infoTablesHeaders, vector<string> &dataNames, vector<string> &noninformativeDataNames){
