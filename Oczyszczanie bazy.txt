@@ -1,0 +1,19 @@
+-- usuwa alarmy, o ktorych nie ma informacji w tabeli Program_alarm
+
+  Delete alarms
+  FROM [Wyniki_alarm] alarms left join Program_alarm on Program_alarm.Program_alarm_ID = alarms.Program_alarm_ID
+  where Nazwa_alarmu is NULL
+
+-- usuwa alarmy dla rekordow, ktore nie zawieraja danych pomiarowych
+
+  Delete
+  FROM [SCSWin].[dbo].[Wyniki_alarm]
+  where Rekord_ID not in (
+		Select distinct Rekord_ID 
+		from Wyniki_pomiar)
+
+-- usuwa rekordy nie zawierajace zadnych danych pomiarowych
+
+  Delete
+  FROM [SCSWin].[dbo].[Rekord]
+  where Rekord.Rekord_ID not in (Select distinct Rekord_ID from Wyniki_pomiar)
