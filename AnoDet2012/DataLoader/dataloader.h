@@ -4,6 +4,8 @@
 #include "../Dataset/DataRecord.h"
 #include "../Dataset/DataRecordTable.h"
 
+#include <vector>
+
 #include <QString>
 #include <QtSql>
 
@@ -11,7 +13,7 @@
 class DataLoader
 {
 public:
-    int objectId;
+    int objectId, recordSize;
     QSqlDatabase db;
     DataRecordTable* dataRecordTable;
 
@@ -22,7 +24,7 @@ public:
     void printRecords();
 
 private:
-    void getValuesForDataRecord(int recordID, DataRecord &dataRecord);
+    std::vector<double> programAlarmIds;
     bool performDatabaseConnection();
 };
 
