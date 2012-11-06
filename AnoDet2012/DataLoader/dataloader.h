@@ -21,10 +21,13 @@ public:
 
     void initDataRecordTable();
     void loadRecords(unsigned long limit = 0);
+    void setAlarmFlagToRecords();
+    void removeAllRecords();
     void printRecords();
 
 private:
     std::vector<double> programAlarmIds;
+    std::vector<int> recordIds;
     bool performDatabaseConnection();
 };
 

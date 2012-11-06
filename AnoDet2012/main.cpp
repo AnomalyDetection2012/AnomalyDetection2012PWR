@@ -16,9 +16,11 @@ int main(int argc, char *argv[])
     //IncomingDataController *incControl = new IncomingDataController("RAFAL-PC\\SQLEXPRESS","SCSWin","sa","tajnehaslo");
     //IncomingDataController *incControl = new IncomingDataController("BalutKomputer","SCSWin","sa","qwe123!");
     //incControl->startListening();
-    DataLoader* dl = new DataLoader(4, "BalutKomputer", "SCSWin", "sa", "qwe123!");
+    DataLoader* dl = new DataLoader(3, "BalutKomputer", "SCSWin", "sa", "qwe123!");
     dl->initDataRecordTable();
-    dl->loadRecords(1000);
+    dl->loadRecords(2000);
+    dl->setAlarmFlagToRecords();
     dl->printRecords();
+    dl->removeAllRecords();
     return a.exec();
 }
