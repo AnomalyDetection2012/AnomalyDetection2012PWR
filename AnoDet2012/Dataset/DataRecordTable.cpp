@@ -57,3 +57,8 @@ void DataRecordTable::saveResults(vector<bool> &anomalies){
 	}
 	lastChecked += n;
 }
+
+void DataRecordTable::setMeasurementsInfo(MeasurementInfo *measurementsInfos)
+{
+    this->measurementsInfos = measurementsInfos;
+}

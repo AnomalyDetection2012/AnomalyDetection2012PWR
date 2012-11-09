@@ -2,6 +2,7 @@
 #define DATARECORDTABLE_H
 #include "DataRecord.h"
 #include "InfoTable.h"
+#include "MeasurementInfo.h"
 
 class DataRecordTable
 {
@@ -12,12 +13,14 @@ public:
 	std::vector<std::string> noninformativeDataNames;
 	std::vector<InfoTable> infoTables;
 	std::vector<DataRecord> records;
+    MeasurementInfo *measurementsInfos;
 	int lastChecked;
 	int addRecord(time_t time, std::vector<double> &data, std::vector<double> &noninformativeData, std::vector<int> &infos, bool isAnomaly);
 	void deleteBefore(time_t time);
     std::vector<std::vector<double> > getUncheckedRecordsData();
     std::vector<std::vector<double> > getAllRecordsData();
 	void saveResults(std::vector<bool> &anomalies);
+    void setMeasurementsInfo(MeasurementInfo *measurementsInfos);
 };
 
 #endif // DATARECORDTABLE_H
