@@ -3,6 +3,7 @@
 #include "HiddenNeuron.h"
 #include <vector>
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 
@@ -117,7 +118,7 @@ double RBFNetwork::calculateQuantizationError(vector<double>& setpoints)
     for(outputLayerIt=this->outputLayer.begin(), setpointsIt = setpoints.begin();outputLayerIt!=this->outputLayer.end()
         ;++outputLayerIt, ++setpointsIt)
     {
-		qError+=pow((*setpointsIt)-(*outputLayerIt)->lastOutputValue, 2.0);
+        qError+=pow((*setpointsIt)-(*outputLayerIt)->lastOutputValue, 2.0);
 	}
 
 	return 0.5*qError;
