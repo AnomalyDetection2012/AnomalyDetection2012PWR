@@ -6,13 +6,16 @@ DataRecordTable::DataRecordTable(vector<string> &dataNames, vector<string> &noni
 {
 	this->dataNames = dataNames;
 	this->noninformativeDataNames = noninformativeDataNames;
-	this->infoTables = infoTables;
-	this->lastChecked = 0;
+    this->infoTables = infoTables;
 }
 
 
 DataRecordTable::~DataRecordTable(void)
 {
+}
+
+int DataRecordTable::getLength(){
+    return records.size();
 }
 
 int DataRecordTable::addRecord(time_t time, vector<double> &data, vector<double> &noninformativeData, vector<int> &infos, bool isAnomaly){
@@ -26,34 +29,34 @@ void DataRecordTable::deleteBefore(time_t time){ // TODO co jesli nie sa posorto
 	for(iter = records.begin(); iter != records.end() && iter->time <= time; ++iter){
 		++n;
 	}
-	records.erase(records.begin(),iter);
-	lastChecked -= n;
+    records.erase(records.begin(),iter);
 }
 
-vector<vector<double> > DataRecordTable::getUncheckedRecordsData(){
+vector<vector<double> > DataRecordTable::getData(int begin, int end){
     vector<vector<double> > result;
-	vector<DataRecord>::iterator iter;
-	for(iter = records.begin()+lastChecked; iter != records.end(); ++iter){
-		result.push_back(iter->data);
-	}
-	return result;
+    vector<DataRecord>::iterator iter;
+    for(iter = records.begin()+begin; iter != records.end() && end>0; ++iter){
+        result.push_back(iter->data);
+        --end;
+    }
+    return result;
 }
 
-vector<vector<double> > DataRecordTable::getAllRecordsData(){
-    vector<vector<double> > result;
-	vector<DataRecord>::iterator iter;
-	for(iter = records.begin(); iter != records.end(); ++iter){
-		result.push_back(iter->data);
-	}
-	return result;
+vector<bool> DataRecordTable::getAnomalies(int begin, int end){
+    vector<bool> result;
+    vector<DataRecord>::iterator iter;
+    for(iter = records.begin()+begin; iter != records.end() && end>0; ++iter){
+        result.push_back(iter->isAnomaly);
+        --end;
+    }
+    return result;
 }
 
-void DataRecordTable::saveResults(vector<bool> &anomalies){
-	vector<DataRecord>::iterator iter;
-    unsigned n=0;
-	for(iter = records.begin()+lastChecked; iter != records.end() && n<anomalies.size(); ++iter){
-		iter->isAnomaly = anomalies.at(n);
-		++n;
-	}
-	lastChecked += n;
+void DataRecordTable::saveResults(vector<bool> &anomalies, int begin){
+    vector<DataRecord>::iterator iter;
+    unsigned int n=0;
+    for(iter = records.begin()+begin; iter != records.end() && n<anomalies.size(); ++iter){
+        iter->isAnomaly = anomalies.at(n);
+        ++n;
+    }
 }

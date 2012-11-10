@@ -36,12 +36,30 @@ int DatasetConnector::newRecord(time_t time, vector<double> &data, vector<double
 
 void DatasetConnector::checkNewData(){
 	if(datasetControler != NULL){
-		datasetControler->checkNewData();
+        datasetControler->checkNewData(anomalyDetection);
 	}
 }
 
 void DatasetConnector::checkAllData(){
 	if(datasetControler != NULL){
-		datasetControler->checkAllData();
+        datasetControler->checkAllData(anomalyDetection);
 	}
+}
+
+void DatasetConnector::checkData(int begin, int end){
+    if(datasetControler != NULL){
+        datasetControler->checkData(begin, end, anomalyDetection);
+    }
+}
+
+void DatasetConnector::teachData(int begin, int end){
+    if(datasetControler != NULL){
+        datasetControler->teachData(begin, end, anomalyDetection);
+    }
+}
+
+void DatasetConnector::setMethodId(int id){
+    if(datasetControler != NULL){
+        datasetControler->setMethodId(id);
+    }
 }

@@ -5,6 +5,7 @@ using namespace std;
 DatasetControler::DatasetControler(string name, vector<vector<string> > &infoTablesHeaders, vector<string> &dataNames, vector<string> &noninformativeDataNames)
 {
 	dataset = new Dataset(name, infoTablesHeaders, dataNames, noninformativeDataNames);
+    lastCheckedId=-1;
 }
 
 
@@ -20,17 +21,34 @@ int DatasetControler::newRecord(time_t time, vector<double> &data, vector<double
 	return dataset->newRecord(time, data, noninformativeData, infos, isAnomaly);
 }
 
-void DatasetControler::checkNewData(){
-    vector<vector<double> > data = dataset->getUncheckedData();
-	vector<bool> results;
-	// TODO wysylanie do algorytmu
-	dataset->saveResults(results);
+void DatasetControler::checkNewData(AlgorithmControler *ac){
+    int end = dataset->getDataRecordsAmmount();
+    checkData(lastCheckedId + 1, end, ac);
 }
 
-void DatasetControler::checkAllData(){
-    vector<vector<double> > data = dataset->getAllData();
-	vector<bool> results;
-	// TODO wysylanie do algorytmu
-	dataset->setCheckingStartingPoint(0);
-	dataset->saveResults(results);
+void DatasetControler::checkAllData(AlgorithmControler *ac){
+    int end = dataset->getDataRecordsAmmount();
+    checkData(0, end, ac);
+}
+
+void DatasetControler::checkData(int begin, int end, AlgorithmControler *ac){
+    int max = dataset->getDataRecordsAmmount() - 1;
+    if(begin > max){
+        if(end > max)
+            end = max;
+        vector<vector<double> > data = dataset->getData(begin, end);
+        vector<bool> results = ac->test(methodId, data);
+        dataset->saveResults(results, begin);
+        lastCheckedId = end;
+    }
+}
+
+void DatasetControler::teachData(int begin, int end, AlgorithmControler *ac){
+    vector<vector<double> > data = dataset->getData(begin, end);
+    vector<bool> anomalies = dataset->getAnomalies(begin, end);
+    ac->learn(methodId, data, anomalies);
+}
+
+void DatasetControler::setMethodId(int id){
+    methodId = id;
 }

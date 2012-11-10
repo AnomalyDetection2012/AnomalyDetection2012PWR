@@ -16,12 +16,12 @@ public:
 	std::string name;
 	std::vector<InfoTable> infoTables;
 	DataRecordTable *dataTable;
+    int getDataRecordsAmmount();
 	int newInfo(std::string tableName, int id, std::vector<std::string> &infoRecord);
 	int newRecord(time_t time, std::vector<double> &data, std::vector<double> &noninformativeData, std::vector<int> &infos, bool isAnomaly);
-    std::vector<std::vector<double> > getUncheckedData();
-    std::vector<std::vector<double> > getAllData();
-	void setCheckingStartingPoint(int x);
-	void saveResults(std::vector<bool> &anomalies);
+    std::vector<std::vector<double> > getData(int begin, int end);
+    std::vector<bool> getAnomalies(int begin, int end);
+    void saveResults(std::vector<bool> &anomalies, int begin);
 };
 
 #endif // DATASET_H
