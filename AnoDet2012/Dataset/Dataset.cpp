@@ -23,6 +23,10 @@ Dataset::~Dataset(void)
 {
 }
 
+int Dataset::getDataRecordsAmmount(){
+    return dataTable->getLength();
+}
+
 int Dataset::newInfo(string tableName, int id, vector<string> &infoRecord){
 	vector<InfoTable>::iterator iter;
 	for(iter = infoTables.begin(); iter != infoTables.end(); ++iter){
@@ -37,18 +41,14 @@ int Dataset::newRecord(time_t time, vector<double> &data, vector<double> &noninf
 	return dataTable->addRecord(time, data, noninformativeData, infos, isAnomaly);
 }
 
-vector<vector<double> > Dataset::getUncheckedData(){
-	return dataTable->getUncheckedRecordsData();
+vector<vector<double> > Dataset::getData(int begin, int end){
+    return dataTable->getData(begin, end);
 }
 
-vector<vector<double> > Dataset::getAllData(){
-	return dataTable->getAllRecordsData();
+vector<bool> Dataset::getAnomalies(int begin, int end){
+    return dataTable->getAnomalies(begin, end);
 }
 
-void Dataset::setCheckingStartingPoint(int x){
-	dataTable->lastChecked=x;
-}
-
-void Dataset::saveResults(vector<bool> &anomalies){
-	dataTable->saveResults(anomalies);
+void Dataset::saveResults(vector<bool> &anomalies, int begin){
+    dataTable->saveResults(anomalies, begin);
 }
