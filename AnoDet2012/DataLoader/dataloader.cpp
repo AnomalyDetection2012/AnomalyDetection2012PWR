@@ -51,6 +51,38 @@ void DataLoader::initDataRecordTable()
     }
 }
 
+void DataLoader::loadMeasurementInfo()
+{
+    if(this->performDatabaseConnection())
+    {
+        QString statement("SELECT [Program_pomiar_ID], [Nazwa_pomiaru], [AlertMin], [AlertMax] FROM [SCSWin].[dbo].[Program_pomiar];");
+        QSqlQuery query(statement, db);
+        query.setForwardOnly(true);
+
+        if (!query.isActive())
+        {
+            qDebug() << "An error was encountered: "<< QSqlError(query.lastError()).text();
+        }
+        else
+        {
+
+            while (query.next())
+            {
+                QHash <QString, QVariant> m;
+                //m = new QHash <QString, QVariant>();
+                m.insert("MeasurementName",query.value(1));
+                m.insert("MinValue",query.value(2));
+                m.insert("MaxValue", query.value(3));
+
+                this->measurementInfo.insert(query.value(0).toInt(), m);
+            }
+
+            dataRecordTable->setMeasurementsInfo(new MeasurementInfo(measurementInfo)); // add to DataRecordTable
+        }
+
+    }
+}
+
 void DataLoader::loadRecords(unsigned long limit)
 {
     if(this->performDatabaseConnection())

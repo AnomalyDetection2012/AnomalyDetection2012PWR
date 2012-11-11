@@ -5,6 +5,7 @@
 #include <random>
 #include <time.h>
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 
