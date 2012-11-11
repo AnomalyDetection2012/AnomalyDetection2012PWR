@@ -45,3 +45,30 @@ void DatasetConnector::checkAllData(){
 		datasetControler->checkAllData();
 	}
 }
+
+QString DatasetConnector::getMeasurementName(int type_id)
+{
+    if(datasetControler != NULL)
+    {
+        return datasetControler->getMeasurementName(type_id);
+    }
+    return NULL;
+}
+
+double DatasetConnector::getMinValue(int type_id)
+{
+    if(datasetControler != NULL)
+    {
+        return datasetControler->getMinValue(type_id);
+    }
+    return NULL;
+}
+
+double DatasetConnector::getMaxValue(int type_id)
+{
+    if(datasetControler != NULL)
+    {
+        return datasetControler->getMaxValue(type_id);
+    }
+    return NULL;
+}

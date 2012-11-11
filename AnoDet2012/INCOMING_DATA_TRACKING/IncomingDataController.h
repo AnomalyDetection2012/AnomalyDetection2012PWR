@@ -2,11 +2,14 @@
 #define INCOMINGDATACONTROLLER_H
 
 #include "Dataset\DataRecord.h"
+#include <connectortracker.h>
 #include <QtSql>
 #include <QString>
 #include <QDebug>
 #include <QTimer>
 #include <QtCore/QCoreApplication>
+#include <ANOMALY_DETECTION/algorithmcontroler.h>
+#include <Dataset/DatasetConnector.h>
 
 
 using namespace QSql;
@@ -19,6 +22,7 @@ class IncomingDataController : public QObject
 public:
 	IncomingDataController(QString server, QString dbName, QString username, QString password);
 	~IncomingDataController();
+    void initialiseConnectors(ConnectorTracker *con);
 
     void startListening();  // start tracking database for new data
     void startListening(unsigned long interval);    // start tracking database for new data with indicated interval
@@ -38,6 +42,9 @@ private:
     int lastVersionID;
     QSqlDatabase db;
     QTimer *timer;
+
+    AlgorithmControler *anomalyDetection;
+    DatasetConnector *datasetConnector;
 
 public slots:
    void processNewData();  // process new data (if exists)

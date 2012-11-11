@@ -34,3 +34,19 @@ void DatasetControler::checkAllData(){
 	dataset->setCheckingStartingPoint(0);
 	dataset->saveResults(results);
 }
+
+
+QString DatasetControler::getMeasurementName(int type_id)
+{
+    return this->dataset->dataTable->measurementsInfos->getMeasurementName(type_id);
+}
+
+double DatasetControler::getMinValue(int type_id)
+{
+    return this->dataset->dataTable->measurementsInfos->getMinValue(type_id);
+}
+
+double DatasetControler::getMaxValue(int type_id)
+{
+    return this->dataset->dataTable->measurementsInfos->getMinValue(type_id);
+}

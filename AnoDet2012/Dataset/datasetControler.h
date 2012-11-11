@@ -12,6 +12,10 @@ public:
 	int newRecord(time_t time, std::vector<double> &data, std::vector<double> &noninformativeData, std::vector<int> &infos, bool isAnomaly);
 	void checkNewData();
 	void checkAllData();
+
+    QString getMeasurementName(int type_id);
+    double getMinValue(int type_id);
+    double getMaxValue(int type_id);
 };
 
 #endif // DATASETCONTROLER_H
