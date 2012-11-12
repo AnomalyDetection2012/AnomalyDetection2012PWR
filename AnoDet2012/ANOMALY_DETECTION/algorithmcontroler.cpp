@@ -1,5 +1,6 @@
 #include "algorithmcontroler.h"
 #include "Dataset/DatasetConnector.h"
+#include <iostream>
 
 AlgorithmControler::AlgorithmControler()
 {
@@ -13,12 +14,12 @@ void AlgorithmControler::initialiseConnectors(ConnectorTracker *con){
     dataset = con->dataset;
 }
 
-void AlgorithmControler::registerMethod(int i, Method &m){
-    methods.insert(make_pair(i,m));
+void AlgorithmControler::registerMethod(int i, Method *m){
+    methods.insert(make_pair(i, m));
 }
 
 Method *AlgorithmControler::getMethod(int i){
-    return &(methods.at(i));
+    return methods.at(i);
 }
 
 void AlgorithmControler::learn(int method, vector< vector<double> > &set, vector<bool> &target, double *mins, double *maxs){

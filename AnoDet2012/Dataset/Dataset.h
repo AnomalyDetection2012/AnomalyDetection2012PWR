@@ -2,6 +2,7 @@
 #define DATASET_H
 #include "InfoTable.h"
 #include "DataRecordTable.h"
+#include <iostream>
 
 class Dataset
 {

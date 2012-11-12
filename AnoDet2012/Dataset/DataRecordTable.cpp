@@ -35,7 +35,8 @@ void DataRecordTable::deleteBefore(time_t time){ // TODO co jesli nie sa posorto
 vector<vector<double> > DataRecordTable::getData(int begin, int end){
     vector<vector<double> > result;
     vector<DataRecord>::iterator iter;
-    for(iter = records.begin()+begin; iter != records.end() && end>0; ++iter){
+    end-=begin;
+    for(iter = records.begin()+begin; iter != records.end() && end>=0; ++iter){
         result.push_back(iter->data);
         --end;
     }
@@ -45,7 +46,8 @@ vector<vector<double> > DataRecordTable::getData(int begin, int end){
 vector<bool> DataRecordTable::getAnomalies(int begin, int end){
     vector<bool> result;
     vector<DataRecord>::iterator iter;
-    for(iter = records.begin()+begin; iter != records.end() && end>0; ++iter){
+    end-=begin;
+    for(iter = records.begin()+begin; iter != records.end() && end>=0; ++iter){
         result.push_back(iter->isAnomaly);
         --end;
     }

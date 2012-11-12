@@ -60,6 +60,9 @@
     </property>
     <addaction name="actionReadLearningSet"/>
     <addaction name="actionReadTestData"/>
+    <addaction name="actionTestowy1"/>
+    <addaction name="actionTestowy2"/>
+    <addaction name="actionTestowy3"/>
    </widget>
    <widget class="QMenu" name="menuMetody">
     <property name="title">
@@ -78,6 +81,21 @@
   <action name="actionReadTestData">
    <property name="text">
     <string>Wczytaj ciąg testowy</string>
+   </property>
+  </action>
+  <action name="actionTestowy1">
+   <property name="text">
+    <string>Testowy1</string>
+   </property>
+  </action>
+  <action name="actionTestowy2">
+   <property name="text">
+    <string>Testowy2</string>
+   </property>
+  </action>
+  <action name="actionTestowy3">
+   <property name="text">
+    <string>Testowy3</string>
    </property>
   </action>
  </widget>
@@ -132,10 +150,61 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionTestowy1</sender>
+   <signal>triggered()</signal>
+   <receiver>GUIMainWindow</receiver>
+   <slot>testSlotA()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>226</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionTestowy2</sender>
+   <signal>triggered()</signal>
+   <receiver>GUIMainWindow</receiver>
+   <slot>testSlotB()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>226</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionTestowy3</sender>
+   <signal>triggered()</signal>
+   <receiver>GUIMainWindow</receiver>
+   <slot>testSlotC()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>226</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>readLearnFile()</slot>
   <slot>readTestFile()</slot>
   <slot>chooseDimension(int)</slot>
+  <slot>testSlotA()</slot>
+  <slot>testSlotB()</slot>
+  <slot>testSlotC()</slot>
  </slots>
 </ui>

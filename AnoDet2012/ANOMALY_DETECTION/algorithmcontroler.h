@@ -12,7 +12,7 @@ public:
     AlgorithmControler();
     ~AlgorithmControler();
     void initialiseConnectors(ConnectorTracker *con);
-    void registerMethod(int i, Method &m);
+    void registerMethod(int i, Method *m);
     Method *getMethod(int i);
     void learn(int method, vector< vector<double> > &set, vector<bool> &target, double *mins, double *maxs);
     void learn(int method, vector< vector<double> > &set, vector<bool> &target);// po normalizacji
@@ -20,7 +20,7 @@ public:
     vector<bool> test(int method, vector< vector<double> > &set);// po normalizacji
 
 private:
-    map<int, Method> methods;
+    map<int, Method*> methods;
     DatasetConnector *dataset;
 };
 

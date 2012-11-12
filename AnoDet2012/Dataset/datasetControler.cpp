@@ -33,11 +33,11 @@ void DatasetControler::checkAllData(AlgorithmControler *ac){
 
 void DatasetControler::checkData(int begin, int end, AlgorithmControler *ac){
     int max = dataset->getDataRecordsAmmount() - 1;
-    if(begin > max){
+    if(begin < max){
         if(end > max)
             end = max;
         vector<vector<double> > data = dataset->getData(begin, end);
-        vector<bool> results = ac->test(methodId, data);
+        vector<bool> results = ac->test(methodId, data, mins, maxs);
         dataset->saveResults(results, begin);
         lastCheckedId = end;
     }
@@ -46,9 +46,22 @@ void DatasetControler::checkData(int begin, int end, AlgorithmControler *ac){
 void DatasetControler::teachData(int begin, int end, AlgorithmControler *ac){
     vector<vector<double> > data = dataset->getData(begin, end);
     vector<bool> anomalies = dataset->getAnomalies(begin, end);
-    ac->learn(methodId, data, anomalies);
+    ac->learn(methodId, data, anomalies, mins, maxs);
 }
 
 void DatasetControler::setMethodId(int id){
     methodId = id;
+}
+
+double* DatasetControler::getMinimals(){
+    return mins;
+}
+
+double* DatasetControler::getMaximals(){
+    return maxs;
+}
+
+void DatasetControler::setMinMax(double* min, double* max){//TODO TEMPORARY
+    mins = min;
+    maxs = max;
 }

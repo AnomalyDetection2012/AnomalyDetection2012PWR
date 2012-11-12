@@ -13,6 +13,9 @@
 #include "ANOMALY_DETECTION/NEIGHBOUR/nearest_neighbor.h"
 #include "ANOMALY_DETECTION/BAYES/naive_bayes.h"
 #include "ANOMALY_DETECTION/DENSITY/densitymethod.h"
+#include "connectortracker.h"
+#include "ANOMALY_DETECTION/algorithmcontroler.h"
+#include "Dataset/DatasetConnector.h"
 
 using namespace std;
 
@@ -35,6 +38,13 @@ public:
     void initDimensions(vector<QString> &dimNames);
     void getMinMax();
     void newMethodTitle(string name);
+
+    //TEST
+    ConnectorTracker *ct;
+    DatasetConnector *dataset;
+    AlgorithmControler *algorithm;
+    int selectedMethodId;
+    void drawNewFormat();
     
 private:
     Ui::GUIMainWindow *ui;
@@ -58,7 +68,9 @@ private slots:
     void chooseBAYES();
     void chooseNEIGHBOUR();
     void chooseDENSITY();
-
+    void testSlotA();
+    void testSlotB();
+    void testSlotC();
 };
 
 #endif // GUIMAINWINDOW_H

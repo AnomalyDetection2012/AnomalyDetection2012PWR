@@ -18,6 +18,7 @@ public:
     void checkData(int begin, int end);
     void teachData(int begin, int end);
     void setMethodId(int id);
+    void setMinMax(double *min, double *max);
 
 private:
     AlgorithmControler *anomalyDetection;

@@ -12,8 +12,9 @@ class RandomMethod : public RandomDetection
 {
 public:
     RandomMethod();
-    void learn(vector< vector<double> > &set, vector<bool> &target, double *mins, double *maxs);
-    vector<bool> test(vector< vector<double> > &set, double *mins, double *maxs);
+    virtual void learn(vector< vector<double> > &set, vector<bool> &target, double *mins, double *maxs);
+    virtual vector<bool> test(vector< vector<double> > &set, double *mins, double *maxs);
+    virtual vector<bool> test(vector< vector<double> > &set);
 };
 
 #endif // RANDOMMETHOD_H

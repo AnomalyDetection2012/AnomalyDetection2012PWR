@@ -13,7 +13,6 @@ GUIMainWindow::GUIMainWindow(QWidget *parent) :
     ui(new Ui::GUIMainWindow)
 {
     ui->setupUi(this);
-    initMethods();
     selectedMethod = new RandomMethod();
     pens.push_back( QPen(QColor("black")) ); colors.push_back(QColor("black"));
     pens.push_back( QPen(QColor("green")) ); colors.push_back(QColor("green"));
@@ -24,6 +23,36 @@ GUIMainWindow::GUIMainWindow(QWidget *parent) :
     vector<QPen>::iterator iter;
     for(iter = pens.begin(); iter != pens.end();iter++){
         iter->setWidth(2);
+    }
+
+    //TEST
+    ct = new ConnectorTracker();
+    ct->initialise();
+    dataset = ct->dataset;
+    algorithm = ct->anomalyDetection;
+    selectedMethodId = 0;
+    initMethods();// WAZNE
+
+    vector<vector<string> > vecvecstr;
+    vector<string> vecstr;
+    vector<string> datanames;
+    datanames.push_back("1");
+    datanames.push_back("2");
+    datanames.push_back("3");
+    datanames.push_back("4");
+    datanames.push_back("5");
+    dataset->createDatasetControler("test",vecvecstr,datanames,vecstr);
+
+    vector<int> vecint;
+    vector<double> vecdouble;
+    time_t *czas = new time_t();
+    for(int i=0;i<=500;++i){
+        vector<double> datavec;
+        bool anom = rand()%1000 > 100;
+        for(int j=0;j<5;++j){
+            datavec.push_back((rand()%1000)/1000.0);
+        }
+        dataset->newRecord(*czas,datavec,vecdouble,vecint,anom);
     }
 }
 
@@ -73,6 +102,18 @@ void GUIMainWindow::getMinMax(){
     maximals[1]=300.0;
     maximals[2]=400.0;
     maximals[3]=50.0;
+
+    //TEST
+    minimals[0]=0.0;
+    minimals[1]=0.0;
+    minimals[2]=0.0;
+    minimals[3]=0.0;
+    minimals[4]=0.0;
+    maximals[0]=1.0;
+    maximals[1]=1.0;
+    maximals[2]=1.0;
+    maximals[3]=1.0;
+    maximals[4]=1.0;
 }
 
 void GUIMainWindow::drawResult(){
@@ -165,12 +206,12 @@ void GUIMainWindow::readLearnFile(){
     }
     file.close();
 
-    for(int i=0;i<values.size();i++)
-    {
-        std::cout<<"\n";
-        for(int j=0;j<values[i].size();j++)
-            std::cout<<values[i][j]<<" ";
-    }
+//    for(int i=0;i<values.size();i++)
+//    {
+//        std::cout<<"\n";
+//        for(int j=0;j<values[i].size();j++)
+//            std::cout<<values[i][j]<<" ";
+//    }
 
     getMinMax();
     selectedMethod->learn(values,target,minimals,maximals);
@@ -203,8 +244,6 @@ void GUIMainWindow::readTestFile(){
     }
     file.close();
 
-
-
     initDimensions(names);
     getMinMax();
     anomalies = selectedMethod->test(values,minimals,maximals);
@@ -228,36 +267,52 @@ void GUIMainWindow::newMethodTitle(string name){
     this->setWindowTitle(QString::fromStdString("Wykrywanie Anomalii - "+name));
 }
 
-void GUIMainWindow::initMethods(){
+void GUIMainWindow::initMethods(){//TEST
     QAction *action;
     //BEGIN - RANDOM
     action = new QAction(tr("Metoda losowa"),this);
     connect(action, SIGNAL(triggered()), this, SLOT(chooseRandom()));
     ui->menuMetody->addAction(action);
+
+    RandomMethod *metA = new RandomMethod();
+    algorithm->registerMethod(0, metA);
     //END - RANDOM
 
     //BEGIN - SOM
     action = new QAction(tr("Siec SOM"),this);
     connect(action, SIGNAL(triggered()), this, SLOT(chooseSOM()));
     ui->menuMetody->addAction(action);
+
+    TopologyMap map(this,20,20,10);
+    SOMNetwork *metB = new SOMNetwork(20,20,4,50,0.4,1000,map);
+    algorithm->registerMethod(1, metB);
     //END - SOM
 
     //BEGIN - BAYES
     action = new QAction(tr("Klasyfikator Bayesa"),this);
     connect(action, SIGNAL(triggered()), this, SLOT(chooseBAYES()));
     ui->menuMetody->addAction(action);
+
+    NaiveBayes *metC = new NaiveBayes(4);
+    algorithm->registerMethod(2, metC);
     //END - BAYES
 
     //BEGIN - NEIGHBOUR
     action = new QAction(tr("Najblizsze sasiedztwo"),this);
     connect(action, SIGNAL(triggered()), this, SLOT(chooseNEIGHBOUR()));
     ui->menuMetody->addAction(action);
+
+    NearestNeighbor *metD = new NearestNeighbor(4,5);
+    algorithm->registerMethod(3, metD);
     //END - NEIGHBOUR
 
     //BEGIN - DENSITY
     action = new QAction(tr("Metoda gestosciowa"),this);
     connect(action, SIGNAL(triggered()), this, SLOT(chooseDENSITY()));
     ui->menuMetody->addAction(action);
+
+    DensityMethod *metE = new DensityMethod(0.5,50);
+    algorithm->registerMethod(4, metE);
     //END - DENSITY
 }
 
@@ -265,6 +320,7 @@ void GUIMainWindow::chooseRandom(){
     delete selectedMethod;
     newMethodTitle("Metoda losowa");
     selectedMethod = new RandomMethod();
+    selectedMethodId = 0;
 }
 
 void GUIMainWindow::chooseSOM(){
@@ -272,22 +328,63 @@ void GUIMainWindow::chooseSOM(){
     newMethodTitle("Siec SOM");
     TopologyMap map(this,20,20,10);
     selectedMethod = new SOMNetwork(20,20,4,50,0.4,1000,map);
+    selectedMethodId = 1;
 }
 
 void GUIMainWindow::chooseBAYES(){
     delete selectedMethod;
     newMethodTitle("Klasyfikator Bayesa");
     selectedMethod = new NaiveBayes(4);
+    selectedMethodId = 2;
 }
 
 void GUIMainWindow::chooseNEIGHBOUR(){
     delete selectedMethod;
     newMethodTitle("Metoda najblizszego sasiedztwa");
     selectedMethod = new NearestNeighbor(4,5);
+    selectedMethodId = 3;
 }
 
 void GUIMainWindow::chooseDENSITY(){
     delete selectedMethod;
     newMethodTitle("Metoda gestosciowa");
     selectedMethod = new DensityMethod(0.5,50);
+    selectedMethodId = 4;
+}
+
+// TEST
+
+void GUIMainWindow::testSlotA(){
+    dataset->setMethodId(selectedMethodId);
+    dataset->setMinMax(minimals, maximals);
+    dataset->teachData(251,500);
+}
+
+void GUIMainWindow::testSlotB(){
+    dataset->setMethodId(selectedMethodId);
+    dataset->setMinMax(minimals, maximals);
+    dataset->checkData(0,250);
+    drawNewFormat();
+}
+
+void GUIMainWindow::testSlotC(){
+    drawNewFormat();
+}
+
+void GUIMainWindow::drawNewFormat(){
+    values = dataset->datasetControler->dataset->getData(0,500);//pozniej dopisze metody pobierajaca z connectora
+    setSize = values.size();
+    setDimensions = values.at(0).size();
+
+    vector<string> headers = dataset->datasetControler->dataset->dataTable->dataNames;//zglaszac zapotrzebowanie na metody do pobierania
+                                                                                      //danych do wyswietlania
+    vector<QString> names;
+    for(int i=0;i<setDimensions;++i){
+        names.push_back(QString::fromStdString(headers.at(i)));
+    }
+    initDimensions(names);
+    getMinMax();//na sztywno wpisane narazie
+
+    anomalies = dataset->datasetControler->dataset->getAnomalies(0,500);
+    drawResult();
 }

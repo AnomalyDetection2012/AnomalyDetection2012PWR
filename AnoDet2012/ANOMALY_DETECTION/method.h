@@ -16,6 +16,7 @@ public:
     virtual vector<bool> test(vector< vector<double> > &set, double *mins, double *maxs);
     virtual vector<bool> test(vector< vector<double> > &set);// po normalizacji
     //TODO metoda zwracajaca interfejs wyboru parametrów
+    int methodId;
 
 private:
     double normalize(double x, double min, double max);

@@ -63,3 +63,9 @@ void DatasetConnector::setMethodId(int id){
         datasetControler->setMethodId(id);
     }
 }
+
+void DatasetConnector::setMinMax(double* min, double* max){//TODO TEMPORARY
+    if(datasetControler != NULL){
+        datasetControler->setMinMax(min, max);
+    }
+}

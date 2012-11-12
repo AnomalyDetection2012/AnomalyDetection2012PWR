@@ -16,10 +16,15 @@ public:
     void checkData(int begin, int end, AlgorithmControler *ac);
     void teachData(int begin, int end, AlgorithmControler *ac);
     void setMethodId(int id);
+    double* getMinimals();
+    double* getMaximals();
+    void setMinMax(double* min, double* max);
 
 private:
     int methodId;
     int lastCheckedId;
+    double* mins;
+    double* maxs;
 };
 
 #endif // DATASETCONTROLER_H
