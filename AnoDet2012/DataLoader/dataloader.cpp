@@ -1,4 +1,5 @@
 #include "dataloader.h"
+#include "Dataset/DatasetConnector.h"
 
 using namespace std;
 
@@ -34,6 +35,8 @@ void DataLoader::initDataRecordTable()
         this->recordIds = *(new vector<int>());
         this->dataRecordTable = new DataRecordTable(*(new vector<string>(0)), *(new vector<string>(0)), *(new vector<InfoTable>()));
 
+        dataset->datasetControler->dataset->dataTable = dataRecordTable;//TODO jakas fajna rzecz
+
         QString statement("Select Program_pomiar.Program_pomiar_ID, Program_pomiar.Nazwa_pomiaru from Program_pomiar where Program_pomiar.Konfiguracja_ID = "+QString::number(this->objectId)+" order by Program_pomiar_ID");
         QSqlQuery query(statement, db);
         query.setForwardOnly(true);
@@ -49,6 +52,11 @@ void DataLoader::initDataRecordTable()
             }
         }
     }
+}
+
+
+void DataLoader::initialiseConnectors(ConnectorTracker *con){
+    dataset = con->dataset;
 }
 
 void DataLoader::loadMeasurementInfo()
