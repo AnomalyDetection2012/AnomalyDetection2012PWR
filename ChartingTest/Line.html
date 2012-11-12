@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>
+      Google Visualization API Sample
+    </title>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+	  google.load("visualization", "1", {packages:["corechart"]});
+	  google.setOnLoadCallback(drawVisualization);
+    </script>
+    <script type="text/javascript">
+       // get the Querystring Function
+        function getQuerystring(key, default_) {
+            if (default_ == null) default_ = "";
+            key = key.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+            var regex = new RegExp("[\\?&]" + key + "=([^&#]*)");
+            var qs = regex.exec(window.location.href);
+            if (qs == null)
+                return default_;
+            else
+                return qs[1];
+        }
+		
+
+		function $_GET(q,s) { 
+			s = s ? s : window.location.search; 
+			var re = new RegExp('&'+q+'(?:=([^&]*))?(?=&|$)','i'); 
+			return (s=s.replace(/\^?/,'&').match(re)) ? (typeof s[1] == 'undefined' ? '' : decodeURIComponent(s[1])) : undefined; 
+		} 
+		
+
+ 
+        function drawVisualization() {
+		// Create and populate the data table.
+			var data = new google.visualization.DataTable();
+			data.addColumn('string', 'wartosc'); // Implicit domain label col.
+			data.addColumn('number', 'Sales'); // Implicit series 1 data col.
+			data.addColumn({type:'number', role:'interval'});  // interval role col.
+			data.addColumn({type:'number', role:'interval'});  // interval role col.
+			data.addColumn({type:'string', role:'annotation'}); // annotation role col.
+			data.addColumn({type:'string', role:'annotationText'}); // annotationText col.
+			  
+			var label = $_GET('l');
+			var params = $_GET('values').split(';');
+			
+			for (var i=0;i<params.length;i++)
+			{ 
+				var vals = params[i].split(',');
+				//document.write((vals[4]=='null'?null:vals[4]) + "<br>");
+				data.addRow(['',vals[1]=='null'?null:parseFloat(vals[1]),vals[2]=='null'?null:parseFloat(vals[2]),vals[3]=='null'?null:parseFloat(vals[3]),vals[4]=='null'?null:vals[4],vals[5]=='null'?null:vals[5]]);
+
+			}
+
+			/*data.addRows([
+			  ['',700,null,null,null,null],
+			  ['',  170,null,null,null,null],
+			  ['',  660,null,null,null,null],
+			  ['anomaly', 1000, 500, 1500,'anomaly','possible anomaly!'],
+			  ['', 200, 100, 300,null,null]
+			]);;*/
+			  
+			  // Create and draw the visualization.
+			  /*new google.visualization.LineChart(document.getElementById('visualization')).
+				  draw(data, {
+							  width: 1000, height: 350,
+							  vAxis: {maxValue: 10}}
+							  
+				);*/
+				
+				var options = {
+					backgroundColor: "#f0f0f0",
+				};
+				
+				new google.visualization.LineChart(document.getElementById('visualization')).
+				  draw(data, options);
+		}
+
+//    drawVisualization();
+     google.setOnLoadCallback(drawVisualization);
+ 
+    </script>
+  </head>
+  <body style="font-family: Arial;border: 0 none;padding:0px;margin:0px;background:#f0f0f0;">
+    <div id="visualization" style="width: 780px; height: 380px;"></div>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {packages: ['corechart']});
+    </script>
+    <script type="text/javascript">
+      
+ 
+ 
+      google.setOnLoadCallback(drawVisualization);
+</script>
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>
+      Google Visualization API Sample
+    </title>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {packages: ['gauge']});
+    </script>
+    <script type="text/javascript">
+       // get the Querystring Function
+        function getQuerystring(key, default_) {
+            if (default_ == null) default_ = "";
+            key = key.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+            var regex = new RegExp("[\\?&]" + key + "=([^&#]*)");
+            var qs = regex.exec(window.location.href);
+            if (qs == null)
+                return default_;
+            else
+                return qs[1];
+        }
+ 
+        function drawVisualization() {
+        // Create and populate the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Task');
+        data.addColumn('number', 'Hours per Day');
+        data.addRows(5);
+        data.setValue(0, 0, 'Work');
+        data.setValue(0, 1, 11);
+        data.setValue(1, 0, 'Eat');
+        data.setValue(1, 1, 2);
+        data.setValue(2, 0, 'Commute');
+        data.setValue(2, 1, 2);
+        data.setValue(3, 0, 'Watch TV');
+        data.setValue(3, 1, 2);
+        data.setValue(4, 0, 'Sleep');
+        data.setValue(4, 1, 7);
+ 
+        // Create and draw the visualization.
+        new google.visualization.PieChart(document.getElementById('visualization')).
+            draw(data, {title:"So, how was your day?"});
+      }
+    //drawVisualization();
+     google.setOnLoadCallback(drawVisualization);
+ 
+    </script>
+  </head>
+  <body style="font-family: Arial;border: 0 none;">
+    <div id="visualization" style="width: 451px; height: 391px;"></div>
+  </body>
+</html>
