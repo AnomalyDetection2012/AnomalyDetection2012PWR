@@ -1,7 +1,8 @@
 #include "IncomingDataController.h"
 #include <sstream>
 
-static const QString statement_base = "SELECT CT.Rekord_ID, E.Obiekt_ID, E.Data, E.Typ_polaczenia FROM dbo.Rekord E JOIN CHANGETABLE(CHANGES dbo.Rekord, %1) AS CT ON E.Rekord_ID = CT.Rekord_ID WHERE CT.SYS_CHANGE_OPERATION='I' AND CT.SYS_CHANGE_VERSION <= %2;";
+static const QString statement_base = "SELECT CT.Rekord_ID, E.Obiekt_ID, E.Data, E.Typ_polaczenia FROM dbo.Rekord E JOIN CHANGETABLE(CHANGES dbo.Rekord, %1) AS CT ON E.Rekord_ID = CT.Rekord_ID WHERE CT.SYS_CHANGE_OPERATION='U' AND CT.SYS_CHANGE_VERSION <= %2;";
+static const QString statement_measurement = "SELECT [SCSWin].[dbo].[Wyniki_pomiar].[Program_pomiar_ID],[Wartosc], [SCSWin].[dbo].[Program_pomiar].[AlertMin], [SCSWin].[dbo].[Program_pomiar].[AlertMax], [Nazwa_pomiaru] FROM [SCSWin].[dbo].[Wyniki_pomiar] inner join [SCSWin].[dbo].[Program_pomiar] on [SCSWin].[dbo].[Wyniki_pomiar].[Program_pomiar_ID]=[SCSWin].[dbo].[Program_pomiar].[Program_pomiar_ID] WHERE [Rekord_ID]=%1;";
 
 IncomingDataController::IncomingDataController(QString server, QString dbName, QString username, QString password)
 {
@@ -31,6 +32,11 @@ IncomingDataController::IncomingDataController(QString server, QString dbName, Q
 IncomingDataController::~IncomingDataController()
 {
 
+}
+
+void IncomingDataController::initialiseConnectors(ConnectorTracker *con){
+    anomalyDetection = con->anomalyDetection;
+    datasetConnector = con->dataset;
 }
 
 void IncomingDataController::startListening()
@@ -114,13 +120,50 @@ void IncomingDataController::processNewData()
     }
     else
     {
+        vector <vector <double> > data;
+
         while (query.next())
         {
             int record_id = query.value(0).toInt();
             int object_id = query.value(1).toInt();
             QDateTime date = query.value(2).toDateTime();
             int connection = query.value(3).toInt();
+
+            //TODO: filter only for specified object (object_id)
+
+            //TODO: say drawing module to redraw chart
+
             qDebug() << "New item:\t" << record_id << "\t" << object_id << "\t" << date.toString("dd.MM.yyyy hh:mm:ss.zzz") << "\t" << connection;
+
+            QString stat_measurements = statement_measurement.arg(record_id, 0, 10);
+            QSqlQuery query_measurements(stat_measurements, db);
+
+            if(!query_measurements.isActive())
+            {
+                 qDebug() << "An error was encountered: "<< QSqlError(query.lastError()).text();
+            }
+            else
+            {
+                vector <double> dataValues;
+                vector <double> mins, maxs;
+
+                while(query_measurements.next())
+                {
+                    int program_measurement_ID = query_measurements.value(0).toInt();
+                    double value = query_measurements.value(1).toDouble();
+
+                    double min = datasetConnector->getMinValue(program_measurement_ID);
+                    double max = datasetConnector->getMaxValue(program_measurement_ID);
+
+                    dataValues.push_back(value);
+                    mins.push_back(min);
+                    maxs.push_back(max);
+                    qDebug() << "\t " << value << "\tmin: " << min << "\tmax: " << max;
+                }
+
+                //TODO: maybe test here?
+                //anomalyDetection->test(method_num, dataValues, mins, maxs);
+            }
         }
 
         lastVersionID = currVersion;

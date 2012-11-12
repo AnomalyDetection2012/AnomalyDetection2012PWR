@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>
+      Google Visualization API Sample
+    </title>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {packages: ['gauge']});
+    </script>
+    <script type="text/javascript">
+       // get the Querystring Function
+        function getQuerystring(key, default_) {
+            if (default_ == null) default_ = "";
+            key = key.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+            var regex = new RegExp("[\\?&]" + key + "=([^&#]*)");
+            var qs = regex.exec(window.location.href);
+            if (qs == null)
+                return default_;
+            else
+                return qs[1];
+        }
+ 
+        function drawVisualization() {
+ 
+        // get the Querystring value and use it in function
+        var Mem = getQuerystring('Mem');
+        var CPU = getQuerystring('CPU');
+        var Network = getQuerystring('Network');
+ 
+        // Create and populate the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Label');
+        data.addColumn('number', 'Value');
+        data.addRows(3);
+        data.setValue(0, 0, 'Memory');
+        data.setValue(0, 1, parseInt(Mem));
+        data.setValue(1, 0, 'CPU');
+        data.setValue(1, 1, parseInt(CPU));
+        data.setValue(2, 0, 'Network');
+        data.setValue(2, 1, parseInt(Network));
+ 
+        // Create and draw the visualization.
+        new google.visualization.Gauge(document.getElementById('visualization')).
+            draw(data);
+      }
+    //drawVisualization();
+     google.setOnLoadCallback(drawVisualization);
+ 
+    </script>
+  </head>
+  <body style="font-family: Arial;border: 0 none;">
+    <div id="visualization" style="width: 600px; height: 340px;"></div>
+  </body>
+</html>

@@ -20,6 +20,10 @@ public:
     double* getMaximals();
     void setMinMax(double* min, double* max);
 
+    QString getMeasurementName(int type_id);
+    double getMinValue(int type_id);
+    double getMaxValue(int type_id);
+
 private:
     int methodId;
     int lastCheckedId;

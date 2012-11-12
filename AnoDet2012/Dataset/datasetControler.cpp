@@ -65,3 +65,18 @@ void DatasetControler::setMinMax(double* min, double* max){//TODO TEMPORARY
     mins = min;
     maxs = max;
 }
+
+QString DatasetControler::getMeasurementName(int type_id)
+{
+    return this->dataset->dataTable->measurementsInfos->getMeasurementName(type_id);
+}
+
+double DatasetControler::getMinValue(int type_id)
+{
+    return this->dataset->dataTable->measurementsInfos->getMinValue(type_id);
+}
+
+double DatasetControler::getMaxValue(int type_id)
+{
+    return this->dataset->dataTable->measurementsInfos->getMinValue(type_id);
+}
