@@ -1,8 +1,9 @@
 #include "KMeans.h"
-#include <random>
 #include "time.h"
 #include <vector>
 #include <iostream>
+#include <stdlib.h>
+#include <limits>
 
 using namespace std;
 
@@ -32,7 +33,7 @@ void KMeans::initAlgorithm(){
 }
 
 void KMeans::runAlgorithm(){
-	double previousQuantizationError = std::numeric_limits<double>().max();
+    double previousQuantizationError = numeric_limits<double>().max();
 	double currentQuantizationError=0.0;
 	double shortestDistance=0.0;
 	double possibleClusterDistance=0.0;

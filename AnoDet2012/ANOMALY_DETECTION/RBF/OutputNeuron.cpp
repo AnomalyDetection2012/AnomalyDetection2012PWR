@@ -2,10 +2,10 @@
 #include "HiddenNeuron.h"
 #include "BIASNeuron.h"
 #include <vector>
-#include <random>
 #include <time.h>
 #include <iostream>
 #include <math.h>
+#include <stdlib.h>
 
 using namespace std;
 

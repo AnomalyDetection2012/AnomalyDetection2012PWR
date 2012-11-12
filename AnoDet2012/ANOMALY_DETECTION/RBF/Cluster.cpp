@@ -1,9 +1,10 @@
 #include "Cluster.h"
-#include <random>
-#include "stdlib.h"
+#include <stdlib.h>
 #include "time.h"
 #include <vector>
 #include <iostream>
+#include <limits>
+#include <math.h>
 
 using namespace std;
 
