@@ -48,7 +48,7 @@ GUIMainWindow::GUIMainWindow(QWidget *parent) :
     time_t *czas = new time_t();
     for(int i=0;i<=500;++i){
         vector<double> datavec;
-        bool anom = rand()%1000 > 100;
+        bool anom = rand()%1000 > 900;
         for(int j=0;j<5;++j){
             datavec.push_back((rand()%1000)/1000.0);
         }
@@ -94,26 +94,26 @@ void GUIMainWindow::getMinMax(){
             j++;
         }
     }
-    minimals[0]=0.0;
-    minimals[1]=100.0;
-    minimals[2]=10.0;
-    minimals[3]=5.0;
-    maximals[0]=1.0;
-    maximals[1]=300.0;
-    maximals[2]=400.0;
-    maximals[3]=50.0;
+//    minimals[0]=0.0;
+//    minimals[1]=100.0;
+//    minimals[2]=10.0;
+//    minimals[3]=5.0;
+//    maximals[0]=1.0;
+//    maximals[1]=300.0;
+//    maximals[2]=400.0;
+//    maximals[3]=50.0;
 
-    //TEST
-    minimals[0]=0.0;
-    minimals[1]=0.0;
-    minimals[2]=0.0;
-    minimals[3]=0.0;
-    minimals[4]=0.0;
-    maximals[0]=1.0;
-    maximals[1]=1.0;
-    maximals[2]=1.0;
-    maximals[3]=1.0;
-    maximals[4]=1.0;
+//    //TEST
+//    minimals[0]=0.0;
+//    minimals[1]=0.0;
+//    minimals[2]=0.0;
+//    minimals[3]=0.0;
+//    minimals[4]=0.0;
+//    maximals[0]=1.0;
+//    maximals[1]=1.0;
+//    maximals[2]=1.0;
+//    maximals[3]=1.0;
+//    maximals[4]=1.0;
 }
 
 void GUIMainWindow::drawResult(){
@@ -284,7 +284,7 @@ void GUIMainWindow::initMethods(){//TEST
     ui->menuMetody->addAction(action);
 
     TopologyMap map(this,20,20,10);
-    SOMNetwork *metB = new SOMNetwork(20,20,4,50,0.4,1000,map);
+    SOMNetwork *metB = new SOMNetwork(20,20,4,20,0.4,1000,map);
     algorithm->registerMethod(1, metB);
     //END - SOM
 

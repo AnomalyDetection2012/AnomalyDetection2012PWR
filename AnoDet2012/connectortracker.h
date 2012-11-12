@@ -4,6 +4,7 @@
 class DatasetConnector;
 class AlgorithmControler;
 class IncomingDataController;
+class DataLoader;
 
 class ConnectorTracker
 {
@@ -12,6 +13,7 @@ public:
     DatasetConnector *dataset;
     AlgorithmControler *anomalyDetection;
     IncomingDataController *incomingData;
+    DataLoader *loader;
     void initialise();
 };
 
