@@ -8,7 +8,7 @@
 class SOMNetwork : public SOMDetection
 {
 public:
-    SOMNetwork(int width, int height, int inputs,double maxRad, double maxAlpha,double maxIter, TopologyMap &m);
+    SOMNetwork(int width, int height, int inputs, double maxRad, double maxAlpha, double maxIter, TopologyMap &m);
     int findWinner(std::vector<double> inputs);
     void correctWeights(std::vector<double> inputs);
     void learn(std::vector<std::vector<double> > inputs);

@@ -13,9 +13,10 @@
 #include "ANOMALY_DETECTION/NEIGHBOUR/nearest_neighbor.h"
 #include "ANOMALY_DETECTION/BAYES/naive_bayes.h"
 #include "ANOMALY_DETECTION/DENSITY/densitymethod.h"
-#include "connectortracker.h"
 #include "ANOMALY_DETECTION/algorithmcontroler.h"
+#include "connectortracker.h"
 #include "Dataset/DatasetConnector.h"
+#include "ConfigurationHandler/configurationhandler.h"
 
 using namespace std;
 
