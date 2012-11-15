@@ -290,8 +290,12 @@ void GUIMainWindow::newMethodTitle(string name){
     this->setWindowTitle(QString::fromStdString("Wykrywanie Anomalii - "+name));
 }
 
-void GUIMainWindow::initMethods(){//TEST
+//TEST
+
+void GUIMainWindow::initMethods(){
+    QString *name;
     QAction *action;
+
     //BEGIN - RANDOM
     action = new QAction(tr("Metoda losowa"),this);
     connect(action, SIGNAL(triggered()), this, SLOT(chooseRandom()));
@@ -301,41 +305,57 @@ void GUIMainWindow::initMethods(){//TEST
     algorithm->registerMethod(0, metA);
     //END - RANDOM
 
-    //BEGIN - SOM
-    action = new QAction(tr("Siec SOM"),this);
-    connect(action, SIGNAL(triggered()), this, SLOT(chooseSOM()));
-    ui->menuMetody->addAction(action);
+        //BEGIN - SOM
+        name = new QString("SOM");
+        action = new QAction(tr("Siec SOM"),this);
+        connect(action, SIGNAL(triggered()), this, SLOT(chooseSOM()));
+        ui->menuMetody->addAction(action);
 
-    TopologyMap map(this,20,20,10);
-    SOMNetwork *metB = new SOMNetwork(20,20,4,20,0.4,1000,map);
-    algorithm->registerMethod(1, metB);
-    //END - SOM
+        TopologyMap map(this,20,20,10);
+        SOMNetwork *metB = new SOMNetwork(ct->configuration->getAlgorithmParameter(*name, "Width").toInt(),
+                                          ct->configuration->getAlgorithmParameter(*name, "Height").toInt(),
+                                          ct->configuration->getAlgorithmParameter(*name, "Inputs").toInt(),
+                                          ct->configuration->getAlgorithmParameter(*name, "MaxRadius").toDouble(),
+                                          ct->configuration->getAlgorithmParameter(*name, "MaxAlpha").toDouble(),
+                                          ct->configuration->getAlgorithmParameter(*name, "MaxIterations").toDouble(),
+                                          map);
+        algorithm->registerMethod(1, metB);
+        delete name;
+        //END - SOM
 
     //BEGIN - BAYES
+    name = new QString("BAYES");
     action = new QAction(tr("Klasyfikator Bayesa"),this);
     connect(action, SIGNAL(triggered()), this, SLOT(chooseBAYES()));
     ui->menuMetody->addAction(action);
 
-    NaiveBayes *metC = new NaiveBayes(4);
+    NaiveBayes *metC = new NaiveBayes(ct->configuration->getAlgorithmParameter(*name, "FeaturesCount").toInt());
     algorithm->registerMethod(2, metC);
+    delete name;
     //END - BAYES
 
-    //BEGIN - NEIGHBOUR
-    action = new QAction(tr("Najblizsze sasiedztwo"),this);
-    connect(action, SIGNAL(triggered()), this, SLOT(chooseNEIGHBOUR()));
-    ui->menuMetody->addAction(action);
+        //BEGIN - NEIGHBOUR
+        name = new QString("NEIGHBOUR");
+        action = new QAction(tr("Najblizsze sasiedztwo"),this);
+        connect(action, SIGNAL(triggered()), this, SLOT(chooseNEIGHBOUR()));
+        ui->menuMetody->addAction(action);
 
-    NearestNeighbor *metD = new NearestNeighbor(4,5);
-    algorithm->registerMethod(3, metD);
-    //END - NEIGHBOUR
+        NearestNeighbor *metD = new NearestNeighbor(ct->configuration->getAlgorithmParameter(*name, "FeaturesCount").toInt(),
+                                                    ct->configuration->getAlgorithmParameter(*name, "K").toInt());
+        algorithm->registerMethod(3, metD);
+        delete name;
+        //END - NEIGHBOUR
 
     //BEGIN - DENSITY
+    name = new QString("DENSITY");
     action = new QAction(tr("Metoda gestosciowa"),this);
     connect(action, SIGNAL(triggered()), this, SLOT(chooseDENSITY()));
     ui->menuMetody->addAction(action);
 
-    DensityMethod *metE = new DensityMethod(0.5,50);
+    DensityMethod *metE = new DensityMethod(ct->configuration->getAlgorithmParameter(*name, "LOFResultDeviation").toDouble(),
+                                            ct->configuration->getAlgorithmParameter(*name, "Neighbors").toInt());
     algorithm->registerMethod(4, metE);
+    delete name;
     //END - DENSITY
 }
 
@@ -348,34 +368,50 @@ void GUIMainWindow::chooseRandom(){
 
 void GUIMainWindow::chooseSOM(){
     delete selectedMethod;
+    QString *name = new QString("SOM");
     newMethodTitle("Siec SOM");
     TopologyMap map(this,20,20,10);
-    selectedMethod = new SOMNetwork(20,20,4,50,0.4,1000,map);
+    selectedMethod = new SOMNetwork(ct->configuration->getAlgorithmParameter(*name, "Width").toInt(),
+                                    ct->configuration->getAlgorithmParameter(*name, "Height").toInt(),
+                                    ct->configuration->getAlgorithmParameter(*name, "Inputs").toInt(),
+                                    ct->configuration->getAlgorithmParameter(*name, "MaxRadius").toDouble(),
+                                    ct->configuration->getAlgorithmParameter(*name, "MaxAlpha").toDouble(),
+                                    ct->configuration->getAlgorithmParameter(*name, "MaxIterations").toDouble(),
+                                    map);
     selectedMethodId = 1;
+    delete name;
 }
 
 void GUIMainWindow::chooseBAYES(){
     delete selectedMethod;
+    QString *name = new QString("BAYES");
     newMethodTitle("Klasyfikator Bayesa");
-    selectedMethod = new NaiveBayes(4);
+    selectedMethod = new NaiveBayes(ct->configuration->getAlgorithmParameter(*name, "FeaturesCount").toInt());
     selectedMethodId = 2;
+    delete name;
 }
 
 void GUIMainWindow::chooseNEIGHBOUR(){
     delete selectedMethod;
+    QString *name = new QString("NEIGHBOUR");
     newMethodTitle("Metoda najblizszego sasiedztwa");
-    selectedMethod = new NearestNeighbor(4,5);
+    selectedMethod = new NearestNeighbor(ct->configuration->getAlgorithmParameter(*name, "FeaturesCount").toInt(),
+                                         ct->configuration->getAlgorithmParameter(*name, "K").toInt());
     selectedMethodId = 3;
+    delete name;
 }
 
 void GUIMainWindow::chooseDENSITY(){
     delete selectedMethod;
+    QString *name = new QString("DENSITY");
     newMethodTitle("Metoda gestosciowa");
-    selectedMethod = new DensityMethod(0.5,50);
+    selectedMethod = new DensityMethod(ct->configuration->getAlgorithmParameter(*name, "LOFResultDeviation").toDouble(),
+                                       ct->configuration->getAlgorithmParameter(*name, "Neighbors").toInt());
     selectedMethodId = 4;
+    delete name;
 }
 
-// TEST
+//TEST
 
 void GUIMainWindow::testSlotA(){
     dataset->setMethodId(selectedMethodId);

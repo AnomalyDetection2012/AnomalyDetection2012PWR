@@ -45,7 +45,8 @@ SOURCES += main.cpp \
     ANOMALY_DETECTION/RBF/BIASNeuron.cpp \
     connectortracker.cpp \
     DataLoader/dataloader.cpp \
-    Dataset/MeasurementInfo.cpp
+    Dataset/MeasurementInfo.cpp \
+    ConfigurationHandler/configurationhandler.cpp
 
 HEADERS  += guimainwindow.h \
     Dataset/InfoTable.h \
@@ -82,6 +83,7 @@ HEADERS  += guimainwindow.h \
     connectortracker.h \
     DataLoader/dataloader.h \
     DataLoader/dataloader.h \
-    Dataset/MeasurementInfo.h
+    Dataset/MeasurementInfo.h \
+    ConfigurationHandler/configurationhandler.h
 
 FORMS    += guimainwindow.ui
