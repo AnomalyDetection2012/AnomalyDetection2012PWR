@@ -21,6 +21,7 @@ public:
     std::vector<bool> getAnomalies(int begin, int end);
     void saveResults(std::vector<bool> &anomalies, int begin);
     void setMeasurementsInfo(MeasurementInfo *measurementsInfos);
+    void setAnomaly(int id, bool isAnomaly);
 };
 
 #endif // DATARECORDTABLE_H

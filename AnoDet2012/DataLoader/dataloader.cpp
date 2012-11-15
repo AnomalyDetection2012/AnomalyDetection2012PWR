@@ -33,9 +33,7 @@ void DataLoader::initDataRecordTable()
         this->recordSize = 0;
         this->programAlarmIds = *(new vector<double>());
         this->recordIds = *(new vector<int>());
-        this->dataRecordTable = new DataRecordTable(*(new vector<string>(0)), *(new vector<string>(0)), *(new vector<InfoTable>()));
-
-        //dataset->datasetControler->dataset->dataTable = dataRecordTable;//TODO jakas fajna rzecz
+        vector<string> dataNames;
 
         QString statement("Select Program_pomiar.Program_pomiar_ID, Program_pomiar.Nazwa_pomiaru from Program_pomiar where Program_pomiar.Konfiguracja_ID = "+QString::number(this->objectId)+" order by Program_pomiar_ID");
         QSqlQuery query(statement, db);
@@ -44,12 +42,14 @@ void DataLoader::initDataRecordTable()
         if (!query.isActive()) {
             qDebug() << "An error was encountered: "<< QSqlError(query.lastError()).text();
         } else {
-
             while (query.next()) {
                 ++this->recordSize;
                 this->programAlarmIds.push_back(query.value(0).toInt());
-                dataRecordTable->dataNames.push_back(query.value(1).toString().toStdString());
+                dataNames.push_back(query.value(1).toString().toStdString());
             }
+            vector<string> vcEmpty;
+            vector<vector<string> > vvcEmpty;
+            dataset->createDatasetControler("", vvcEmpty, dataNames, vcEmpty);
         }
     }
 }
@@ -73,7 +73,6 @@ void DataLoader::loadMeasurementInfo()
         }
         else
         {
-
             while (query.next())
             {
                 QHash <QString, QVariant> m;
@@ -84,8 +83,7 @@ void DataLoader::loadMeasurementInfo()
 
                 this->measurementInfo.insert(query.value(0).toInt(), m);
             }
-
-            dataRecordTable->setMeasurementsInfo(new MeasurementInfo(measurementInfo)); // add to DataRecordTable
+            dataset->setMeasurementsInfo(new MeasurementInfo(measurementInfo)); // add to DataRecordTable
         }
 
     }
@@ -115,14 +113,14 @@ void DataLoader::loadRecords(unsigned long limit)
         if (!query.isActive()) {
             qDebug() << "An error was encountered: "<< QSqlError(query.lastError()).text();
         } else {
-
             while (query.next()) {
-                int pos = dataRecordTable->addRecord(query.value(1).toDateTime().toTime_t(),*(new vector<double>(0)),*(new vector<double>(0)),*(new vector<int>(0)),false);
+                vector<double> data;
                 this->recordIds.push_back(query.value(0).toInt());
                 for(int a = 0; a < this->recordSize; ++a)
                 {
-                    dataRecordTable->records.at(pos).data.push_back(query.value(a+2).toDouble());
+                    data.push_back(query.value(a+2).toDouble());
                 }
+                dataset->newRecord(query.value(1).toDateTime().toTime_t(), data, *(new vector<double>(0)), *(new vector<int>(0)),false);
             }
         }
     }
@@ -152,8 +150,8 @@ void DataLoader::setAlarmFlagToRecords()
                 while(recordIdsIt != recordIds.end())
                 {
                     if((*recordIdsIt)==qRecordId)
-                    {qDebug()<<"x ";
-                        this->dataRecordTable->records[currentRecord].isAnomaly = true;
+                    {
+                        dataset->setAnomaly(currentRecord, true);
                         ++recordIdsIt;
                         ++currentRecord;
                         break;
@@ -172,41 +170,7 @@ void DataLoader::setAlarmFlagToRecords()
 
 void DataLoader::removeAllRecords()
 {
-    this->dataRecordTable->records.clear();
     this->recordIds.clear();
-}
-
-void DataLoader::printRecords()
-{
-    vector<string>::iterator names;
-    vector<DataRecord>::iterator drIt;
-    vector<double>::iterator dataIt;
-    QString record("");
-    for(names = this->dataRecordTable->dataNames.begin();names!=this->dataRecordTable->dataNames.end();++names)
-    {
-        record+=QString::fromStdString(*names)+=", ";
-    }
-    qDebug() << record;
-    record.clear();
-    int current = 0;
-    for(drIt = this->dataRecordTable->records.begin();drIt!=this->dataRecordTable->records.end();++drIt)
-    {
-        DataRecord dr = *drIt;
-        record+=QString::number(this->recordIds[current++])+" ";
-        record+=dr.isAnomaly?"1 -- ":"0 -- ";
-        if(dr.data.empty())
-        {
-            record+="Pusty rekord";
-        }else{
-            for(dataIt = dr.data.begin();dataIt!=dr.data.end();++dataIt)
-            {
-                record+=QString::number(*dataIt).append(", ");
-            }
-        }
-        qDebug() << record;
-        record.clear();
-    }
-
 }
 
 bool DataLoader::performDatabaseConnection()

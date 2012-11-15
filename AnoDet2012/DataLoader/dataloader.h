@@ -18,7 +18,6 @@ class DataLoader
 public:
     int objectId, recordSize;
     QSqlDatabase db;
-    DataRecordTable* dataRecordTable;
     QHash<int, QHash <QString, QVariant> > measurementInfo;
     DatasetConnector* dataset;
 
@@ -31,7 +30,6 @@ public:
     void loadRecords(unsigned long limit = 0);
     void setAlarmFlagToRecords();
     void removeAllRecords();
-    void printRecords();
 
 private:
     std::vector<double> programAlarmIds;

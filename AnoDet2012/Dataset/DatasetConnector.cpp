@@ -96,3 +96,16 @@ double DatasetConnector::getMaxValue(int type_id)
     }
     return NULL;
 }
+
+void DatasetConnector::setMeasurementsInfo(MeasurementInfo *measurementsInfos)
+{
+    if(datasetControler != NULL){
+        datasetControler->setMeasurementsInfo(measurementsInfos);
+    }
+}
+
+void DatasetConnector::setAnomaly(int id, bool isAnomaly){
+    if(datasetControler != NULL){
+        datasetControler->setAnomaly(id, isAnomaly);
+    }
+}

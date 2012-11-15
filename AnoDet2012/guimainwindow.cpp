@@ -34,22 +34,10 @@ GUIMainWindow::GUIMainWindow(QWidget *parent) :
     selectedMethodId = 0;
     initMethods();// WAZNE
 
-        DataLoader* dl = ct->loader;
-        dl->initDataRecordTable();
-        dl->loadRecords(2000);
-        dl->setAlarmFlagToRecords();
-
-            vector<vector<string> > vecvecstr;
-            vector<string> vecstr;
-            vector<string> datanames;
-            datanames.push_back("1");
-            datanames.push_back("2");
-            datanames.push_back("3");
-            datanames.push_back("4");
-            datanames.push_back("5");
-        dataset->createDatasetControler("test",vecvecstr,datanames,vecstr);
-
-      dataset->datasetControler->dataset->dataTable = dl->dataRecordTable;
+    DataLoader* dl = ct->loader;
+    dl->initDataRecordTable();
+    dl->loadRecords(2000);
+    dl->setAlarmFlagToRecords();
 
 //    vector<vector<string> > vecvecstr;
 //    vector<string> vecstr;
@@ -157,7 +145,6 @@ void GUIMainWindow::drawResult(){
         for(int j=1;j<setSize;++j){
             if( i == 0 && anomalies.at(j)){
                 resultScene->addLine( j*XSPACE , 0 , j*XSPACE , YSIZE, red);
-                qDebug()<<"b ";
             }
             temp = YSIZE - (((values.at(j).at(i) - minimals[i]) / (maximals[i]-minimals[i])) * YSIZE);
             resultScene->addLine( (j-1)*XSPACE , lastY , j*XSPACE , temp, *pen);

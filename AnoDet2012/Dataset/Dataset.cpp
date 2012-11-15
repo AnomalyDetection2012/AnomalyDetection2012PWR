@@ -52,3 +52,12 @@ vector<bool> Dataset::getAnomalies(int begin, int end){
 void Dataset::saveResults(vector<bool> &anomalies, int begin){
     dataTable->saveResults(anomalies, begin);
 }
+
+void Dataset::setMeasurementsInfo(MeasurementInfo *measurementsInfos)
+{
+    dataTable->setMeasurementsInfo(measurementsInfos);
+}
+
+void Dataset::setAnomaly(int id, bool isAnomaly){
+    dataTable->setAnomaly(id, isAnomaly);
+}
