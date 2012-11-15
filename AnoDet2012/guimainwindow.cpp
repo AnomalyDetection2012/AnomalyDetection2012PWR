@@ -1,6 +1,7 @@
 #include "guimainwindow.h"
 #include "ui_guimainwindow.h"
 #include <iostream>
+#include "DataLoader/dataloader.h"
 
 #define YSIZE 350
 #define VERTS 11
@@ -33,27 +34,44 @@ GUIMainWindow::GUIMainWindow(QWidget *parent) :
     selectedMethodId = 0;
     initMethods();// WAZNE
 
-    vector<vector<string> > vecvecstr;
-    vector<string> vecstr;
-    vector<string> datanames;
-    datanames.push_back("1");
-    datanames.push_back("2");
-    datanames.push_back("3");
-    datanames.push_back("4");
-    datanames.push_back("5");
-    dataset->createDatasetControler("test",vecvecstr,datanames,vecstr);
+        DataLoader* dl = ct->loader;
+        dl->initDataRecordTable();
+        dl->loadRecords(2000);
+        dl->setAlarmFlagToRecords();
 
-    vector<int> vecint;
-    vector<double> vecdouble;
-    time_t *czas = new time_t();
-    for(int i=0;i<=500;++i){
-        vector<double> datavec;
-        bool anom = rand()%1000 > 900;
-        for(int j=0;j<5;++j){
-            datavec.push_back((rand()%1000)/1000.0);
-        }
-        dataset->newRecord(*czas,datavec,vecdouble,vecint,anom);
-    }
+            vector<vector<string> > vecvecstr;
+            vector<string> vecstr;
+            vector<string> datanames;
+            datanames.push_back("1");
+            datanames.push_back("2");
+            datanames.push_back("3");
+            datanames.push_back("4");
+            datanames.push_back("5");
+        dataset->createDatasetControler("test",vecvecstr,datanames,vecstr);
+
+      dataset->datasetControler->dataset->dataTable = dl->dataRecordTable;
+
+//    vector<vector<string> > vecvecstr;
+//    vector<string> vecstr;
+//    vector<string> datanames;
+//    datanames.push_back("1");
+//    datanames.push_back("2");
+//    datanames.push_back("3");
+//    datanames.push_back("4");
+//    datanames.push_back("5");
+//    dataset->createDatasetControler("test",vecvecstr,datanames,vecstr);
+
+//    vector<int> vecint;
+//    vector<double> vecdouble;
+//    time_t *czas = new time_t();
+//    for(int i=0;i<=500;++i){
+//        vector<double> datavec;
+//        bool anom = rand()%1000 > 900;
+//        for(int j=0;j<5;++j){
+//            datavec.push_back((rand()%1000)/1000.0);
+//        }
+//        dataset->newRecord(*czas,datavec,vecdouble,vecint,anom);
+//    }
 }
 
 GUIMainWindow::~GUIMainWindow()
@@ -114,6 +132,10 @@ void GUIMainWindow::getMinMax(){
 //    maximals[2]=1.0;
 //    maximals[3]=1.0;
 //    maximals[4]=1.0;
+    for(int i=0;i<10;++i){
+        minimals[i]=-10000;
+        maximals[i]=10000;
+    }
 }
 
 void GUIMainWindow::drawResult(){
@@ -135,6 +157,7 @@ void GUIMainWindow::drawResult(){
         for(int j=1;j<setSize;++j){
             if( i == 0 && anomalies.at(j)){
                 resultScene->addLine( j*XSPACE , 0 , j*XSPACE , YSIZE, red);
+                qDebug()<<"b ";
             }
             temp = YSIZE - (((values.at(j).at(i) - minimals[i]) / (maximals[i]-minimals[i])) * YSIZE);
             resultScene->addLine( (j-1)*XSPACE , lastY , j*XSPACE , temp, *pen);
@@ -372,7 +395,7 @@ void GUIMainWindow::testSlotC(){
 }
 
 void GUIMainWindow::drawNewFormat(){
-    values = dataset->datasetControler->dataset->getData(0,500);//pozniej dopisze metody pobierajaca z connectora
+    values = dataset->datasetControler->dataset->getData(0,2000);//pozniej dopisze metody pobierajaca z connectora
     setSize = values.size();
     setDimensions = values.at(0).size();
 
@@ -385,6 +408,6 @@ void GUIMainWindow::drawNewFormat(){
     initDimensions(names);
     getMinMax();//na sztywno wpisane narazie
 
-    anomalies = dataset->datasetControler->dataset->getAnomalies(0,500);
+    anomalies = dataset->datasetControler->dataset->getAnomalies(0,2000);
     drawResult();
 }
