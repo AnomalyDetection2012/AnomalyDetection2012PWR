@@ -27,7 +27,7 @@ void LiveLineChart::loadData()
         std::vector <bool> anomalies = dataset->getAnomalies(0,200);
 qDebug() << "dimension: " << dimension;
 qDebug() << "daataanames: " << dataNames.size();
-        QString url = "Line.html?&labels=";
+        QString url = "GUI_COMPONENTS/Line.html?&labels=";
 
         for(int i=0;i<dataNames.size();i++)
         {
