@@ -13,6 +13,7 @@ class LiveLineChart : public QWebView
 public:
     explicit LiveLineChart(QWidget *parent = 0);
     LiveLineChart(QWidget *parent, int width, int height, Dataset *dataset);
+    void setDataset(Dataset *dataset);
 
     void loadData();
     void reloadData();

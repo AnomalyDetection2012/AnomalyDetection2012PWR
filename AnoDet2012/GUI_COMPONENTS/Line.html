@@ -35,7 +35,7 @@
         function drawVisualization() {
 		// Create and populate the data table.
 			var labels = $_GET('labels').split(';');
-		
+			labels.pop(); // remove last empty element
 			var data = new google.visualization.DataTable();
 			data.addColumn('string', 'wartosc'); // Implicit domain label col.
 			
@@ -51,7 +51,7 @@
 			  
 			
 			var records = $_GET('values').split(';');
-			
+			records.pop(); //remove last empty element
 			
 			for(var i=0;i<records.length;i++)
 			{
@@ -88,6 +88,6 @@
     </script>
   </head>
   <body style="font-family: Arial;border: 0 none;padding:0px;margin:0px;background:#f0f0f0;">
-    <div id="visualization" style="width: 780px; height: 380px;"></div>
+    <div id="visualization" style="width: 1800px; height: 1000px;"></div>
   </body>
 </html>

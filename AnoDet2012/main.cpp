@@ -30,9 +30,7 @@ int main(int argc, char *argv[])
 //    qDebug() <<"pomiar 10: " << dl->measurementInfo.value(10).value("MeasurementName").toString();
 
 
-    LiveLineChart *chart = new LiveLineChart(&w,300,300,w.dataset->datasetControler->dataset);
 
-    chart->loadData();
 
     return a.exec();
 }

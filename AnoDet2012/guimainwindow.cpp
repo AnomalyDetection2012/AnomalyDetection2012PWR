@@ -2,6 +2,7 @@
 #include "ui_guimainwindow.h"
 #include <iostream>
 #include "DataLoader/dataloader.h"
+#include "GUI_COMPONENTS/livelinechart.h"
 
 #define YSIZE 350
 #define VERTS 11
@@ -36,8 +37,16 @@ GUIMainWindow::GUIMainWindow(QWidget *parent) :
 
     DataLoader* dl = ct->loader;
     dl->initDataRecordTable();
-    dl->loadRecords(2000);
+    dl->loadRecords(200);
     dl->setAlarmFlagToRecords();
+
+   // LiveLineChart *chart = new LiveLineChart(0,300,300,dataset->datasetControler->dataset);
+
+   // chart->loadData();
+
+    ui->webView->setDataset(dataset->datasetControler->dataset);
+    ui->webView->loadData();
+
 
 //    vector<vector<string> > vecvecstr;
 //    vector<string> vecstr;
@@ -418,7 +427,7 @@ void GUIMainWindow::testSlotC(){
 }
 
 void GUIMainWindow::drawNewFormat(){
-    values = dataset->datasetControler->dataset->getData(0,2000);//pozniej dopisze metody pobierajaca z connectora
+    values = dataset->datasetControler->dataset->getData(0,200);//pozniej dopisze metody pobierajaca z connectora
     setSize = values.size();
     setDimensions = values.at(0).size();
 
@@ -431,6 +440,6 @@ void GUIMainWindow::drawNewFormat(){
     initDimensions(names);
     getMinMax();//na sztywno wpisane narazie
 
-    anomalies = dataset->datasetControler->dataset->getAnomalies(0,2000);
+    anomalies = dataset->datasetControler->dataset->getAnomalies(0,200);
     drawResult();
 }

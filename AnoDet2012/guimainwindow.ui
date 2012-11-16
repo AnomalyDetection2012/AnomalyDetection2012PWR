@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>454</height>
+    <height>794</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,6 +42,21 @@
       <width>76</width>
       <height>22</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="LiveLineChart" name="webView">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>449</y>
+      <width>701</width>
+      <height>251</height>
+     </rect>
+    </property>
+    <property name="url">
+     <url>
+      <string>about:blank</string>
+     </url>
     </property>
    </widget>
   </widget>
@@ -100,6 +115,18 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QWebView</class>
+   <extends>QWidget</extends>
+   <header>QtWebKit/QWebView</header>
+  </customwidget>
+  <customwidget>
+   <class>LiveLineChart</class>
+   <extends>QWebView</extends>
+   <header>GUI_COMPONENTS/livelinechart.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
