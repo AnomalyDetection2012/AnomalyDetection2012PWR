@@ -80,3 +80,12 @@ double DatasetControler::getMaxValue(int type_id)
 {
     return this->dataset->dataTable->measurementsInfos->getMinValue(type_id);
 }
+
+void DatasetControler::setMeasurementsInfo(MeasurementInfo *measurementsInfos)
+{
+    dataset->setMeasurementsInfo(measurementsInfos);
+}
+
+void DatasetControler::setAnomaly(int id, bool isAnomaly){
+    dataset->setAnomaly(id, isAnomaly);
+}
