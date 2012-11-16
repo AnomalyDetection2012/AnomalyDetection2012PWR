@@ -3,6 +3,7 @@
 #include "INCOMING_DATA_TRACKING/IncomingDataController.h"
 #include "DataLoader/dataloader.h"
 #include "Dataset/MeasurementInfo.h"
+#include "GUI_COMPONENTS/livelinechart.h"
 
 
 int main(int argc, char *argv[])
@@ -28,6 +29,10 @@ int main(int argc, char *argv[])
 
 //    qDebug() <<"pomiar 10: " << dl->measurementInfo.value(10).value("MeasurementName").toString();
 
+
+    LiveLineChart *chart = new LiveLineChart(&w,300,300,w.dataset->datasetControler->dataset);
+
+    chart->loadData();
 
     return a.exec();
 }

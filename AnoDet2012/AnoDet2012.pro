@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql webkit
 
 TARGET = AnoDet2012
 TEMPLATE = app
@@ -46,7 +46,8 @@ SOURCES += main.cpp \
     connectortracker.cpp \
     DataLoader/dataloader.cpp \
     Dataset/MeasurementInfo.cpp \
-    ConfigurationHandler/configurationhandler.cpp
+    ConfigurationHandler/configurationhandler.cpp \
+    GUI_COMPONENTS/livelinechart.cpp
 
 HEADERS  += guimainwindow.h \
     Dataset/InfoTable.h \
@@ -84,6 +85,10 @@ HEADERS  += guimainwindow.h \
     DataLoader/dataloader.h \
     DataLoader/dataloader.h \
     Dataset/MeasurementInfo.h \
-    ConfigurationHandler/configurationhandler.h
+    ConfigurationHandler/configurationhandler.h \
+    GUI_COMPONENTS/livelinechart.h
 
 FORMS    += guimainwindow.ui
+
+OTHER_FILES += \
+    GUI_COMPONENTS/Line.html
