@@ -16,7 +16,7 @@ void DatasetConnector::initialiseConnectors(ConnectorTracker *con){
     anomalyDetection = con->anomalyDetection;
 }
 
-void DatasetConnector::createDatasetControler(string name, vector<vector<string> > &infoTablesHeaders, vector<string> &dataNames, vector<string> &noninformativeDataNames){
+void DatasetConnector::createDatasetControler(string name, vector<vector<string> > &infoTablesHeaders, vector<QString> &dataNames, vector<QString> &noninformativeDataNames){
 	datasetControler = new DatasetControler(name, infoTablesHeaders, dataNames, noninformativeDataNames);
 }
 

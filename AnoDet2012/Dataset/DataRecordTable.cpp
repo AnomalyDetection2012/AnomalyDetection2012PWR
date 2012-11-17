@@ -2,7 +2,7 @@
 
 using namespace std;
 
-DataRecordTable::DataRecordTable(vector<string> &dataNames, vector<string> &noninformativeDataNames, vector<InfoTable> &infoTables)
+DataRecordTable::DataRecordTable(vector<QString> &dataNames, vector<QString> &noninformativeDataNames, vector<InfoTable> &infoTables)
 {
 	this->dataNames = dataNames;
 	this->noninformativeDataNames = noninformativeDataNames;

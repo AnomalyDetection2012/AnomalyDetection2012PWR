@@ -12,7 +12,7 @@ public:
 	dataNames - nazwy pomiarow bioracych udzial w wykrywaniu anomalii
 	noninformativeDataNames - nazwy pomiarow nie bioracych udzialu w wykrywaniu anomalii
 */
-    Dataset(std::string name, std::vector<std::vector<std::string> > &infoTablesHeaders, std::vector<std::string> &dataNames, std::vector<std::string> &noninformativeDataNames);
+    Dataset(std::string name, std::vector<std::vector<std::string> > &infoTablesHeaders, std::vector<QString> &dataNames, std::vector<QString> &noninformativeDataNames);
 	~Dataset(void);
 	std::string name;
 	std::vector<InfoTable> infoTables;

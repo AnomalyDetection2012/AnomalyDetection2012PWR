@@ -7,10 +7,10 @@
 class DataRecordTable
 {
 public:
-	DataRecordTable(std::vector<std::string> &dataNames, std::vector<std::string> &noninformativeDataNames, std::vector<InfoTable> &infoTables);
+    DataRecordTable(std::vector<QString> &dataNames, std::vector<QString> &noninformativeDataNames, std::vector<InfoTable> &infoTables);
 	~DataRecordTable(void);
-	std::vector<std::string> dataNames;
-	std::vector<std::string> noninformativeDataNames;
+    std::vector<QString> dataNames;
+    std::vector<QString> noninformativeDataNames;
     std::vector<InfoTable> infoTables;
     std::vector<DataRecord> records;
     MeasurementInfo *measurementsInfos;

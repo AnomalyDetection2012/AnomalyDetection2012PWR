@@ -33,7 +33,7 @@ void DataLoader::initDataRecordTable()
         this->recordSize = 0;
         this->programAlarmIds = *(new vector<double>());
         this->recordIds = *(new vector<int>());
-        vector<string> dataNames;
+        vector<QString> dataNames;
 
         QString statement("Select Program_pomiar.Program_pomiar_ID, Program_pomiar.Nazwa_pomiaru from Program_pomiar where Program_pomiar.Konfiguracja_ID = "+QString::number(this->objectId)+" order by Program_pomiar_ID");
         QSqlQuery query(statement, db);
@@ -45,9 +45,9 @@ void DataLoader::initDataRecordTable()
             while (query.next()) {
                 ++this->recordSize;
                 this->programAlarmIds.push_back(query.value(0).toInt());
-                dataNames.push_back(query.value(1).toString().toStdString());
+                dataNames.push_back(query.value(1).toString());
             }
-            vector<string> vcEmpty;
+            vector<QString> vcEmpty;
             vector<vector<string> > vvcEmpty;
             dataset->createDatasetControler("", vvcEmpty, dataNames, vcEmpty);
         }

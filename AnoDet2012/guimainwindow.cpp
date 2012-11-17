@@ -431,11 +431,11 @@ void GUIMainWindow::drawNewFormat(){
     setSize = values.size();
     setDimensions = values.at(0).size();
 
-    vector<string> headers = dataset->datasetControler->dataset->dataTable->dataNames;//zglaszac zapotrzebowanie na metody do pobierania
+    vector<QString> headers = dataset->datasetControler->dataset->dataTable->dataNames;//zglaszac zapotrzebowanie na metody do pobierania
                                                                                       //danych do wyswietlania
     vector<QString> names;
     for(int i=0;i<setDimensions;++i){
-        names.push_back(QString::fromStdString(headers.at(i)));
+        names.push_back(headers.at(i));
     }
     initDimensions(names);
     getMinMax();//na sztywno wpisane narazie

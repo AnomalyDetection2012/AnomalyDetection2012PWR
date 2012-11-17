@@ -21,7 +21,7 @@ void LiveLineChart::loadData()
     if(dataset != NULL)
     {
         std::vector <std::vector <double> > values = dataset->getData(0,200);
-        std::vector <std::string> dataNames = dataset->dataTable->dataNames;
+        std::vector <QString> dataNames = dataset->dataTable->dataNames;
 
         int dimension = values[0].size();
         std::vector <bool> anomalies = dataset->getAnomalies(0,200);
@@ -31,7 +31,7 @@ qDebug() << "daataanames: " << dataNames.size();
 
         for(int i=0;i<dataNames.size();i++)
         {
-            url = url.append(QString::fromStdString(dataNames[i]).append(";"));
+            url = url.append(dataNames[i].append(";"));
         }
         url = url.append("&values=");
 

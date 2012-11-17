@@ -2,7 +2,7 @@
 
 using namespace std;
 
-DatasetControler::DatasetControler(string name, vector<vector<string> > &infoTablesHeaders, vector<string> &dataNames, vector<string> &noninformativeDataNames)
+DatasetControler::DatasetControler(string name, vector<vector<string> > &infoTablesHeaders, vector<QString> &dataNames, vector<QString> &noninformativeDataNames)
 {
 	dataset = new Dataset(name, infoTablesHeaders, dataNames, noninformativeDataNames);
     lastCheckedId=-1;

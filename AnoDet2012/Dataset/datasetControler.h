@@ -6,7 +6,7 @@
 class DatasetControler
 {
 public:
-    DatasetControler(std::string name, std::vector<std::vector<std::string> > &infoTablesHeaders, std::vector<std::string> &dataNames, std::vector<std::string> &noninformativeDataNames);
+    DatasetControler(std::string name, std::vector<std::vector<std::string> > &infoTablesHeaders, std::vector<QString> &dataNames, std::vector<QString> &noninformativeDataNames);
 	~DatasetControler(void);
 	Dataset *dataset;
 	int newInfo(std::string tableName, int id, std::vector<std::string> &infoRecord);

@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Dataset::Dataset(string name, vector<vector<string> > &infoTablesHeaders, vector<string> &dataNames, vector<string> &noninformativeDataNames)
+Dataset::Dataset(string name, vector<vector<string> > &infoTablesHeaders, vector<QString> &dataNames, vector<QString> &noninformativeDataNames)
 {
 	this->name = name;
     vector<vector<string> >::iterator headersIter;
