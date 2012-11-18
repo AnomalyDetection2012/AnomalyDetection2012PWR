@@ -24,10 +24,15 @@ void ConfigurationHandler::initialize()
 
         // Database
         settings->beginGroup("Database");
-        settings->setValue("Server", "VIRTUALBOX-PC");
-        settings->setValue("Source", "scswin");
-        settings->setValue("UserName", "scswin_admin");
-        settings->setValue("UserPassword", "qwe123!");
+        settings->setValue("Server", "RAFAL-PC\\SQLEXPRESS");
+        settings->setValue("Source", "SCSWin");
+        settings->setValue("UserName", "sa");
+        settings->setValue("UserPassword", "tajnehaslo");
+        settings->endGroup();
+
+        // Selected object
+        settings->beginGroup("SelectedObject");
+        settings->setValue("Object_ID", "3");
         settings->endGroup();
 
         // Algorithm - SOM

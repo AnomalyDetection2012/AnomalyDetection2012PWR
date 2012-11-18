@@ -4,6 +4,7 @@
 #include "ConfigurationHandler/configurationhandler.h"
 #include "ANOMALY_DETECTION/algorithmcontroler.h"
 #include "INCOMING_DATA_TRACKING/IncomingDataController.h"
+#include "GUI_COMPONENTS/guicontroller.h"
 
 ConnectorTracker::ConnectorTracker()
 {
@@ -16,8 +17,30 @@ ConnectorTracker::ConnectorTracker()
     QString userName = configuration->getDatabaseUserName();
     QString userPassword = configuration->getDatabaseUserPassword();
 
-    incomingData = new IncomingDataController(server, source, userName, userPassword);
-    loader = new DataLoader(3, server, source, userName, userPassword);
+
+    // create shared database connection:
+    QString connectionString("Driver={SQL Server};Server=");
+    connectionString.append(server).append(";Database=").append(source);
+
+    dbConnection = &QSqlDatabase::addDatabase("QODBC3");
+    dbConnection->setDatabaseName(connectionString);
+    dbConnection->setUserName(userName);
+    dbConnection->setPassword(userPassword);
+
+    if (!dbConnection->open())
+    {
+        qDebug() << "An error was encountered: "<< QSqlError(dbConnection->lastError()).text();
+    }
+    else
+    {
+        qDebug() << "The database connection was established successfully.";
+    }
+
+
+    incomingData = new IncomingDataController(dbConnection);
+    loader = new DataLoader(3, dbConnection);
+
+    guiController = new GUIController(); // remember to set components
 }
 
 void ConnectorTracker::initialise(){

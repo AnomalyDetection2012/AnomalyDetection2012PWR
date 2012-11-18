@@ -17,12 +17,16 @@ public:
 
     void loadData();
     void reloadData();
+    void setLogScale();
+    void setLinearScale();
+
 
     int width;
     int height;
 
 private:
     Dataset *dataset;
+    bool logScale;
     
 signals:
     

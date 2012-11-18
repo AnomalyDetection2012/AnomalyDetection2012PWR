@@ -47,7 +47,8 @@ SOURCES += main.cpp \
     DataLoader/dataloader.cpp \
     Dataset/MeasurementInfo.cpp \
     ConfigurationHandler/configurationhandler.cpp \
-    GUI_COMPONENTS/livelinechart.cpp
+    GUI_COMPONENTS/livelinechart.cpp \
+    GUI_COMPONENTS/guicontroller.cpp
 
 HEADERS  += guimainwindow.h \
     Dataset/InfoTable.h \
@@ -86,7 +87,8 @@ HEADERS  += guimainwindow.h \
     DataLoader/dataloader.h \
     Dataset/MeasurementInfo.h \
     ConfigurationHandler/configurationhandler.h \
-    GUI_COMPONENTS/livelinechart.h
+    GUI_COMPONENTS/livelinechart.h \
+    GUI_COMPONENTS/guicontroller.h
 
 FORMS    += guimainwindow.ui
 

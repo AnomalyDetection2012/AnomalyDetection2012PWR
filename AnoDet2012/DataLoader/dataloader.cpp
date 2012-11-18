@@ -26,6 +26,12 @@ DataLoader::DataLoader(int objectId, QString server, QString dbName, QString use
 
 }
 
+DataLoader::DataLoader(int objectId, QSqlDatabase *dbConn)
+{
+    this->objectId = objectId;
+    this->db = *dbConn;
+}
+
 void DataLoader::initDataRecordTable()
 {
     if(this->performDatabaseConnection())

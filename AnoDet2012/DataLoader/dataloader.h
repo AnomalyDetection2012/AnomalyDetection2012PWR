@@ -23,6 +23,7 @@ public:
 
 
     DataLoader(int objectId, QString server, QString dbName, QString username, QString password);
+    DataLoader(int objectId, QSqlDatabase *dbConn);
 
     void initialiseConnectors(ConnectorTracker *con);
     void initDataRecordTable();

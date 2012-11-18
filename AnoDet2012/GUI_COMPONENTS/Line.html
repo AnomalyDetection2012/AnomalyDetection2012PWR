@@ -73,8 +73,10 @@
 							  
 				);*/
 				
+				var showLogScale = $_GET('logscale') == "true";
 				var options = {
 					backgroundColor: "#f0f0f0",
+					logScale: showLogScale
 				};
 				
 				new google.visualization.LineChart(document.getElementById('visualization')).

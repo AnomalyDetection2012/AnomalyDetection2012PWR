@@ -1,7 +1,7 @@
 #include "IncomingDataController.h"
 #include <sstream>
 
-static const QString statement_base = "SELECT CT.Rekord_ID, E.Obiekt_ID, E.Data, E.Typ_polaczenia FROM dbo.Rekord E JOIN CHANGETABLE(CHANGES dbo.Rekord, %1) AS CT ON E.Rekord_ID = CT.Rekord_ID WHERE CT.SYS_CHANGE_OPERATION='U' AND CT.SYS_CHANGE_VERSION <= %2;";
+static const QString statement_base = "SELECT CT.Rekord_ID, E.Obiekt_ID, E.Data, E.Typ_polaczenia FROM dbo.Rekord E JOIN CHANGETABLE(CHANGES dbo.Rekord, %1) AS CT ON E.Rekord_ID = CT.Rekord_ID WHERE CT.SYS_CHANGE_OPERATION='I' AND CT.SYS_CHANGE_VERSION <= %2 AND E.Obiekt_ID = %3;";
 static const QString statement_measurement = "SELECT [SCSWin].[dbo].[Wyniki_pomiar].[Program_pomiar_ID],[Wartosc], [SCSWin].[dbo].[Program_pomiar].[AlertMin], [SCSWin].[dbo].[Program_pomiar].[AlertMax], [Nazwa_pomiaru] FROM [SCSWin].[dbo].[Wyniki_pomiar] inner join [SCSWin].[dbo].[Program_pomiar] on [SCSWin].[dbo].[Wyniki_pomiar].[Program_pomiar_ID]=[SCSWin].[dbo].[Program_pomiar].[Program_pomiar_ID] WHERE [Rekord_ID]=%1;";
 
 IncomingDataController::IncomingDataController(QString server, QString dbName, QString username, QString password)
@@ -17,7 +17,7 @@ IncomingDataController::IncomingDataController(QString server, QString dbName, Q
 	db.setUserName(username);
 	db.setPassword(password);
 
-	if (!db.open())
+    if (!db.open())
 	{
         qDebug() << "An error was encountered: "<< QSqlError(db.lastError()).text();
     }
@@ -25,6 +25,16 @@ IncomingDataController::IncomingDataController(QString server, QString dbName, Q
 	{
         qDebug() << "The database connection was established successfully.";
     }
+
+    lastVersionID = getCurrVersionID();
+}
+
+IncomingDataController::IncomingDataController(QSqlDatabase *dbConn)
+{
+    timer = new QTimer(this);
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(processNewData()));
+
+    this->db = *dbConn;
 
     lastVersionID = getCurrVersionID();
 }
@@ -37,6 +47,8 @@ IncomingDataController::~IncomingDataController()
 void IncomingDataController::initialiseConnectors(ConnectorTracker *con){
     anomalyDetection = con->anomalyDetection;
     datasetConnector = con->dataset;
+    configuration = con->configuration;
+    guiController = con->guiController;
 }
 
 void IncomingDataController::startListening()
@@ -110,7 +122,9 @@ void IncomingDataController::processNewData()
         return;
     }
 
-    QString statement = statement_base.arg(lastVersionID, 0, 10).arg(currVersion, 0, 10);
+    int chosenObjId = configuration->getPropertyValue("SelectedObject","Object_ID").toInt();
+
+    QString statement = statement_base.arg(lastVersionID, 0, 10).arg(currVersion, 0, 10).arg(chosenObjId, 0, 10);
 
     QSqlQuery query(statement, db);
 
@@ -129,9 +143,6 @@ void IncomingDataController::processNewData()
             QDateTime date = query.value(2).toDateTime();
             int connection = query.value(3).toInt();
 
-            //TODO: filter only for specified object (object_id)
-
-            //TODO: say drawing module to redraw chart
 
             qDebug() << "New item:\t" << record_id << "\t" << object_id << "\t" << date.toString("dd.MM.yyyy hh:mm:ss.zzz") << "\t" << connection;
 
@@ -161,8 +172,26 @@ void IncomingDataController::processNewData()
                     qDebug() << "\t " << value << "\tmin: " << min << "\tmax: " << max;
                 }
 
-                //TODO: maybe test here?
-                //anomalyDetection->test(method_num, dataValues, mins, maxs);
+                // test
+                vector < vector<double> > wrap;
+                wrap.push_back(dataValues);
+                double minsT[mins.size()];
+                double maxsT[maxs.size()];
+
+                for(int k=0;k<mins.size();k++)
+                {
+                    minsT[k] = mins[k];
+                    maxsT[k] = maxs[k];
+                }
+                vector <bool> result = anomalyDetection->test(1,wrap, minsT, maxsT);    //TODO: which method?
+
+                // add DataRecord to dataset
+                vector <double> nonInf(0);
+                vector <int> infos(0);
+                datasetConnector->newRecord((time_t)date.toTime_t(), dataValues, nonInf, infos, result[0]);
+
+                // redraw LiveLineChart
+                guiController->refreshLiveLineChart();
             }
         }
 

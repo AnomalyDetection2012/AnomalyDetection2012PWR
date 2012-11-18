@@ -3,12 +3,13 @@
 LiveLineChart::LiveLineChart(QWidget *parent) :
     QWebView(parent)
 {
+    this->logScale = false;
 }
 
 LiveLineChart::LiveLineChart(QWidget *parent, int width, int height, Dataset *dataset) :
     QWebView(parent), width(width), height(height), dataset(dataset)
 {
-
+    this->logScale = false;
 }
 
 void LiveLineChart::setDataset(Dataset *dataset)
@@ -16,26 +17,41 @@ void LiveLineChart::setDataset(Dataset *dataset)
     this->dataset = dataset;
 }
 
+void LiveLineChart::setLogScale()
+{
+    this->logScale = true;
+    this->loadData();
+}
+
+void LiveLineChart::setLinearScale()
+{
+    this->logScale = false;
+    this->loadData();
+}
+
 void LiveLineChart::loadData()
 {
     if(dataset != NULL)
     {
-        std::vector <std::vector <double> > values = dataset->getData(0,200);
+        int recordsNum = dataset->getDataRecordsAmmount();
+        int showLastRecords = 50;   // show last 50 records on chart
+        std::vector <std::vector <double> > values = dataset->getData(recordsNum - showLastRecords, recordsNum);
         std::vector <QString> dataNames = dataset->dataTable->dataNames;
 
         int dimension = values[0].size();
-        std::vector <bool> anomalies = dataset->getAnomalies(0,200);
-qDebug() << "dimension: " << dimension;
-qDebug() << "daataanames: " << dataNames.size();
-        QString url = "GUI_COMPONENTS/Line.html?&labels=";
+        std::vector <bool> anomalies = dataset->getAnomalies(recordsNum - showLastRecords, recordsNum);
 
+        QString url = "GUI_COMPONENTS/Line.html?&logscale=";
+        url = url.append(this->logScale?"true":"false");
+
+        url = url.append("&labels=");
         for(int i=0;i<dataNames.size();i++)
         {
             url = url.append(dataNames[i].append(";"));
         }
-        url = url.append("&values=");
 
-        for(int i=0;i<values.size() && i < 10;i++)
+        url = url.append("&values=");
+        for(int i=0;i<values.size() && i < 50;i++)
         {
             if(!anomalies[i])
             {
@@ -62,7 +78,7 @@ qDebug() << "daataanames: " << dataNames.size();
 
         }
 
-        qDebug() << url;
+        //qDebug() << url;
         this->load(QUrl(url));
     }
     else
@@ -73,5 +89,5 @@ qDebug() << "daataanames: " << dataNames.size();
 
 void LiveLineChart::reloadData()
 {
-
+    this->loadData();
 }

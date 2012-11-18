@@ -3,6 +3,8 @@
 #include <iostream>
 #include "DataLoader/dataloader.h"
 #include "GUI_COMPONENTS/livelinechart.h"
+#include "GUI_COMPONENTS/guicontroller.h"
+#include "INCOMING_DATA_TRACKING/IncomingDataController.h"
 
 #define YSIZE 350
 #define VERTS 11
@@ -37,15 +39,18 @@ GUIMainWindow::GUIMainWindow(QWidget *parent) :
 
     DataLoader* dl = ct->loader;
     dl->initDataRecordTable();
-    dl->loadRecords(200);
+    dl->loadRecords(2000);
     dl->setAlarmFlagToRecords();
 
    // LiveLineChart *chart = new LiveLineChart(0,300,300,dataset->datasetControler->dataset);
 
-   // chart->loadData();
+    ct->incomingData->startListening();
 
     ui->webView->setDataset(dataset->datasetControler->dataset);
-    ui->webView->loadData();
+
+    ct->guiController->setLiveLineChart(ui->webView);
+    ct->guiController->refreshLiveLineChart();
+
 
 
 //    vector<vector<string> > vecvecstr;

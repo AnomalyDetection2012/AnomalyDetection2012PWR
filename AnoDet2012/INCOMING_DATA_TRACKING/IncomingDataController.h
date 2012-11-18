@@ -10,6 +10,8 @@
 #include <QtCore/QCoreApplication>
 #include <ANOMALY_DETECTION/algorithmcontroler.h>
 #include <Dataset/DatasetConnector.h>
+#include <ConfigurationHandler/configurationhandler.h>
+#include <GUI_COMPONENTS/guicontroller.h>
 
 
 using namespace QSql;
@@ -21,6 +23,7 @@ class IncomingDataController : public QObject
 
 public:
 	IncomingDataController(QString server, QString dbName, QString username, QString password);
+    IncomingDataController(QSqlDatabase *dbConn);
 	~IncomingDataController();
     void initialiseConnectors(ConnectorTracker *con);
 
@@ -45,6 +48,8 @@ private:
 
     AlgorithmControler *anomalyDetection;
     DatasetConnector *datasetConnector;
+    ConfigurationHandler *configuration;
+    GUIController * guiController;
 
 public slots:
    void processNewData();  // process new data (if exists)
