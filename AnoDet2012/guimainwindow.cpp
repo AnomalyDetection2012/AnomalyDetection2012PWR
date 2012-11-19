@@ -49,6 +49,7 @@ GUIMainWindow::GUIMainWindow(QWidget *parent) :
     ui->webView->setDataset(dataset->datasetControler->dataset);
 
     ct->guiController->setLiveLineChart(ui->webView);
+    ct->guiController->setLogScaleLiveLineChart();
     ct->guiController->refreshLiveLineChart();
 
 

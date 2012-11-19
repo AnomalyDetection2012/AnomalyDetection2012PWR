@@ -18,3 +18,13 @@ void GUIController::refreshLiveLineChart()
 {
     this->liveLineChart->reloadData();
 }
+
+void GUIController::setLogScaleLiveLineChart()
+{
+    this->liveLineChart->setLogScale();
+}
+
+void GUIController::setLinearScaleLiveLineChart()
+{
+    this->liveLineChart->setLinearScale();
+}
