@@ -15,6 +15,8 @@ public:
         void setLiveLineChart(LiveLineChart *liveLineChart);
 
         void refreshLiveLineChart();
+        void setLogScaleLiveLineChart();
+        void setLinearScaleLiveLineChart();
 
     // END LiveLineChart
 
