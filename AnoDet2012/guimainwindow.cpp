@@ -30,26 +30,27 @@ GUIMainWindow::GUIMainWindow(QWidget *parent) :
     }
 
     //TEST
-    ct = new ConnectorTracker();
-    ct->initialise();
-    dataset = ct->dataset;
-    algorithm = ct->anomalyDetection;
-    selectedMethodId = 0;
-    initMethods();// WAZNE
+//    ct = new ConnectorTracker();
+//    ct->initialise();
+//    ct->createConnection(3);
+//    dataset = ct->dataset;
+//    algorithm = ct->anomalyDetection;
+//    selectedMethodId = 0;
+//    initMethods();// WAZNE
 
-    DataLoader* dl = ct->loader;
-    dl->initDataRecordTable();
-    dl->loadRecords(2000);
-    dl->setAlarmFlagToRecords();
+//    DataLoader* dl = ct->loader;
+//    dl->initDataRecordTable();
+//    dl->loadRecords(100);
+//    dl->setAlarmFlagToRecords();
 
    // LiveLineChart *chart = new LiveLineChart(0,300,300,dataset->datasetControler->dataset);
 
-    ct->incomingData->startListening();
+//    ct->incomingData->startListening();
 
-    ui->webView->setDataset(dataset->datasetControler->dataset);
+//    ui->webView->setDataset(dataset->datasetControler->dataset);
 
-    ct->guiController->setLiveLineChart(ui->webView);
-    ct->guiController->refreshLiveLineChart();
+//    ct->guiController->setLiveLineChart(ui->webView);
+//    ct->guiController->refreshLiveLineChart();
 
 
 
@@ -432,7 +433,7 @@ void GUIMainWindow::testSlotC(){
 }
 
 void GUIMainWindow::drawNewFormat(){
-    values = dataset->datasetControler->dataset->getData(0,200);//pozniej dopisze metody pobierajaca z connectora
+    values = dataset->getData(0,200);//pozniej dopisze metody pobierajaca z connectora
     setSize = values.size();
     setDimensions = values.at(0).size();
 

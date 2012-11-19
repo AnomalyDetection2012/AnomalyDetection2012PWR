@@ -24,6 +24,7 @@ public:
     QString getDatabaseSource();
     QString getDatabaseUserName();
     QString getDatabaseUserPassword();
+    int getObjectId();
 
     QVariant getAlgorithmParameter(const QString &algorithm, const QString &key);
 

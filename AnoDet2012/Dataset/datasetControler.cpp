@@ -89,3 +89,7 @@ void DatasetControler::setMeasurementsInfo(MeasurementInfo *measurementsInfos)
 void DatasetControler::setAnomaly(int id, bool isAnomaly){
     dataset->setAnomaly(id, isAnomaly);
 }
+
+vector<vector<double> > DatasetControler::getData(int begin, int end){
+    return dataset->getData(begin, end);
+}

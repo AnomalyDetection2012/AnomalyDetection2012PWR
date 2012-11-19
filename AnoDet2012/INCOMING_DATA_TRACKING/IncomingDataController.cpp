@@ -173,22 +173,22 @@ void IncomingDataController::processNewData()
                 }
 
                 // test
-                vector < vector<double> > wrap;
-                wrap.push_back(dataValues);
-                double minsT[mins.size()];
-                double maxsT[maxs.size()];
+//                vector < vector<double> > wrap;
+//                wrap.push_back(dataValues);
+//                double minsT[mins.size()];
+//                double maxsT[maxs.size()];
 
-                for(int k=0;k<mins.size();k++)
-                {
-                    minsT[k] = mins[k];
-                    maxsT[k] = maxs[k];
-                }
-                vector <bool> result = anomalyDetection->test(1,wrap, minsT, maxsT);    //TODO: which method?
+//                for(int k=0;k<mins.size();k++)
+//                {
+//                    minsT[k] = mins[k];
+//                    maxsT[k] = maxs[k];
+//                }
+//                vector <bool> result = anomalyDetection->test(1,wrap, minsT, maxsT);    //TODO: which method?
 
-                // add DataRecord to dataset
-                vector <double> nonInf(0);
-                vector <int> infos(0);
-                datasetConnector->newRecord((time_t)date.toTime_t(), dataValues, nonInf, infos, result[0]);
+//                // add DataRecord to dataset
+//                vector <double> nonInf(0);
+//                vector <int> infos(0);
+//                datasetConnector->newRecord((time_t)date.toTime_t(), dataValues, nonInf, infos, result[0]);
 
                 // redraw LiveLineChart
                 guiController->refreshLiveLineChart();

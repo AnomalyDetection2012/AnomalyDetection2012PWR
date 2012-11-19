@@ -15,10 +15,9 @@ class ConnectorTracker
 public:
     ConnectorTracker();
     void initialise();
-
+    void createConnection(int objectId);
 
 private:
-
 
 
 public:
@@ -29,7 +28,7 @@ public:
     IncomingDataController *incomingData;
     DataLoader *loader;
     GUIController *guiController;
-
+    bool isConnected;
 
 
 private:

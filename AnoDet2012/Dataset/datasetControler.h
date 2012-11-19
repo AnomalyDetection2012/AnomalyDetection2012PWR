@@ -24,6 +24,7 @@ public:
     QString getMeasurementName(int type_id);
     double getMinValue(int type_id);
     double getMaxValue(int type_id);
+    std::vector<std::vector<double> > getData(int begin, int end);
 
 private:
     int methodId;

@@ -35,11 +35,11 @@ void LiveLineChart::loadData()
     {
         int recordsNum = dataset->getDataRecordsAmmount();
         int showLastRecords = 50;   // show last 50 records on chart
-        std::vector <std::vector <double> > values = dataset->getData(recordsNum - showLastRecords, recordsNum);
+        std::vector <std::vector <double> > values = dataset->getData(recordsNum - showLastRecords < 0 ? 0 : recordsNum - showLastRecords, recordsNum);
         std::vector <QString> dataNames = dataset->dataTable->dataNames;
 
         int dimension = values[0].size();
-        std::vector <bool> anomalies = dataset->getAnomalies(recordsNum - showLastRecords, recordsNum);
+        std::vector <bool> anomalies = dataset->getAnomalies(recordsNum - showLastRecords < 0 ? 0 : recordsNum - showLastRecords, recordsNum);
 
         QString url = "GUI_COMPONENTS/Line.html?&logscale=";
         url = url.append(this->logScale?"true":"false");

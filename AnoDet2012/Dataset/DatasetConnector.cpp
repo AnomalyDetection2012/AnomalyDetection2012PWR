@@ -109,3 +109,21 @@ void DatasetConnector::setAnomaly(int id, bool isAnomaly){
         datasetControler->setAnomaly(id, isAnomaly);
     }
 }
+
+vector<vector<double> > DatasetConnector::getData(int begin, int end){
+    if(datasetControler != NULL){
+        return datasetControler->getData(begin, end);
+    }
+}
+
+double* DatasetConnector::getMinimals(){
+    if(datasetControler != NULL){
+        return datasetControler->getMinimals();
+    }
+}
+
+double* DatasetConnector::getMaximals(){
+    if(datasetControler != NULL){
+        return datasetControler->getMaximals();
+    }
+}

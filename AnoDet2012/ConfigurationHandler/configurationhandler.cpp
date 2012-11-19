@@ -24,15 +24,15 @@ void ConfigurationHandler::initialize()
 
         // Database
         settings->beginGroup("Database");
-        settings->setValue("Server", "RAFAL-PC\\SQLEXPRESS");
-        settings->setValue("Source", "SCSWin");
-        settings->setValue("UserName", "sa");
-        settings->setValue("UserPassword", "tajnehaslo");
+        settings->setValue("Server", "LASTVERB-ZPI\\SQLEXPRESS");
+        settings->setValue("Source", "zpi");
+        settings->setValue("UserName", "superuser");
+        settings->setValue("UserPassword", "haslo");
         settings->endGroup();
 
         // Selected object
         settings->beginGroup("SelectedObject");
-        settings->setValue("Object_ID", "3");
+        settings->setValue("Object_ID", 3);
         settings->endGroup();
 
         // Algorithm - SOM
@@ -198,6 +198,11 @@ QString ConfigurationHandler::getDatabaseUserName()
 QString ConfigurationHandler::getDatabaseUserPassword()
 {
     return getPropertyValue("Database", "UserPassword").toString();
+}
+
+int ConfigurationHandler::getObjectId()
+{
+    return getPropertyValue("SelectedObject", "Object_ID").toInt();
 }
 
 QVariant ConfigurationHandler::getAlgorithmParameter(const QString &algorithm, const QString &key)

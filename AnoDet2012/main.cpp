@@ -4,6 +4,7 @@
 #include "DataLoader/dataloader.h"
 #include "Dataset/MeasurementInfo.h"
 #include "GUI_COMPONENTS/livelinechart.h"
+#include "GUI/mainwindow.h"
 
 
 int main(int argc, char *argv[])
@@ -11,9 +12,12 @@ int main(int argc, char *argv[])
     srand(time(NULL));
     qsrand(time(NULL));
     QApplication a(argc, argv);
-    GUIMainWindow w;
-//    w.randomTest(60);
+    MainWindow w;
     w.show();
+
+
+//    GUIMainWindow w;
+//    w.show();
 
 //    IncomingDataController *incControl = new IncomingDataController("RAFAL-PC\\SQLEXPRESS","SCSWin","sa","tajnehaslo");
 //    IncomingDataController *incControl = new IncomingDataController("BalutKomputer","SCSWin","sa","qwe123!");
