@@ -4,6 +4,7 @@
 #include "ANOMALY_DETECTION/algorithmcontroler.h"
 #include "DataLoader/dataloader.h"
 #include "Dataset/DatasetConnector.h"
+#include "GUI_COMPONENTS/guicontroller.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -92,6 +93,9 @@ void MainWindow::loadDataStandard(){// TODO balut a gdzie sa metody do tego?
     ct->dataset->setMinMax(min, max);
 
     ui->webView->setDataset(ct->dataset->datasetControler->dataset);
+    ct->guiController->setLiveLineChart(ui->webView);
+    ct->guiController->refreshLiveLineChart();
+   // ui->webView->reloadData();
     redrawDataset();
 }
 
@@ -121,6 +125,7 @@ void MainWindow::testData(){
 }
 
 void MainWindow::redrawDataset(){
-    ui->webView->loadData();
+    //ui->webView->loadData();
+    ct->guiController->refreshLiveLineChart();
     //qDebug()<<ui->webView->url();
 }
