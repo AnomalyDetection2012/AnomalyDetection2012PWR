@@ -122,4 +122,5 @@ void MainWindow::testData(){
 
 void MainWindow::redrawDataset(){
     ui->webView->loadData();
+    //qDebug()<<ui->webView->url();
 }
