@@ -1,8 +1,74 @@
+-- dodaje kolumny minValue, maxValue do tabeli Program_pomiar
+
+  Alter table Program_pomiar
+  Add minValue real,
+      maxValue real
+
+-- aktualizuje wartosci minValue, maxValue i Unit w tabeli Program_pomiar
+
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=10000, Program_pomiar.Unit='Ah'  where Nazwa_pomiaru like 'Ca³kowita pojemnoœæ baterii'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=600, Program_pomiar.Unit='VAC'  where Nazwa_pomiaru like 'Eltek WebPower - AC Voltage 1'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=600, Program_pomiar.Unit='VAC'  where Nazwa_pomiaru like 'Eltek WebPower - AC Voltage 2'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=600, Program_pomiar.Unit='VAC'  where Nazwa_pomiaru like 'Eltek WebPower - AC Voltage 3'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=10000, Program_pomiar.Unit='Ah'  where Nazwa_pomiaru like 'Eltek WebPower - Battery capacity left'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=10000, Program_pomiar.Unit='Ah'  where Nazwa_pomiaru like 'Eltek WebPower - Battery capacity total'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=10000, Program_pomiar.Unit='Ah'  where Nazwa_pomiaru like 'Eltek WebPower - Battery capacity used'
+Update Program_pomiar set Program_pomiar.minValue=-1000 , Program_pomiar.maxValue=1000, Program_pomiar.Unit='A'  where Nazwa_pomiaru like 'Eltek WebPower - Battery current'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=100, Program_pomiar.Unit='h'  where Nazwa_pomiaru like 'Eltek WebPower - Battery time to disconnect'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=100, Program_pomiar.Unit='VDC'  where Nazwa_pomiaru like 'Eltek WebPower - Battery voltage'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=1000, Program_pomiar.Unit='A'  where Nazwa_pomiaru like 'Eltek WebPower - Rectifier total current'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=32, Program_pomiar.Unit=''  where Nazwa_pomiaru like 'Liczba prostowników'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=32, Program_pomiar.Unit=''  where Nazwa_pomiaru like 'Liczba prostowników niepracuj¹cych'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=32, Program_pomiar.Unit=''  where Nazwa_pomiaru like 'Liczba prostowników pracuj¹cych'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=100, Program_pomiar.Unit='kW'  where Nazwa_pomiaru like 'Moc systemu'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=100, Program_pomiar.Unit='VDC'  where Nazwa_pomiaru like 'Napiêcie – Bateria 1 Ogniwo 1'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=100, Program_pomiar.Unit='VDC'  where Nazwa_pomiaru like 'Napiêcie – Bateria 1 Ogniwo 2'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=100, Program_pomiar.Unit='VDC'  where Nazwa_pomiaru like 'Napiêcie – Bateria 1 Ogniwo 3'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=100, Program_pomiar.Unit='VDC'  where Nazwa_pomiaru like 'Napiêcie – Bateria 1 Ogniwo 4'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=100, Program_pomiar.Unit='VDC'  where Nazwa_pomiaru like 'Napiêcie – Bateria 2 Ogniwo 1'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=100, Program_pomiar.Unit='VDC'  where Nazwa_pomiaru like 'Napiêcie – Bateria 2 Ogniwo 2'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=100, Program_pomiar.Unit='VDC'  where Nazwa_pomiaru like 'Napiêcie – Bateria 2 Ogniwo 3'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=100, Program_pomiar.Unit='VDC'  where Nazwa_pomiaru like 'Napiêcie – Bateria 2 Ogniwo 4'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=100, Program_pomiar.Unit='VDC'  where Nazwa_pomiaru like 'Napiêcie baterii 1'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=100, Program_pomiar.Unit='VDC'  where Nazwa_pomiaru like 'Napiêcie baterii 2'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=100, Program_pomiar.Unit='VDC'  where Nazwa_pomiaru like 'Napiêcie odbioru'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=100, Program_pomiar.Unit='VDC'  where Nazwa_pomiaru like 'Napiêcie systemu'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=100, Program_pomiar.Unit='VDC'  where Nazwa_pomiaru like 'Napiêcie wyjœciowe'
+Update Program_pomiar set Program_pomiar.minValue=-1000 , Program_pomiar.maxValue=1000, Program_pomiar.Unit='A'  where Nazwa_pomiaru like 'Pr¹d baterii'
+Update Program_pomiar set Program_pomiar.minValue=-1000 , Program_pomiar.maxValue=1000, Program_pomiar.Unit='A'  where Nazwa_pomiaru like 'Pr¹d baterii 1'
+Update Program_pomiar set Program_pomiar.minValue=-1000 , Program_pomiar.maxValue=1000, Program_pomiar.Unit='A'  where Nazwa_pomiaru like 'Pr¹d baterii 2'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=1000, Program_pomiar.Unit='A'  where Nazwa_pomiaru like 'Pr¹d odbioru'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=1000, Program_pomiar.Unit='A'  where Nazwa_pomiaru like 'Pr¹d prostowników'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=1000, Program_pomiar.Unit='A'  where Nazwa_pomiaru like 'Pr¹d wyjœciowy'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=1000, Program_pomiar.Unit='A'  where Nazwa_pomiaru like 'Sumaryczny pr¹d prostowników'
+Update Program_pomiar set Program_pomiar.minValue=-20 , Program_pomiar.maxValue=80, Program_pomiar.Unit='C'  where Nazwa_pomiaru like 'Temperatura'
+Update Program_pomiar set Program_pomiar.minValue=-20 , Program_pomiar.maxValue=80, Program_pomiar.Unit='C'  where Nazwa_pomiaru like 'Temperatura baterii'
+Update Program_pomiar set Program_pomiar.minValue=-20 , Program_pomiar.maxValue=80, Program_pomiar.Unit='C'  where Nazwa_pomiaru like 'Temperatura pod pod³og¹ lewa'
+Update Program_pomiar set Program_pomiar.minValue=-20 , Program_pomiar.maxValue=80, Program_pomiar.Unit='C'  where Nazwa_pomiaru like 'Temperatura pod pod³og¹ œrodek'
+Update Program_pomiar set Program_pomiar.minValue=-20 , Program_pomiar.maxValue=80, Program_pomiar.Unit='C'  where Nazwa_pomiaru like 'Temperatura pomieszczenia lewa'
+Update Program_pomiar set Program_pomiar.minValue=-20 , Program_pomiar.maxValue=80, Program_pomiar.Unit='C'  where Nazwa_pomiaru like 'Temperatura pomieszczenia œrodek'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=100, Program_pomiar.Unit='%RH'  where Nazwa_pomiaru like 'Wilgotnoœæ'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=100, Program_pomiar.Unit='%RH'  where Nazwa_pomiaru like 'Wilgotnoœæ pod pod³og¹ lewa'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=100, Program_pomiar.Unit='%RH'  where Nazwa_pomiaru like 'Wilgotnoœæ pod pod³og¹ œrodek'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=100, Program_pomiar.Unit='%RH'  where Nazwa_pomiaru like 'Wilgotnoœæ pomieszczenia lewa'
+Update Program_pomiar set Program_pomiar.minValue=0 , Program_pomiar.maxValue=100, Program_pomiar.Unit='%RH'  where Nazwa_pomiaru like 'Wilgotnoœæ pomieszczenia œrodek'
+
+
 -- usuwa alarmy, o ktorych nie ma informacji w tabeli Program_alarm
 
   Delete alarms
   FROM [Wyniki_alarm] alarms left join Program_alarm on Program_alarm.Program_alarm_ID = alarms.Program_alarm_ID
   where Nazwa_alarmu is NULL
+
+-- usuwa Wyniki_pomiar dla rekordow w których przynajmniej jeden z pomiarow wykracza poza minimalna lub maksymalna wartosc
+
+Delete from Wyniki_pomiar
+Where Rekord_ID in
+(Select distinct Rekord_ID
+From Wyniki_pomiar 
+	left join Program_pomiar on Wyniki_pomiar.Program_pomiar_ID = Program_pomiar.Program_pomiar_ID
+where
+	Wyniki_pomiar.Wartosc > Program_pomiar.maxValue OR Wyniki_pomiar.Wartosc < Program_pomiar.minValue)
 
 -- usuwa alarmy dla rekordow, ktore nie zawieraja danych pomiarowych
 
@@ -17,3 +83,10 @@
   Delete
   FROM [SCSWin].[dbo].[Rekord]
   where Rekord.Rekord_ID not in (Select distinct Rekord_ID from Wyniki_pomiar)
+
+-- zaklada indeksy przyspieszajace wybieranie rekordow
+
+CREATE UNIQUE INDEX Rekord_ID_unique ON Rekord (Rekord_ID)
+CREATE INDEX Data_ordinary ON Rekord (Data)
+CREATE INDEX Rekord_ID_ordinary ON Wyniki_pomiar (Rekord_ID)
+CREATE INDEX Program_Pomiar_ID_ordinary ON Wyniki_pomiar (Program_pomiar_ID)

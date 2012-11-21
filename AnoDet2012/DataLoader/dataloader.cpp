@@ -111,7 +111,7 @@ void DataLoader::loadRecords(unsigned long limit)
         }
         statement.append(")) as pvt order by pvt.Rekord_ID");
 
-        //qDebug() << statement;
+        qDebug() << statement;
 
         QSqlQuery query(statement, db);
         query.setForwardOnly(true);
