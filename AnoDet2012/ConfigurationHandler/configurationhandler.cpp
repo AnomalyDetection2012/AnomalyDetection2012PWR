@@ -24,10 +24,10 @@ void ConfigurationHandler::initialize()
 
         // Database
         settings->beginGroup("Database");
-        settings->setValue("Server", "LASTVERB-ZPI\\SQLEXPRESS");
-        settings->setValue("Source", "zpi");
-        settings->setValue("UserName", "superuser");
-        settings->setValue("UserPassword", "haslo");
+        settings->setValue("Server", "");
+        settings->setValue("Source", "");
+        settings->setValue("UserName", "");
+        settings->setValue("UserPassword", "");
         settings->endGroup();
 
         // Selected object
@@ -110,6 +110,40 @@ void ConfigurationHandler::initialize()
         // }
         settings->beginGroup("Algorithm.BAYES");
         settings->setValue("FeaturesCount", 4);
+        settings->endGroup();
+		
+		// Sending alerts via e-mail
+        settings->beginGroup("Mail");
+        settings->setValue("Host", "smtp.gmail.com");
+        settings->setValue("Port", 465);
+        settings->setValue("User", "anomalydetection2012@gmail.com");
+        settings->setValue("Password", "t9#a8#j7#n6#e5#h4#a3#s2#l1#o"); // plain text
+        settings->setValue("SenderAddress", "anomalydetection2012@gmail.com");
+        settings->setValue("SenderField", "AnomalyDetection");
+        settings->setValue("MessageTopic", "Alert");
+        settings->setValue("TemplateLocation", "C:/test/Templates/Mail");
+        settings->setValue("TemplateDescription", "MailTemplate.xml");
+        settings->endGroup();
+
+        // Sending alerts via SMS
+        settings->beginGroup("SMS");
+        settings->setValue("URL", "http://api.smsapi.pl/sms.do");
+        settings->setValue("User", "balutek");
+        settings->setValue("Password", "6f8a54ea4a15b822d0120c213a78c029"); // MD5 hash
+        settings->setValue("SenderField", "Alert");
+        settings->setValue("Flash", "0");
+        settings->setValue("Test", "0");
+        settings->setValue("Details", "0");
+        settings->setValue("ECO", "0");
+        settings->setValue("Fast", "0");
+        settings->setValue("TemplateLocation", "C:/test/Templates/SMS");
+        settings->setValue("TemplateDescription", "SMSTemplate.xml");
+        settings->endGroup();
+
+        // Subscribers
+        settings->beginGroup("Subscribers");
+        settings->setValue("Location", "C:/test");
+        settings->setValue("File", "Subscribers.xml");
         settings->endGroup();
     }
 }

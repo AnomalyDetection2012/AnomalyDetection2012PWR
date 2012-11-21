@@ -1,5 +1,6 @@
 #ifndef CONFIGURATIONHANDLER_H
 #define CONFIGURATIONHANDLER_H
+
 #include <QDebug>
 #include <QSettings>
 #include <QStringList>
@@ -20,6 +21,7 @@ public:
     void setPropertyValue(const QString &category, const QString &key, const QVariant &value);
     bool contains(const QString &key);
 
+	// Below you can see higher level methods added for simplicity's sake
     QString getDatabaseServer();
     QString getDatabaseSource();
     QString getDatabaseUserName();
