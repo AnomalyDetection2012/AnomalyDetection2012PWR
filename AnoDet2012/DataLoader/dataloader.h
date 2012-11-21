@@ -28,7 +28,9 @@ public:
     void initialiseConnectors(ConnectorTracker *con);
     void initDataRecordTable();
     void loadMeasurementInfo();
-    void loadRecords(unsigned long limit = 0);
+    void loadAllRecords();
+    void loadRecords(int from, int to);
+    //void loadRecords(QDateTime from, QDateTime to);
     void setAlarmFlagToRecords();
     void removeAllRecords();
 
@@ -36,6 +38,8 @@ private:
     std::vector<double> programAlarmIds;
     std::vector<int> recordIds;
     bool performDatabaseConnection();
+    int getRecordIDOfFirstRecord(int begin);
+    //int getRecordIDOfFirstRecord(QDateTime begin);
 };
 
 #endif // DATALOADER_H

@@ -79,7 +79,7 @@ void MainWindow::loadDataStandard(){// TODO balut a gdzie sa metody do tego?
 
     DataLoader* dl = ct->loader;
     dl->initDataRecordTable();
-    dl->loadRecords(end);
+    dl->loadAllRecords();
     dl->setAlarmFlagToRecords();
 
     // TODO TEMP

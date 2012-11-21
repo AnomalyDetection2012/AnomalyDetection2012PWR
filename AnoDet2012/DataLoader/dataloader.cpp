@@ -95,7 +95,7 @@ void DataLoader::loadMeasurementInfo()
     }
 }
 
-void DataLoader::loadRecords(unsigned long limit)
+void DataLoader::loadAllRecords()
 {
     if(this->performDatabaseConnection())
     {
@@ -104,14 +104,57 @@ void DataLoader::loadRecords(unsigned long limit)
         {
             statement.append(", ["+QString::number(this->programAlarmIds[a])+"]");
         }
-        statement.append("from (Select "+(limit?"TOP "+QString::number(limit*this->recordSize):"")+" Wyniki_pomiar.Rekord_ID, Program_pomiar_ID, Wartosc, Data From Wyniki_pomiar left join Rekord on Rekord.Rekord_ID = Wyniki_pomiar.Rekord_ID where Rekord.Obiekt_ID = "+QString::number(this->objectId)+" order by Rekord_ID) p PIVOT( min(Wartosc) FOR Program_pomiar_ID IN (["+QString::number(this->programAlarmIds[0])+"]");
+        statement.append("from (Select TOP 1600000 Wyniki_pomiar.Rekord_ID, Program_pomiar_ID, Wartosc, Data From Wyniki_pomiar left join Rekord on Rekord.Rekord_ID = Wyniki_pomiar.Rekord_ID where Rekord.Obiekt_ID = "+QString::number(this->objectId)+" order by Rekord_ID) p PIVOT( min(Wartosc) FOR Program_pomiar_ID IN (["+QString::number(this->programAlarmIds[0])+"]");
         for(int a = 1; a < this->recordSize; ++a)
         {
             statement.append(", ["+QString::number(this->programAlarmIds[a])+"]");
         }
         statement.append(")) as pvt order by pvt.Rekord_ID");
 
-        qDebug() << statement;
+        //qDebug() << statement;
+
+        QSqlQuery query(statement, db);
+        query.setForwardOnly(true);
+
+        if (!query.isActive()) {
+            qDebug() << "An error was encountered: "<< QSqlError(query.lastError()).text();
+        } else {
+            while (query.next()) {
+                vector<double> data;
+                this->recordIds.push_back(query.value(0).toInt());
+                for(int a = 0; a < this->recordSize; ++a)
+                {
+                    data.push_back(query.value(a+2).toDouble());
+                }
+                dataset->newRecord(query.value(1).toDateTime().toTime_t(), data, *(new vector<double>(0)), *(new vector<int>(0)),false);
+            }
+        }
+    }
+}
+
+void DataLoader::loadRecords(int from, int to)
+{
+    if(this->performDatabaseConnection())
+    {
+        if(to<from){ to=from+1; }
+        if(from<1){ from=1; }
+        if(to<1){ to=1; }
+
+        int firstRecordID = this->getRecordIDOfFirstRecord(from);
+
+        QString statement("SELECT Rekord_ID, Data");
+        for(int a = 0; a < this->recordSize; ++a)
+        {
+            statement.append(", ["+QString::number(this->programAlarmIds[a])+"]");
+        }
+        statement.append("from (Select TOP "+QString::number((to-from+1)*this->recordSize)+" Wyniki_pomiar.Rekord_ID, Program_pomiar_ID, Wartosc, Data From Wyniki_pomiar left join Rekord on Rekord.Rekord_ID = Wyniki_pomiar.Rekord_ID where Rekord.Obiekt_ID = "+QString::number(this->objectId)+" and Rekord.Rekord_ID>="+QString::number(firstRecordID)+" order by Rekord_ID) p PIVOT( min(Wartosc) FOR Program_pomiar_ID IN (["+QString::number(this->programAlarmIds[0])+"]");
+        for(int a = 1; a < this->recordSize; ++a)
+        {
+            statement.append(", ["+QString::number(this->programAlarmIds[a])+"]");
+        }
+        statement.append(")) as pvt where Rekord_ID>="+QString::number(firstRecordID)+" order by pvt.Rekord_ID");
+
+        //qDebug() << statement;
 
         QSqlQuery query(statement, db);
         query.setForwardOnly(true);
@@ -136,7 +179,8 @@ void DataLoader::setAlarmFlagToRecords()
 {
     if(this->performDatabaseConnection())
     {
-        QString statement("select distinct Wyniki_alarm.Rekord_ID from Wyniki_alarm left join Program_alarm on Program_alarm.Program_alarm_ID = Wyniki_alarm.Program_alarm_ID where Wyniki_alarm.Status>0 and (Program_alarm.Typ_alarmu_ID=0 or Program_alarm.Typ_alarmu_ID=3 or Program_alarm.Typ_alarmu_ID=5) and Program_alarm.Konfiguracja_ID = "+QString::number(this->objectId)+" and Wyniki_alarm.Rekord_ID >= "+QString::number(this->recordIds[0])+" and Wyniki_alarm.Rekord_ID <= "+QString::number(this->recordIds.back())+" order by Wyniki_alarm.Rekord_ID");
+        //QString statement("select distinct Wyniki_alarm.Rekord_ID from Wyniki_alarm left join Program_alarm on Program_alarm.Program_alarm_ID = Wyniki_alarm.Program_alarm_ID where Wyniki_alarm.Status>0 and (Program_alarm.Typ_alarmu_ID=0 or Program_alarm.Typ_alarmu_ID=3 or Program_alarm.Typ_alarmu_ID=5) and Program_alarm.Konfiguracja_ID = "+QString::number(this->objectId)+" and Wyniki_alarm.Rekord_ID >= "+QString::number(this->recordIds[0])+" and Wyniki_alarm.Rekord_ID <= "+QString::number(this->recordIds.back())+" order by Wyniki_alarm.Rekord_ID");
+        QString statement("select distinct Wyniki_alarm.Rekord_ID from Wyniki_alarm left join Program_alarm on Program_alarm.Program_alarm_ID = Wyniki_alarm.Program_alarm_ID where Wyniki_alarm.Status>0 and (Program_alarm.Typ_alarmu_ID=0 or Program_alarm.Typ_alarmu_ID=3 or Program_alarm.Typ_alarmu_ID=5) and Program_alarm.Konfiguracja_ID = "+QString::number(this->objectId)+" order by Wyniki_alarm.Rekord_ID");
         QSqlQuery query(statement, db);
         query.setForwardOnly(true);
 
@@ -191,4 +235,24 @@ bool DataLoader::performDatabaseConnection()
     }
 
     return true;
+}
+int DataLoader::getRecordIDOfFirstRecord(int begin)
+{
+    if(this->performDatabaseConnection())
+    {
+        QString statement("Select Top 1 rows.Rekord_ID From (Select Top "+QString::number(begin)+" ROW_NUMBER() over(Order by Rekord_ID) as RowNr,  Rekord_ID From Rekord where Rekord.Obiekt_ID = "+QString::number(this->objectId)+") as rows order by rows.RowNr desc");
+
+        QSqlQuery query(statement, db);
+        query.setForwardOnly(true);
+
+        if (!query.isActive()) {
+            qDebug() << "An error was encountered: "<< QSqlError(query.lastError()).text();
+        } else {
+            while (query.next()) {
+                qDebug() << query.value(0).toString();
+                return query.value(0).toInt();
+            }
+        }
+    }
+    return -1;
 }
