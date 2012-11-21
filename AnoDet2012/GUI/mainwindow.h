@@ -26,6 +26,7 @@ private:
     Ui::MainWindow *ui;
     ConnectorTracker *ct;
     int choosenObjectId;
+    int objectsData[17][2];
 
 private slots:
     void chooseObject();
@@ -35,6 +36,7 @@ private slots:
     void learnData();
     void testData();
     void on_filterValuesBtn_clicked();
+    void loadAllObjectRecords();
 };
 
 #endif // MAINWINDOW_H

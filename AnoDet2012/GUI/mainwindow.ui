@@ -30,7 +30,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -514,6 +514,13 @@
              </item>
             </layout>
            </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_9">
+             <property name="text">
+              <string>Pobierz rekordy dla wybranego obiektu</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
         </item>
@@ -696,6 +703,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_9</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>loadAllObjectRecords()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>320</x>
+     <y>313</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>321</x>
+     <y>338</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>chooseObject()</slot>
@@ -704,5 +727,6 @@
   <slot>loadDataDate()</slot>
   <slot>learnData()</slot>
   <slot>testData()</slot>
+  <slot>loadAllObjectRecords()</slot>
  </slots>
 </ui>

@@ -120,11 +120,11 @@ void DataLoader::loadAllRecords()
             qDebug() << "An error was encountered: "<< QSqlError(query.lastError()).text();
         } else {
             while (query.next()) {
-                vector<double> data;
+                vector<double> data(this->recordSize);
                 this->recordIds.push_back(query.value(0).toInt());
                 for(int a = 0; a < this->recordSize; ++a)
                 {
-                    data.push_back(query.value(a+2).toDouble());
+                    data[a] = query.value(a+2).toDouble();
                 }
                 dataset->newRecord(query.value(1).toDateTime().toTime_t(), data, *(new vector<double>(0)), *(new vector<int>(0)),false);
                 this->progessBar->setValue(this->progessBar->value()+1);
