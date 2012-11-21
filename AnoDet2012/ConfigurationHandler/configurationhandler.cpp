@@ -24,10 +24,10 @@ void ConfigurationHandler::initialize()
 
         // Database
         settings->beginGroup("Database");
-        settings->setValue("Server", "");
-        settings->setValue("Source", "");
-        settings->setValue("UserName", "");
-        settings->setValue("UserPassword", "");
+        settings->setValue("Server", "${CHANGE_IT}");
+        settings->setValue("Source", "${CHANGE_IT}");
+        settings->setValue("UserName", "${CHANGE_IT}");
+        settings->setValue("UserPassword", "${CHANGE_IT}");
         settings->endGroup();
 
         // Selected object
@@ -121,7 +121,7 @@ void ConfigurationHandler::initialize()
         settings->setValue("SenderAddress", "anomalydetection2012@gmail.com");
         settings->setValue("SenderField", "AnomalyDetection");
         settings->setValue("MessageTopic", "Alert");
-        settings->setValue("TemplateLocation", "C:/test/Templates/Mail");
+        settings->setValue("TemplateLocation", "${CHANGE_IT}");
         settings->setValue("TemplateDescription", "MailTemplate.xml");
         settings->endGroup();
 
@@ -136,13 +136,13 @@ void ConfigurationHandler::initialize()
         settings->setValue("Details", "0");
         settings->setValue("ECO", "0");
         settings->setValue("Fast", "0");
-        settings->setValue("TemplateLocation", "C:/test/Templates/SMS");
+        settings->setValue("TemplateLocation", "${CHANGE_IT}");
         settings->setValue("TemplateDescription", "SMSTemplate.xml");
         settings->endGroup();
 
         // Subscribers
         settings->beginGroup("Subscribers");
-        settings->setValue("Location", "C:/test");
+        settings->setValue("Location", "${CHANGE_IT}");
         settings->setValue("File", "Subscribers.xml");
         settings->endGroup();
     }
