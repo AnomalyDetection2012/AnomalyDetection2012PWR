@@ -11,6 +11,7 @@
 #include <QString>
 #include <QtSql>
 #include <QHash>
+#include <QProgressDialog>
 
 
 class DataLoader
@@ -20,6 +21,7 @@ public:
     QSqlDatabase db;
     QHash<int, QHash <QString, QVariant> > measurementInfo;
     DatasetConnector* dataset;
+    QProgressDialog* progessBar;
 
 
     DataLoader(int objectId, QString server, QString dbName, QString username, QString password);

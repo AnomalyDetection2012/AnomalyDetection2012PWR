@@ -82,6 +82,9 @@ void MainWindow::loadDataStandard(){// TODO balut a gdzie sa metody do tego?
     int end = ui->spinBox_2->value();
 
     DataLoader* dl = ct->loader;
+    QProgressDialog progress("Pobieranie rekordów dla wybranego obiektu...", "Anuluj", 0, 40024, this);
+    progress.setWindowModality(Qt::WindowModal);
+    dl->progessBar = &progress;
     dl->initDataRecordTable();
     dl->loadAllRecords();
     dl->setAlarmFlagToRecords();

@@ -127,6 +127,7 @@ void DataLoader::loadAllRecords()
                     data.push_back(query.value(a+2).toDouble());
                 }
                 dataset->newRecord(query.value(1).toDateTime().toTime_t(), data, *(new vector<double>(0)), *(new vector<int>(0)),false);
+                this->progessBar->setValue(this->progessBar->value()+1);
             }
         }
     }
