@@ -133,6 +133,49 @@ void DataLoader::loadAllRecords()
     }
 }
 
+vector<int> DataLoader::loadAllObjectIDs()
+{
+    if(this->performDatabaseConnection())
+    {
+        QString statement("SELECT TOP 17 [Obiekt_ID] FROM [SCSWin].[dbo].[Obiekt] where Nazwa_obiektu like '%Monitoring'");
+
+        QSqlQuery query(statement, db);
+        query.setForwardOnly(true);
+
+        if (!query.isActive()) {
+            qDebug() << "An error was encountered: "<< QSqlError(query.lastError()).text();
+        } else {
+            vector<int> objectIDs = *(new vector<int>(17));
+            int currentObject=0;
+            while (query.next()) {
+                objectIDs[currentObject++] = query.value(0).toInt();
+            }
+            return objectIDs;
+        }
+    }
+    return *(new vector<int>(0));
+}
+
+int DataLoader::getAmountOfObjectRecords(int objectID)
+{
+    if(this->performDatabaseConnection())
+    {
+        QString statement("SELECT COUNT(*) FROM [SCSWin].[dbo].[Rekord] where Obiekt_ID = "+QString::number(objectID)+" group by Obiekt_ID");
+
+        QSqlQuery query(statement, db);
+        query.setForwardOnly(true);
+
+        if (!query.isActive()) {
+            qDebug() << "An error was encountered: "<< QSqlError(query.lastError()).text();
+        } else {
+            while (query.next()) {
+                return query.value(0).toInt();
+            }
+        }
+    }
+    return 0;
+}
+
 void DataLoader::loadRecords(int from, int to)
 {
     if(this->performDatabaseConnection())

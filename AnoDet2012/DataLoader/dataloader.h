@@ -31,6 +31,8 @@ public:
     void initDataRecordTable();
     void loadMeasurementInfo();
     void loadAllRecords();
+    std::vector<int> loadAllObjectIDs();
+    int getAmountOfObjectRecords(int objectID);
     void loadRecords(int from, int to);
     //void loadRecords(QDateTime from, QDateTime to);
     void setAlarmFlagToRecords();
