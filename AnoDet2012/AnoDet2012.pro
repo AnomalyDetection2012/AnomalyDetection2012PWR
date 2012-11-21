@@ -110,7 +110,7 @@ HEADERS  += guimainwindow.h \
     GUI_COMPONENTS/guicontroller.h \
     GUI/mainwindow.h \
     GUI/dialogfilter.h
-	lsender.h \
+    Alarms/Mail/mailsender.h \
     Alarms/SMS/smssender.h \
     Alarms/Mail/smtpclient.h \
     Alarms/Mail/quotedprintable.h \
@@ -127,7 +127,7 @@ HEADERS  += guimainwindow.h \
     Alarms/Mail/smtpmime.h \
     Alarms/subscriber.h \
     Alarms/SMS/smsmessagebuilder.h \
-    Alarms/Mail/mi
+    Alarms/Mail/mimemessagebuilder.h
 
 FORMS    += guimainwindow.ui \
     GUI/mainwindow.ui \
