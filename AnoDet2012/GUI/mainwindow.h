@@ -26,7 +26,7 @@ private:
     Ui::MainWindow *ui;
     ConnectorTracker *ct;
     int choosenObjectId;
-    int objectsData[17][2];
+    std::vector<int> objectIDs;
 
 private slots:
     void chooseObject();
