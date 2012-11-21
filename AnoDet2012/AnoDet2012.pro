@@ -100,3 +100,6 @@ FORMS    += guimainwindow.ui \
 
 OTHER_FILES += \
     GUI_COMPONENTS/Line.html
+
+RESOURCES += \
+    Resources/resources.qrc

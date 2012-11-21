@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dialogfilter.ui'
 **
-** Created: Wed 21. Nov 01:43:26 2012
+** Created: Wed 21. Nov 22:28:46 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -39,7 +39,7 @@ public:
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         listWidget = new QListWidget(DialogFilter);
         listWidget->setObjectName(QString::fromUtf8("listWidget"));
-        listWidget->setGeometry(QRect(50, 10, 256, 192));
+        listWidget->setGeometry(QRect(50, 20, 291, 211));
 
         retranslateUi(DialogFilter);
         QObject::connect(buttonBox, SIGNAL(accepted()), DialogFilter, SLOT(accept()));
@@ -50,7 +50,7 @@ public:
 
     void retranslateUi(QDialog *DialogFilter)
     {
-        DialogFilter->setWindowTitle(QApplication::translate("DialogFilter", "Dialog", 0, QApplication::UnicodeUTF8));
+        DialogFilter->setWindowTitle(QApplication::translate("DialogFilter", "Wybierz pomiary do wy\305\233wietlenia", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
