@@ -24,7 +24,7 @@ public:
     // another component...
     // ...
 
-private:
+public:
     LiveLineChart *liveLineChart;
 };
 

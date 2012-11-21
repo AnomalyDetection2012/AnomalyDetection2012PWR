@@ -5,6 +5,10 @@
 #include "DataLoader/dataloader.h"
 #include "Dataset/DatasetConnector.h"
 #include "GUI_COMPONENTS/guicontroller.h"
+#include "GUI/dialogfilter.h"
+#include <QListWidgetItem>
+
+#define CHECKBOX_CHECKED 2
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -128,4 +132,40 @@ void MainWindow::redrawDataset(){
     //ui->webView->loadData();
     ct->guiController->refreshLiveLineChart();
     //qDebug()<<ui->webView->url();
+}
+
+void MainWindow::on_filterValuesBtn_clicked()
+{
+    DialogFilter dialogFilter;
+
+    std::vector<QListWidgetItem *> items;
+
+    //std::vector<QString> *dataNames = & ct->dataset->datasetControler->dataset->dataTable->dataNames;
+
+    vector<bool> currFilter = ct->guiController->liveLineChart->getFilter();
+    QListWidgetItem *item;
+    for(unsigned i=0;i<ct->dataset->datasetControler->dataset->dataTable->dataNames.size();i++)
+    {
+        item = new QListWidgetItem;
+        item->setData( Qt::DisplayRole, ct->dataset->datasetControler->dataset->dataTable->dataNames[i] );
+        item->setData( Qt::CheckStateRole, currFilter[i]?Qt::Checked : Qt::Unchecked );
+
+        items.push_back(item);
+    }
+
+
+    dialogFilter.addCheckboxesToList(items);
+    dialogFilter.setModal(true);
+
+    if(dialogFilter.exec())
+    {
+        vector<bool> filter(items.size());
+        for(unsigned i=0;i<items.size();i++)
+            filter[i] = items[i]->checkState() == CHECKBOX_CHECKED;
+
+        ct->guiController->liveLineChart->setFilter(filter);
+        ct->guiController->refreshLiveLineChart();
+    }
+
+
 }

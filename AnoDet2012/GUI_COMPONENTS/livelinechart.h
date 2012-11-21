@@ -14,11 +14,15 @@ public:
     explicit LiveLineChart(QWidget *parent = 0);
     LiveLineChart(QWidget *parent, int width, int height, Dataset *dataset);
     void setDataset(Dataset *dataset);
+    void initFilter(int size);
 
     void loadData();
     void reloadData();
     void setLogScale();
     void setLinearScale();
+    void setFilter(std::vector<bool> filter);
+    void removeFilter();
+    std::vector<bool> getFilter();
 
 
     int width;
@@ -27,6 +31,7 @@ public:
 private:
     Dataset *dataset;
     bool logScale;
+    std::vector<bool> filter;
     
 signals:
     
