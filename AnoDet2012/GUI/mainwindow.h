@@ -34,6 +34,7 @@ private slots:
     void loadDataDate();
     void learnData();
     void testData();
+    void on_filterValuesBtn_clicked();
 };
 
 #endif // MAINWINDOW_H

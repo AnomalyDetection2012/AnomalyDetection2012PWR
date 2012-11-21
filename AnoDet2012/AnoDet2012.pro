@@ -49,7 +49,8 @@ SOURCES += main.cpp \
     ConfigurationHandler/configurationhandler.cpp \
     GUI_COMPONENTS/livelinechart.cpp \
     GUI_COMPONENTS/guicontroller.cpp \
-    GUI/mainwindow.cpp
+    GUI/mainwindow.cpp \
+    GUI/dialogfilter.cpp
 
 HEADERS  += guimainwindow.h \
     Dataset/InfoTable.h \
@@ -90,10 +91,12 @@ HEADERS  += guimainwindow.h \
     ConfigurationHandler/configurationhandler.h \
     GUI_COMPONENTS/livelinechart.h \
     GUI_COMPONENTS/guicontroller.h \
-    GUI/mainwindow.h
+    GUI/mainwindow.h \
+    GUI/dialogfilter.h
 
 FORMS    += guimainwindow.ui \
-    GUI/mainwindow.ui
+    GUI/mainwindow.ui \
+    GUI/dialogfilter.ui
 
 OTHER_FILES += \
     GUI_COMPONENTS/Line.html
