@@ -52,22 +52,23 @@ SOURCES += main.cpp \
     GUI_COMPONENTS/livelinechart.cpp \
     GUI_COMPONENTS/guicontroller.cpp \
     GUI/mainwindow.cpp \
-    GUI/dialogfilter.cpp
-    Alarms/SMS/smssender.cpp \
+    GUI/dialogfilter.cpp \
     Alarms/Mail/smtpclient.cpp \
     Alarms/Mail/quotedprintable.cpp \
     Alarms/Mail/mimetext.cpp \
     Alarms/Mail/mimepart.cpp \
     Alarms/Mail/mimemultipart.cpp \
+    Alarms/Mail/mimemessagebuilder.cpp \
     Alarms/Mail/mimemessage.cpp \
     Alarms/Mail/mimeinlinefile.cpp \
     Alarms/Mail/mimehtml.cpp \
     Alarms/Mail/mimefile.cpp \
     Alarms/Mail/mimecontentformatter.cpp \
     Alarms/Mail/mimeattachment.cpp \
+    Alarms/Mail/mailsender.cpp \
     Alarms/Mail/emailaddress.cpp \
-    Alarms/SMS/smsmessagebuilder.cpp \
-    Alarms/Mail/mimemessagebuilder.cpp
+    Alarms/SMS/smssender.cpp \
+    Alarms/SMS/smsmessagebuilder.cpp
 
 HEADERS  += guimainwindow.h \
     Dataset/InfoTable.h \
@@ -109,25 +110,25 @@ HEADERS  += guimainwindow.h \
     GUI_COMPONENTS/livelinechart.h \
     GUI_COMPONENTS/guicontroller.h \
     GUI/mainwindow.h \
-    GUI/dialogfilter.h
-    Alarms/Mail/mailsender.h \
-    Alarms/SMS/smssender.h \
+    GUI/dialogfilter.h \
+    Alarms/subscriber.h \
+    Alarms/Mail/smtpmime.h \
     Alarms/Mail/smtpclient.h \
     Alarms/Mail/quotedprintable.h \
     Alarms/Mail/mimetext.h \
     Alarms/Mail/mimepart.h \
     Alarms/Mail/mimemultipart.h \
+    Alarms/Mail/mimemessagebuilder.h \
     Alarms/Mail/mimemessage.h \
     Alarms/Mail/mimeinlinefile.h \
     Alarms/Mail/mimehtml.h \
     Alarms/Mail/mimefile.h \
     Alarms/Mail/mimecontentformatter.h \
     Alarms/Mail/mimeattachment.h \
+    Alarms/Mail/mailsender.h \
     Alarms/Mail/emailaddress.h \
-    Alarms/Mail/smtpmime.h \
-    Alarms/subscriber.h \
-    Alarms/SMS/smsmessagebuilder.h \
-    Alarms/Mail/mimemessagebuilder.h
+    Alarms/SMS/smssender.h \
+    Alarms/SMS/smsmessagebuilder.h
 
 FORMS    += guimainwindow.ui \
     GUI/mainwindow.ui \
