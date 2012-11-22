@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dialogfilter.ui'
 **
-** Created: Wed 21. Nov 22:28:46 2012
-**      by: Qt User Interface Compiler version 4.8.1
+** Created: Thu 22. Nov 00:24:31 2012
+**      by: Qt User Interface Compiler version 4.8.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/

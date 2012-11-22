@@ -37,6 +37,9 @@ private slots:
     void testData();
     void on_filterValuesBtn_clicked();
     void loadAllObjectRecords();
+    void showAnomaliesFromDB();
+    void startLivelog();
+    void stopLivelog();
 };
 
 #endif // MAINWINDOW_H

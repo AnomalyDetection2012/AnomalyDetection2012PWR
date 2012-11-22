@@ -15,7 +15,7 @@ class ConnectorTracker
 public:
     ConnectorTracker();
     void initialise();
-    void createConnection(int objectId);
+    bool createConnection(int objectId);
 
 private:
 

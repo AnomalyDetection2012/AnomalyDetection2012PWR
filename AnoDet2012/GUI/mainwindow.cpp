@@ -4,10 +4,12 @@
 #include "ANOMALY_DETECTION/algorithmcontroler.h"
 #include "DataLoader/dataloader.h"
 #include "Dataset/DatasetConnector.h"
+#include "INCOMING_DATA_TRACKING/IncomingDataController.h"
 #include "GUI_COMPONENTS/guicontroller.h"
 #include "GUI/dialogfilter.h"
 #include <QListWidgetItem>
 #include <QMessageBox>
+#include <QSqlError>
 
 #define CHECKBOX_CHECKED 2
 
@@ -21,14 +23,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ct->initialise();
     choosenObjectId = ct->configuration->getObjectId();
 
-    // USTAWIENIA P�L
+    // USTAWIENIA PÓL
     ui->comboBox_2->setCurrentIndex(choosenObjectId);
     ui->label_12->setText(ui->comboBox_2->currentText());
     ui->lineEdit->setText(ct->configuration->getPropertyValue("Database", "Server").toString());
     ui->lineEdit_2->setText(ct->configuration->getPropertyValue("Database", "Source").toString());
     ui->lineEdit_3->setText(ct->configuration->getPropertyValue("Database", "UserName").toString());
     ui->lineEdit_4->setText(ct->configuration->getPropertyValue("Database", "UserPassword").toString());
-    // KONIEC USTAWIEN P�L
+    // KONIEC USTAWIEN PÓL
 
     // TODO TEMP METODY DETEKCJI
     AlgorithmControler* algorithm = ct->anomalyDetection;
@@ -75,9 +77,22 @@ void MainWindow::connectDatabase(){
     ct->configuration->setPropertyValue("Database", "UserName", ui->lineEdit_3->text() );
     ct->configuration->setPropertyValue("Database", "UserPassword", ui->lineEdit_4->text() );
 
-    ct->createConnection(4);
+    bool status = ct->createConnection(4);
 
-    this->objectIDs = ct->loader->loadAllObjectIDs();
+    if(status)
+    {
+        this->objectIDs = ct->loader->loadAllObjectIDs();
+        ui->connectionStatusLabel->setText(QString::fromUtf8("<font color='green'>Połączono</font>"));
+        ui->statusBar->showMessage(QString::fromUtf8("   Połączenie ze wskazaną bazą danych zostało nawiązane"),10000);
+    }
+    else
+    {
+        QString msg(QSqlError(ct->dbConnection->lastError()).text());
+        ui->connectionStatusLabel->setText(QString::fromUtf8("<font color='red'>Błąd połączenia </font>"));
+
+        ui->statusBar->showMessage(msg,10000);
+    }
+
 }
 
 void MainWindow::loadDataStandard(){// TODO balut a gdzie sa metody do tego?
@@ -85,7 +100,7 @@ void MainWindow::loadDataStandard(){// TODO balut a gdzie sa metody do tego?
     int end = ui->spinBox_2->value();
 /*
     DataLoader* dl = ct->loader;
-    QProgressDialog progress("Pobieranie rekord�w dla wybranego obiektu...", "Anuluj", 0, 40024, this);
+    QProgressDialog progress("Pobieranie rekordów dla wybranego obiektu...", "Anuluj", 0, 40024, this);
     progress.setWindowModality(Qt::WindowModal);
     dl->progessBar = &progress;
     dl->initDataRecordTable();
@@ -103,9 +118,8 @@ void MainWindow::loadDataStandard(){// TODO balut a gdzie sa metody do tego?
     ct->dataset->setMinMax(min, max);
 
     ui->webView->setDataset(ct->dataset->datasetControler->dataset);
-    ct->guiController->setLiveLineChart(ui->webView);
-    ct->guiController->refreshLiveLineChart();
-   // ui->webView->reloadData();
+
+    ui->webView->reloadData();
     redrawDataset();
 }
 
@@ -135,8 +149,7 @@ void MainWindow::testData(){
 }
 
 void MainWindow::redrawDataset(){
-    //ui->webView->loadData();
-    ct->guiController->refreshLiveLineChart();
+    ui->webView->reloadData();
     //qDebug()<<ui->webView->url();
 }
 
@@ -146,9 +159,7 @@ void MainWindow::on_filterValuesBtn_clicked()
 
     std::vector<QListWidgetItem *> items;
 
-    //std::vector<QString> *dataNames = & ct->dataset->datasetControler->dataset->dataTable->dataNames;
-
-    vector<bool> currFilter = ct->guiController->liveLineChart->getFilter();
+    std::vector<bool> currFilter = ui->webView->getFilter();
     QListWidgetItem *item;
     for(unsigned i=0;i<ct->dataset->datasetControler->dataset->dataTable->dataNames.size();i++)
     {
@@ -169,8 +180,8 @@ void MainWindow::on_filterValuesBtn_clicked()
         for(unsigned i=0;i<items.size();i++)
             filter[i] = items[i]->checkState() == CHECKBOX_CHECKED;
 
-        ct->guiController->liveLineChart->setFilter(filter);
-        ct->guiController->refreshLiveLineChart();
+        ui->webView->setFilter(filter);
+        ui->webView->reloadData();
     }
 
 
@@ -182,18 +193,36 @@ void MainWindow::loadAllObjectRecords()
 
     QMessageBox msgBox;
     int amountOfObjectRecords = dl->getAmountOfObjectRecords(objectIDs[choosenObjectId]);
-    msgBox.setInformativeText("Czy chcesz za�adowac "+QString::number(amountOfObjectRecords)+" rekordow?");
+    msgBox.setInformativeText(QString::fromUtf8("Czy chcesz załadować ") + QString::number(amountOfObjectRecords) + QString::fromUtf8(" rekordów?"));
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     msgBox.setDefaultButton(QMessageBox::No);
 
     if(msgBox.exec()==QMessageBox::Yes)
     {
         ct->loader->objectId = objectIDs[choosenObjectId];
-        QProgressDialog progress("Pobieranie rekord�w dla wybranego obiektu...", "Anuluj", 0, amountOfObjectRecords, this);
+        QProgressDialog progress(QString::fromUtf8("Pobieranie rekordów dla wybranego obiektu..."), "Anuluj", 0, amountOfObjectRecords, this);
         progress.setWindowModality(Qt::WindowModal);
         dl->progessBar = &progress;
         dl->initDataRecordTable();
         dl->loadAllRecords();
-        dl->setAlarmFlagToRecords();
     }
+}
+
+void MainWindow::showAnomaliesFromDB()
+{
+    ct->loader->setAlarmFlagToRecords();
+    ui->webView->reloadData();
+}
+
+void MainWindow::startLivelog()
+{
+    ui->livelogChart->setDataset(ct->dataset->datasetControler->dataset);
+    ct->guiController->setLiveLineChart(ui->livelogChart);
+    ct->guiController->refreshLiveLineChart();
+    ct->incomingData->startListening();
+}
+
+void MainWindow::stopLivelog()
+{
+    ct->incomingData->stopListening();
 }

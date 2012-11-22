@@ -20,7 +20,7 @@ void ConnectorTracker::initialise(){
     anomalyDetection->initialiseConnectors(this);
 }
 
-void ConnectorTracker::createConnection(int objectId){
+bool ConnectorTracker::createConnection(int objectId){
     QString server = configuration->getDatabaseServer();
     QString source = configuration->getDatabaseSource();
     QString userName = configuration->getDatabaseUserName();
@@ -38,6 +38,7 @@ void ConnectorTracker::createConnection(int objectId){
     if (!dbConnection->open())
     {
         qDebug() << "An error was encountered: "<< QSqlError(dbConnection->lastError()).text();
+        return false;
     }
     else
     {
@@ -49,4 +50,6 @@ void ConnectorTracker::createConnection(int objectId){
     incomingData->initialiseConnectors(this);
     loader->initialiseConnectors(this);
     isConnected = true;
+
+    return true;
 }

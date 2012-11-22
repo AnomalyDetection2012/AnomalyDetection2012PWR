@@ -21,11 +21,17 @@ public:
     // END LiveLineChart
 
 
+    // BEGIN Test LiveLineChart
+
+    // END Test LiveLineChart
+
+
     // another component...
     // ...
 
 public:
     LiveLineChart *liveLineChart;
+    LiveLineChart *testLineChart;
 };
 
 #endif // GUICONTROLLER_H
