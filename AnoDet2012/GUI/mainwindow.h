@@ -21,6 +21,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void redrawDataset();
+    void newRecords(unsigned num);
+    void newAnomalies(unsigned num);
     
 private:
     Ui::MainWindow *ui;
@@ -41,6 +43,7 @@ private slots:
     void startLivelog();
     void stopLivelog();
     void filterValuesLivelog();
+    void setRefreshInterval();
 };
 
 #endif // MAINWINDOW_H

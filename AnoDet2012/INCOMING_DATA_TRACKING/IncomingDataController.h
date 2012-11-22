@@ -12,6 +12,7 @@
 #include <Dataset/DatasetConnector.h>
 #include <ConfigurationHandler/configurationhandler.h>
 #include <GUI_COMPONENTS/guicontroller.h>
+#include <GUI/mainwindow.h>
 
 
 using namespace QSql;
@@ -30,6 +31,8 @@ public:
     void startListening();  // start tracking database for new data
     void startListening(unsigned long interval);    // start tracking database for new data with indicated interval
     void stopListening();   // stop tracking database for new data
+    void setRefreshInterval(unsigned interval);
+    unsigned getRefreshInterval();
 
     bool checkNewData();
     int getCurrVersionID();
@@ -50,6 +53,7 @@ private:
     DatasetConnector *datasetConnector;
     ConfigurationHandler *configuration;
     GUIController * guiController;
+    MainWindow *mainWindow;
 
 public slots:
    void processNewData();  // process new data (if exists)

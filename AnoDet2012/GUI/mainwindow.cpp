@@ -62,6 +62,9 @@ MainWindow::MainWindow(QWidget *parent) :
     met = new DensityMethod(ct->configuration->getAlgorithmParameter(*name, "LOFResultDeviation").toDouble(),
                             ct->configuration->getAlgorithmParameter(*name, "Neighbors").toInt());
     algorithm->registerMethod(4, met);
+
+
+    ct->mainWindow = this;
 }
 
 MainWindow::~MainWindow()
@@ -158,6 +161,16 @@ void MainWindow::redrawDataset(){
     //qDebug()<<ui->webView->url();
 }
 
+void MainWindow::newRecords(unsigned num)
+{
+    ui->newRecordsNumLabel->setText(QString::number(ui->newRecordsNumLabel->text().toInt() + num));
+}
+
+void MainWindow::newAnomalies(unsigned num)
+{
+    ui->newAnomaliesNumLabel->setText(QString::number(ui->newAnomaliesNumLabel->text().toInt() + num));
+}
+
 void MainWindow::on_filterValuesBtn_clicked()
 {
     DialogFilter dialogFilter;
@@ -226,9 +239,12 @@ void MainWindow::startLivelog()
     ct->guiController->refreshLiveLineChart();
     ct->incomingData->startListening();
 
-    ui->livelogStatusLabel->setText(QString::fromUtf8("<b>Uruchomiony</b>"));
+    ui->livelogStatusLabel->setText(QString::fromUtf8("<b><font color='green'>Uruchomiony</font></b>"));
     ui->livelogStartTimeLabel->setText(QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss"));
     ui->filterValuesLivelogBtn->setEnabled(true);
+    ui->refreshIntervalLabel->setText(QString::number(ct->incomingData->getRefreshInterval()/1000)+ " " + ui->refreshIntervalSpin->suffix());
+    ui->newAnomaliesNumLabel->setText("0");
+    ui->newRecordsNumLabel->setText("0");
 }
 
 void MainWindow::stopLivelog()
@@ -237,6 +253,7 @@ void MainWindow::stopLivelog()
     ui->livelogStatusLabel->setText(QString::fromUtf8("<b>Zatrzymany</b>"));
     ui->livelogStartTimeLabel->setText("-");
     ui->filterValuesLivelogBtn->setEnabled(false);
+    ui->refreshIntervalLabel->setText("-");
 }
 
 void MainWindow::filterValuesLivelog()
@@ -269,4 +286,11 @@ void MainWindow::filterValuesLivelog()
         ct->guiController->liveLineChart->setFilter(filter);
         ct->guiController->refreshLiveLineChart();
     }
+}
+
+
+void MainWindow::setRefreshInterval()
+{
+    ct->incomingData->setRefreshInterval(1000 * ui->refreshIntervalSpin->value());
+    ui->refreshIntervalLabel->setText(QString::number(ui->refreshIntervalSpin->value()) + " " + ui->refreshIntervalSpin->suffix());
 }

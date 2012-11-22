@@ -5,6 +5,7 @@
 #include "ANOMALY_DETECTION/algorithmcontroler.h"
 #include "INCOMING_DATA_TRACKING/IncomingDataController.h"
 #include "GUI_COMPONENTS/guicontroller.h"
+#include "GUI/mainwindow.h"
 
 ConnectorTracker::ConnectorTracker()
 {

@@ -3,12 +3,14 @@
 
 #include <QtSql>
 
+
 class ConfigurationHandler;
 class DatasetConnector;
 class AlgorithmControler;
 class IncomingDataController;
 class DataLoader;
 class GUIController;
+class MainWindow;
 
 class ConnectorTracker
 {
@@ -29,6 +31,8 @@ public:
     DataLoader *loader;
     GUIController *guiController;
     bool isConnected;
+    MainWindow *mainWindow;
+
 
 
 private:

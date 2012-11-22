@@ -49,6 +49,7 @@ void IncomingDataController::initialiseConnectors(ConnectorTracker *con){
     datasetConnector = con->dataset;
     configuration = con->configuration;
     guiController = con->guiController;
+    mainWindow = con->mainWindow;
 }
 
 void IncomingDataController::startListening()
@@ -64,6 +65,16 @@ void IncomingDataController::startListening(unsigned long interval)
 void IncomingDataController::stopListening()
 {
     timer->stop();
+}
+
+void IncomingDataController::setRefreshInterval(unsigned interval)
+{
+    this->timer->setInterval(interval);
+}
+
+unsigned IncomingDataController::getRefreshInterval()
+{
+    return this->timer->interval();
 }
 
 int IncomingDataController::getCurrVersionID()
@@ -192,6 +203,11 @@ void IncomingDataController::processNewData()
 
                 // redraw LiveLineChart
                 guiController->refreshLiveLineChart();
+
+                mainWindow->newRecords(1);
+
+                if(result[0])
+                    mainWindow->newAnomalies(1);
             }
         }
 
