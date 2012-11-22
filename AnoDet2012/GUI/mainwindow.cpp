@@ -11,6 +11,8 @@
 #include <QMessageBox>
 #include <QSqlError>
 #include <QDateTime>
+#include <QSpacerItem>
+#include <QGridLayout>
 
 #define CHECKBOX_CHECKED 2
 
@@ -213,7 +215,14 @@ void MainWindow::loadAllObjectRecords()
     int amountOfObjectRecords = dl->getAmountOfObjectRecords(objectIDs[choosenObjectId]);
     msgBox.setInformativeText(QString::fromUtf8("Czy chcesz załadować ") + QString::number(amountOfObjectRecords) + QString::fromUtf8(" rekordów?"));
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    msgBox.setDefaultButton(QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::Yes);
+    msgBox.setIcon(QMessageBox::Question);
+    msgBox.setWindowTitle(QString::fromUtf8("Pobieranie danych"));
+
+    // workaround for not working setMinimumWidth:
+    QSpacerItem* horizontalSpacer = new QSpacerItem(350, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QGridLayout* layout = (QGridLayout*)msgBox.layout();
+    layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
 
     if(msgBox.exec()==QMessageBox::Yes)
     {
