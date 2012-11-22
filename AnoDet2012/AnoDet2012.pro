@@ -6,7 +6,7 @@
 
 
 QT       += core gui sql webkit network xml
-
+CONFIG   += exceptions rtti
 
 TARGET = AnoDet2012
 TEMPLATE = app
