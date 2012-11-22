@@ -21,7 +21,7 @@ public:
     void setPropertyValue(const QString &category, const QString &key, const QVariant &value);
     bool contains(const QString &key);
 
-	// Below you can see higher level methods added for simplicity's sake
+    // Below you can see higher level methods added for simplicity's sake
     QString getDatabaseServer();
     QString getDatabaseSource();
     QString getDatabaseUserName();
