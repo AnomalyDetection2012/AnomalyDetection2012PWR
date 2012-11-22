@@ -40,6 +40,7 @@ private slots:
     void showAnomaliesFromDB();
     void startLivelog();
     void stopLivelog();
+    void filterValuesLivelog();
 };
 
 #endif // MAINWINDOW_H

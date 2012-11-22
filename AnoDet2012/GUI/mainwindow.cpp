@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "ConfigurationHandler/configurationhandler.h"
 #include "ANOMALY_DETECTION/algorithmcontroler.h"
@@ -10,6 +10,7 @@
 #include <QListWidgetItem>
 #include <QMessageBox>
 #include <QSqlError>
+#include <QDateTime>
 
 #define CHECKBOX_CHECKED 2
 
@@ -224,9 +225,48 @@ void MainWindow::startLivelog()
     ct->guiController->setLiveLineChart(ui->livelogChart);
     ct->guiController->refreshLiveLineChart();
     ct->incomingData->startListening();
+
+    ui->livelogStatusLabel->setText(QString::fromUtf8("<b>Uruchomiony</b>"));
+    ui->livelogStartTimeLabel->setText(QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss"));
+    ui->filterValuesLivelogBtn->setEnabled(true);
 }
 
 void MainWindow::stopLivelog()
 {
     ct->incomingData->stopListening();
+    ui->livelogStatusLabel->setText(QString::fromUtf8("<b>Zatrzymany</b>"));
+    ui->livelogStartTimeLabel->setText("-");
+    ui->filterValuesLivelogBtn->setEnabled(false);
+}
+
+void MainWindow::filterValuesLivelog()
+{
+    DialogFilter dialogFilter;
+
+    std::vector<QListWidgetItem *> items;
+
+    std::vector<bool> currFilter =ct->guiController->liveLineChart->getFilter();
+    QListWidgetItem *item;
+    for(unsigned i=0;i<ct->dataset->datasetControler->dataset->dataTable->dataNames.size();i++)
+    {
+        item = new QListWidgetItem;
+        item->setData( Qt::DisplayRole, ct->dataset->datasetControler->dataset->dataTable->dataNames[i] );
+        item->setData( Qt::CheckStateRole, currFilter[i]?Qt::Checked : Qt::Unchecked );
+
+        items.push_back(item);
+    }
+
+
+    dialogFilter.addCheckboxesToList(items);
+    dialogFilter.setModal(true);
+
+    if(dialogFilter.exec())
+    {
+        vector<bool> filter(items.size());
+        for(unsigned i=0;i<items.size();i++)
+            filter[i] = items[i]->checkState() == CHECKBOX_CHECKED;
+
+        ct->guiController->liveLineChart->setFilter(filter);
+        ct->guiController->refreshLiveLineChart();
+    }
 }
