@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Subscribers>
+	<subscriber>
+		<identifier>Paweł Gruszka</identifier>
+		<mail>pgruszka@gmail.com</mail>
+		<phone>48664123456</phone>
+		<notification>Both</notification>
+	</subscriber>
+	<subscriber>
+		<identifier>Tomasz Żelazny</identifier>
+		<mail>żelazo@hotmail.com</mail>
+		<phone>48690444666</phone>
+		<notification>SMS</notification>
+	</subscriber>
+	<subscriber>
+		<identifier>Justyna Jahn</identifier>
+		<mail>justyna.jahn@gmail.com</mail>
+		<phone>48662876543</phone>
+		<notification>None</notification>
+	</subscriber>
+</Subscribers>

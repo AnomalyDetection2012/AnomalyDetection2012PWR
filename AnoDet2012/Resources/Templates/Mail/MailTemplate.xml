@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Description>
+	<body>
+		webpage.html
+	</body>
+	<images folder="images">
+		<image file="5adba517cb953fa2e14bd3ab9cc55076.jpg" id="5adba517cb953fa2e14bd3ab9cc55076" type="image/jpg"/>
+		<image file="a5676d5286c290f2ccc28b1ff145088a.jpg" id="a5676d5286c290f2ccc28b1ff145088a" type="image/jpg"/>
+	</images>
+	<tags>
+		<tag key="{%TEST%}" value="bleh"/>
+		<tag key="%TODAY%" value="Nawet zacny..."/>
+	</tags>
+</Description>

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Description>
+	<body>
+		plain.txt
+	</body>
+	<tags>
+		<tag key="{%TEST%}" value="blah"/>
+	</tags>
+</Description>
