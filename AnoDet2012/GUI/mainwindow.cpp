@@ -23,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ct->initialise();
     choosenObjectId = ct->configuration->getObjectId();
 
+    ui->webView->setLiveMode(false);
+    ui->livelogChart->setLiveMode(true);
+
     // USTAWIENIA PÓL
     ui->comboBox_2->setCurrentIndex(choosenObjectId);
     ui->label_12->setText(ui->comboBox_2->currentText());
@@ -118,6 +121,7 @@ void MainWindow::loadDataStandard(){// TODO balut a gdzie sa metody do tego?
     ct->dataset->setMinMax(min, max);
 
     ui->webView->setDataset(ct->dataset->datasetControler->dataset);
+    ui->webView->setInterval(begin, end);
 
     ui->webView->reloadData();
     redrawDataset();
