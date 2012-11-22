@@ -102,7 +102,7 @@ MimeMessage * MimeMessageBuilder::build(QVector<Subscriber> *subscribers)
     {
         message->addRecipient(new EmailAddress((*i).mail,
                                                (*i).identifier),
-                                               MimeMessage::RecipientType::Bcc);
+                                               MimeMessage::Bcc);
     }
 
     MimeHtml *html = new MimeHtml();
