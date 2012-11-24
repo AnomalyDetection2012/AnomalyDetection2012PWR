@@ -60,6 +60,13 @@
 				{
 					vals[j] = parseFloat(vals[j]);
 				}
+
+				if(vals[vals.length-2]==" ")
+					vals[vals.length-2] = null;
+					
+				if(vals[vals.length-1]==" ")
+					vals[vals.length-1] = null;
+				
 				//document.write(typeof vals[0] + " " + typeof vals[1] + " " + typeof vals[2] + " " + typeof vals[3] + " " + typeof vals[4] + " " + typeof vals[5] + " " + typeof vals[6] + " " + typeof vals[7] + "<br/>");
 				data.addRow(vals);
 			}
