@@ -64,7 +64,7 @@ void LiveLineChart::loadData()
 
             std::vector <bool> anomalies = dataset->getAnomalies(recordsNum - showLastRecords < 0 ? 0 : recordsNum - showLastRecords, recordsNum);
 
-            QString url = "GUI_COMPONENTS/Line.html?&logscale=";
+            QString url = "qrc:///googleChart/Line.html?&logscale=";
             url = url.append(this->logScale?"true":"false");
 
             url = url.append(QString("&width=%1&height=%2").arg(this->width,0,10).arg(this->height,0,10));
@@ -121,7 +121,7 @@ void LiveLineChart::loadData()
 
             std::vector <bool> anomalies = dataset->getAnomalies(begin,end);
 
-            QString url = "GUI_COMPONENTS/Line.html?&logscale=";
+            QString url = "qrc:///googleChart/Line.html?&logscale=";
             url = url.append(this->logScale?"true":"false");
 
             url = url.append(QString("&width=%1&height=%2").arg(this->width,0,10).arg(this->height,0,10));

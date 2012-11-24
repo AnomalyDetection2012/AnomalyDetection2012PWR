@@ -2,4 +2,7 @@
     <qresource prefix="/images">
         <file>db.png</file>
     </qresource>
+    <qresource prefix="/googleChart">
+        <file>Line.html</file>
+    </qresource>
 </RCC>
