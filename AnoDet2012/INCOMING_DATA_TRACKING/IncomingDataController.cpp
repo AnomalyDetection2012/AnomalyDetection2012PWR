@@ -2,7 +2,7 @@
 #include <sstream>
 
 static const QString statement_base = "SELECT CT.Rekord_ID, E.Obiekt_ID, E.Data, E.Typ_polaczenia FROM dbo.Rekord E JOIN CHANGETABLE(CHANGES dbo.Rekord, %1) AS CT ON E.Rekord_ID = CT.Rekord_ID WHERE CT.SYS_CHANGE_OPERATION='I' AND CT.SYS_CHANGE_VERSION <= %2 AND E.Obiekt_ID = %3;";
-static const QString statement_measurement = "SELECT [SCSWin].[dbo].[Wyniki_pomiar].[Program_pomiar_ID],[Wartosc], [SCSWin].[dbo].[Program_pomiar].[AlertMin], [SCSWin].[dbo].[Program_pomiar].[AlertMax], [Nazwa_pomiaru] FROM [SCSWin].[dbo].[Wyniki_pomiar] inner join [SCSWin].[dbo].[Program_pomiar] on [SCSWin].[dbo].[Wyniki_pomiar].[Program_pomiar_ID]=[SCSWin].[dbo].[Program_pomiar].[Program_pomiar_ID] WHERE [Rekord_ID]=%1;";
+static const QString statement_measurement = "SELECT  [Wyniki_pomiar].[Program_pomiar_ID],[Wartosc],  [Program_pomiar].[AlertMin],  [Program_pomiar].[AlertMax], [Nazwa_pomiaru] FROM  [Wyniki_pomiar] inner join  [Program_pomiar] on  [Wyniki_pomiar].[Program_pomiar_ID]= [Program_pomiar].[Program_pomiar_ID] WHERE [Rekord_ID]=%1;";
 
 IncomingDataController::IncomingDataController(QString server, QString dbName, QString username, QString password)
 {

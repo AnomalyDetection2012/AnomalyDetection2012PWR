@@ -69,7 +69,7 @@ void DataLoader::loadMeasurementInfo()
 {
     if(this->performDatabaseConnection())
     {
-        QString statement("SELECT [Program_pomiar_ID], [Nazwa_pomiaru], [AlertMin], [AlertMax] FROM [SCSWin].[dbo].[Program_pomiar];");
+        QString statement("SELECT [Program_pomiar_ID], [Nazwa_pomiaru], [AlertMin], [AlertMax] FROM  [Program_pomiar];");
         QSqlQuery query(statement, db);
         query.setForwardOnly(true);
 
@@ -144,7 +144,7 @@ vector<QPair<int, QString> >* DataLoader::loadAllObjectsData()
 {
     if(this->performDatabaseConnection())
     {
-        QString statement("SELECT TOP 17 [Obiekt_ID], Nazwa_obiektu FROM [SCSWin].[dbo].[Obiekt] where Nazwa_obiektu like '%Monitoring'");
+        QString statement("SELECT TOP 17 [Obiekt_ID], Nazwa_obiektu FROM  [Obiekt] where Nazwa_obiektu like '%Monitoring'");
 
         QSqlQuery query(statement, db);
         query.setForwardOnly(true);
@@ -170,7 +170,7 @@ int DataLoader::getAmountOfObjectRecords(int objectID)
 {
     if(this->performDatabaseConnection())
     {
-        QString statement("SELECT COUNT(*) FROM [SCSWin].[dbo].[Rekord] where Obiekt_ID = "+QString::number(objectID)+" group by Obiekt_ID");
+        QString statement("SELECT COUNT(*) FROM  [Rekord] where Obiekt_ID = "+QString::number(objectID)+" group by Obiekt_ID");
 
         QSqlQuery query(statement, db);
         query.setForwardOnly(true);
