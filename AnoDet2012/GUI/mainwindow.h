@@ -8,6 +8,7 @@
 #include "ANOMALY_DETECTION/NEIGHBOUR/nearest_neighbor.h"
 #include "ANOMALY_DETECTION/BAYES/naive_bayes.h"
 #include "ANOMALY_DETECTION/DENSITY/densitymethod.h"
+#include <QResizeEvent>
 
 namespace Ui {
 class MainWindow;
@@ -29,6 +30,8 @@ private:
     ConnectorTracker *ct;
     int choosenObjectId;
     std::vector<int> objectIDs;
+    void resizeEvent(QResizeEvent * event);
+    QTimer *timer;
 
 private slots:
     void chooseObject();
@@ -44,6 +47,7 @@ private slots:
     void stopLivelog();
     void filterValuesLivelog();
     void setRefreshInterval();
+    void afterResize();
 };
 
 #endif // MAINWINDOW_H

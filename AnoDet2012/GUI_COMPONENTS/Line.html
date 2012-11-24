@@ -80,10 +80,18 @@
 							  
 				);*/
 				
+				var width = $_GET('width');
+				var height = $_GET('height');
+				
+				document.getElementById("visualization").style.width = width+"px";
+				document.getElementById("visualization").style.height = height+"px";
+				
 				var showLogScale = $_GET('logscale') == "true";
 				var options = {
 					backgroundColor: "#f0f0f0",
-					logScale: showLogScale
+					logScale: showLogScale,
+					chartArea:{left:30,top:20,width:"65%",height:"80%"},
+					legend: {position: 'right', textStyle: {color: 'blue', fontSize: 10}}
 				};
 				
 				new google.visualization.LineChart(document.getElementById('visualization')).
@@ -95,7 +103,8 @@
  
     </script>
   </head>
-  <body style="font-family: Arial;border: 0 none;padding:0px;margin:0px;background:#f0f0f0;">
-    <div id="visualization" style="width: 740px; height: 300px;"></div>
+  <body style="font-family: Arial;border: 0 none;background:#f0f0f0;">
+    <div id="visualization" style="width: 660px; height: 350px;"></div>
+	<!--<div id="visualization" style="width: px; height: 350px;"></div> !-->
   </body>
 </html>

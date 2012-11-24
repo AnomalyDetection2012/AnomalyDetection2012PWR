@@ -5,6 +5,8 @@ LiveLineChart::LiveLineChart(QWidget *parent) :
 {
     this->logScale = false;
     this->liveMode = true;
+    this->width = 660;
+    this->height = 350;
 }
 
 LiveLineChart::LiveLineChart(QWidget *parent, int width, int height, Dataset *dataset) :
@@ -12,6 +14,8 @@ LiveLineChart::LiveLineChart(QWidget *parent, int width, int height, Dataset *da
 {
     this->logScale = false;
     this->liveMode = true;
+    this->width = 660;
+    this->height = 350;
 }
 
 void LiveLineChart::setDataset(Dataset *dataset)
@@ -38,6 +42,12 @@ void LiveLineChart::setLinearScale()
     this->loadData();
 }
 
+void LiveLineChart::setSize(int width, int height)
+{
+    this->width = width;
+    this->height = height;
+}
+
 void LiveLineChart::loadData()
 {
     if(dataset != NULL)
@@ -56,6 +66,8 @@ void LiveLineChart::loadData()
 
             QString url = "GUI_COMPONENTS/Line.html?&logscale=";
             url = url.append(this->logScale?"true":"false");
+
+            url = url.append(QString("&width=%1&height=%2").arg(this->width,0,10).arg(this->height,0,10));
 
             url = url.append("&labels=");
             for(int i=0;i<dataNames.size();i++)
@@ -111,6 +123,8 @@ void LiveLineChart::loadData()
 
             QString url = "GUI_COMPONENTS/Line.html?&logscale=";
             url = url.append(this->logScale?"true":"false");
+
+            url = url.append(QString("&width=%1&height=%2").arg(this->width,0,10).arg(this->height,0,10));
 
             url = url.append("&labels=");
             for(int i=0;i<dataNames.size();i++)
