@@ -29,9 +29,11 @@ private:
     Ui::MainWindow *ui;
     ConnectorTracker *ct;
     int choosenObjectId;
-    std::vector<int> objectIDs;
+    std::vector<QPair<int, QString> > objectsData;
     void resizeEvent(QResizeEvent * event);
     QTimer *timer;
+    bool statusOfDatabaseConnection;
+    bool statusOfObjectDataLoad;
 
 private slots:
     void chooseObject();

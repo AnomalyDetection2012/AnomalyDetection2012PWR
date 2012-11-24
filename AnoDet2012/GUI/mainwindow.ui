@@ -30,9 +30,12 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>5</number>
       </property>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="livelogTab">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <attribute name="title">
         <string>Livelog</string>
        </attribute>
@@ -286,7 +289,10 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_2">
+      <widget class="QWidget" name="anomalyDetectionTab">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <attribute name="title">
         <string>Detekcja anomalii</string>
        </attribute>
@@ -294,7 +300,7 @@
         <item row="0" column="0">
          <widget class="QTabWidget" name="tabWidget_2">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tab_5">
            <attribute name="title">
@@ -634,31 +640,46 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_14">
+      <widget class="QWidget" name="dataOverviewTab">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <attribute name="title">
         <string>Przegląd danych</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_7"/>
       </widget>
-      <widget class="QWidget" name="tab_13">
+      <widget class="QWidget" name="reportsTab">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <attribute name="title">
         <string>Raporty</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_9"/>
       </widget>
-      <widget class="QWidget" name="tab_4">
+      <widget class="QWidget" name="subscriptionTab">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <attribute name="title">
         <string>Subskrypcja</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_6"/>
       </widget>
-      <widget class="QWidget" name="tab_3">
+      <widget class="QWidget" name="dataSourceTab">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <attribute name="title">
         <string>Źródło danych</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
-         <widget class="QGroupBox" name="groupBox">
+         <widget class="QGroupBox" name="selectObjectBox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="title">
            <string>Badany obiekt</string>
           </property>
@@ -687,6 +708,9 @@
              </item>
              <item>
               <widget class="QLabel" name="label_12">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
                <property name="font">
                 <font>
                  <weight>75</weight>
@@ -694,7 +718,7 @@
                 </font>
                </property>
                <property name="text">
-                <string>Obiekt 01 - Monitoring</string>
+                <string>Brak</string>
                </property>
               </widget>
              </item>
@@ -724,91 +748,15 @@
              </item>
              <item>
               <widget class="QComboBox" name="comboBox_2">
-               <item>
-                <property name="text">
-                 <string extracomment="18">Obiekt 01 - Monitoring</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string extracomment="22">Obiekt 02 - Monitoring</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string extracomment="28">Obiekt 03 - Monitoring</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string extracomment="9">Obiekt 04 - Monitoring</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string extracomment="28">Obiekt 05 - Monitoring</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string extracomment="22">Obiekt 06 - Monitoring</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string extracomment="16">Obiekt 07 - Monitoring</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string extracomment="15">Obiekt 08 - Monitoring</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string extracomment="28">Obiekt 09 - Monitoring</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string extracomment="28">Obiekt 10 - Monitoring</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string extracomment="22">Obiekt 11 - Monitoring</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string extracomment="22">Obiekt 12 - Monitoring</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string extracomment="28">Obiekt 13 - Monitoring</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string extracomment="33">Obiekt 14 - Monitoring</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string extracomment="16">Obiekt 15 - Monitoring</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string extracomment="16">Obiekt 16 - Monitoring</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string extracomment="18">Obiekt 17 - Monitoring</string>
-                </property>
-               </item>
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
               </widget>
              </item>
              <item>
@@ -910,6 +858,9 @@
         </item>
         <item>
          <widget class="QGroupBox" name="groupBox_4">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="title">
            <string>Połączenie z bazą danych</string>
           </property>
@@ -953,6 +904,9 @@
              </item>
              <item row="0" column="1">
               <widget class="QLineEdit" name="lineEdit">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
                <property name="maximumSize">
                 <size>
                  <width>250</width>

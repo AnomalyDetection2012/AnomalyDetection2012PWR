@@ -119,7 +119,9 @@ void DataLoader::loadAllRecords()
         if (!query.isActive()) {
             qDebug() << "An error was encountered: "<< QSqlError(query.lastError()).text();
         } else {
-            while (query.next()) {
+            while (query.next())
+            {
+
                 vector<double> data(this->recordSize);
                 this->recordIds.push_back(query.value(0).toInt());
                 for(int a = 0; a < this->recordSize; ++a)
@@ -128,16 +130,21 @@ void DataLoader::loadAllRecords()
                 }
                 dataset->newRecord(query.value(1).toDateTime().toTime_t(), data, *(new vector<double>(0)), *(new vector<int>(0)),false);
                 this->progessBar->setValue(this->progessBar->value()+1);
+
+                if(this->progessBar->wasCanceled())
+                {
+                    break;
+                }
             }
         }
     }
 }
 
-vector<int> DataLoader::loadAllObjectIDs()
+vector<QPair<int, QString> >* DataLoader::loadAllObjectsData()
 {
     if(this->performDatabaseConnection())
     {
-        QString statement("SELECT TOP 17 [Obiekt_ID] FROM [SCSWin].[dbo].[Obiekt] where Nazwa_obiektu like '%Monitoring'");
+        QString statement("SELECT TOP 17 [Obiekt_ID], Nazwa_obiektu FROM [SCSWin].[dbo].[Obiekt] where Nazwa_obiektu like '%Monitoring'");
 
         QSqlQuery query(statement, db);
         query.setForwardOnly(true);
@@ -145,15 +152,18 @@ vector<int> DataLoader::loadAllObjectIDs()
         if (!query.isActive()) {
             qDebug() << "An error was encountered: "<< QSqlError(query.lastError()).text();
         } else {
-            vector<int> objectIDs = *(new vector<int>(17));
+            vector<QPair<int, QString> >* objectsData = new vector<QPair<int, QString> >(17);
             int currentObject=0;
-            while (query.next()) {
-                objectIDs[currentObject++] = query.value(0).toInt();
+            while (query.next())
+            {
+                objectsData->at(currentObject) = *(new QPair<int, QString>(query.value(0).toInt(), query.value(1).toString()));
+                currentObject++;
+                this->progessBar->setValue(this->progessBar->value()+1);
             }
-            return objectIDs;
+            return objectsData;
         }
     }
-    return *(new vector<int>(0));
+    return NULL;
 }
 
 int DataLoader::getAmountOfObjectRecords(int objectID)
