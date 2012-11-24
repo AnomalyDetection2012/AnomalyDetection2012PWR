@@ -41,7 +41,7 @@ public:
     void removeAllRecords();
 
 private:
-    std::vector<double> programAlarmIds;
+    std::vector<int> programPomiarIds;
     std::vector<int> recordIds;
     bool performDatabaseConnection();
     int getRecordIDOfFirstRecord(int begin);

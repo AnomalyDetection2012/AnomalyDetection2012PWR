@@ -37,7 +37,7 @@ void DataLoader::initDataRecordTable()
     if(this->performDatabaseConnection())
     {
         this->recordSize = 0;
-        this->programAlarmIds = *(new vector<double>());
+        this->programPomiarIds = *(new vector<int>());
         this->recordIds = *(new vector<int>());
         vector<QString> dataNames;
 
@@ -50,7 +50,7 @@ void DataLoader::initDataRecordTable()
         } else {
             while (query.next()) {
                 ++this->recordSize;
-                this->programAlarmIds.push_back(query.value(0).toInt());
+                this->programPomiarIds.push_back(query.value(0).toInt());
                 dataNames.push_back(query.value(1).toString());
             }
             vector<QString> vcEmpty;
@@ -102,12 +102,12 @@ void DataLoader::loadAllRecords()
         QString statement("SELECT Rekord_ID, Data");
         for(int a = 0; a < this->recordSize; ++a)
         {
-            statement.append(", ["+QString::number(this->programAlarmIds[a])+"]");
+            statement.append(", ["+QString::number(this->programPomiarIds[a])+"]");
         }
-        statement.append("from (Select TOP 1600000 Wyniki_pomiar.Rekord_ID, Program_pomiar_ID, Wartosc, Data From Wyniki_pomiar left join Rekord on Rekord.Rekord_ID = Wyniki_pomiar.Rekord_ID where Rekord.Obiekt_ID = "+QString::number(this->objectId)+" order by Rekord_ID) p PIVOT( min(Wartosc) FOR Program_pomiar_ID IN (["+QString::number(this->programAlarmIds[0])+"]");
+        statement.append("from (Select TOP 1600000 Wyniki_pomiar.Rekord_ID, Program_pomiar_ID, Wartosc, Data From Wyniki_pomiar left join Rekord on Rekord.Rekord_ID = Wyniki_pomiar.Rekord_ID where Rekord.Obiekt_ID = "+QString::number(this->objectId)+" order by Rekord_ID) p PIVOT( min(Wartosc) FOR Program_pomiar_ID IN (["+QString::number(this->programPomiarIds[0])+"]");
         for(int a = 1; a < this->recordSize; ++a)
         {
-            statement.append(", ["+QString::number(this->programAlarmIds[a])+"]");
+            statement.append(", ["+QString::number(this->programPomiarIds[a])+"]");
         }
         statement.append(")) as pvt order by pvt.Rekord_ID");
 
@@ -128,7 +128,7 @@ void DataLoader::loadAllRecords()
                 {
                     data[a] = query.value(a+2).toDouble();
                 }
-                dataset->newRecord(query.value(1).toDateTime().toTime_t(), data, *(new vector<double>(0)), *(new vector<int>(0)),false);
+                dataset->newRecord(query.value(1).toDateTime().toTime_t(), data, *(new vector<double>(0)), this->programPomiarIds,false);
                 this->progessBar->setValue(this->progessBar->value()+1);
 
                 if(this->progessBar->wasCanceled())
@@ -199,12 +199,12 @@ void DataLoader::loadRecords(int from, int to)
         QString statement("SELECT Rekord_ID, Data");
         for(int a = 0; a < this->recordSize; ++a)
         {
-            statement.append(", ["+QString::number(this->programAlarmIds[a])+"]");
+            statement.append(", ["+QString::number(this->programPomiarIds[a])+"]");
         }
-        statement.append("from (Select TOP "+QString::number((to-from+1)*this->recordSize)+" Wyniki_pomiar.Rekord_ID, Program_pomiar_ID, Wartosc, Data From Wyniki_pomiar left join Rekord on Rekord.Rekord_ID = Wyniki_pomiar.Rekord_ID where Rekord.Obiekt_ID = "+QString::number(this->objectId)+" and Rekord.Rekord_ID>="+QString::number(firstRecordID)+" order by Rekord_ID) p PIVOT( min(Wartosc) FOR Program_pomiar_ID IN (["+QString::number(this->programAlarmIds[0])+"]");
+        statement.append("from (Select TOP "+QString::number((to-from+1)*this->recordSize)+" Wyniki_pomiar.Rekord_ID, Program_pomiar_ID, Wartosc, Data From Wyniki_pomiar left join Rekord on Rekord.Rekord_ID = Wyniki_pomiar.Rekord_ID where Rekord.Obiekt_ID = "+QString::number(this->objectId)+" and Rekord.Rekord_ID>="+QString::number(firstRecordID)+" order by Rekord_ID) p PIVOT( min(Wartosc) FOR Program_pomiar_ID IN (["+QString::number(this->programPomiarIds[0])+"]");
         for(int a = 1; a < this->recordSize; ++a)
         {
-            statement.append(", ["+QString::number(this->programAlarmIds[a])+"]");
+            statement.append(", ["+QString::number(this->programPomiarIds[a])+"]");
         }
         statement.append(")) as pvt where Rekord_ID>="+QString::number(firstRecordID)+" order by pvt.Rekord_ID");
 
