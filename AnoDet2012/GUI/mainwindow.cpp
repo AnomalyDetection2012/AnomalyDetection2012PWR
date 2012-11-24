@@ -67,6 +67,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     ct->mainWindow = this;
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), SLOT(afterResize()));
+
+    int w = ui->webView->geometry().width() * 1.11;
+    int h = ui->webView->geometry().height() * 1.72;
+
+    ui->webView->setSize(w,h);
+
+    qDebug() << ui->webView->geometry().height();
 }
 
 MainWindow::~MainWindow()
@@ -129,7 +138,7 @@ void MainWindow::loadDataStandard(){// TODO balut a gdzie sa metody do tego?
     ui->webView->setDataset(ct->dataset->datasetControler->dataset);
     ui->webView->setInterval(begin, end);
 
-    ui->webView->reloadData();
+    //ui->webView->reloadData();
     redrawDataset();
 }
 
@@ -203,7 +212,6 @@ void MainWindow::on_filterValuesBtn_clicked()
         ui->webView->setFilter(filter);
         ui->webView->reloadData();
     }
-
 
 }
 
@@ -302,4 +310,31 @@ void MainWindow::setRefreshInterval()
 {
     ct->incomingData->setRefreshInterval(1000 * ui->refreshIntervalSpin->value());
     ui->refreshIntervalLabel->setText(QString::number(ui->refreshIntervalSpin->value()) + " " + ui->refreshIntervalSpin->suffix());
+}
+
+void MainWindow::afterResize()
+{
+    int w1 = ui->webView->geometry().width() * 1.30;
+    int h1 = ui->webView->geometry().height() * 1.0;
+
+    ui->webView->setSize(w1,h1);
+    ui->webView->reloadData();
+
+    if(ui->filterValuesLivelogBtn->isEnabled()) //if livelog is running
+    {
+        int w2 = ui->livelogChart->geometry().width() * 1.30;
+        int h2 = ui->livelogChart->geometry().height() * 1.0;
+
+        ui->livelogChart->setSize(w2,h2);
+        ui->livelogChart->reloadData();
+    }
+}
+
+
+void MainWindow::resizeEvent(QResizeEvent * event)
+{
+    timer->stop();
+    timer->setInterval(100);
+    timer->setSingleShot(true);
+    timer->start();
 }
