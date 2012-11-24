@@ -12,6 +12,8 @@
 #include <QtSql>
 #include <QHash>
 #include <QProgressDialog>
+#include <QString>
+#include <QPair>
 
 
 class DataLoader
@@ -31,7 +33,7 @@ public:
     void initDataRecordTable();
     void loadMeasurementInfo();
     void loadAllRecords();
-    std::vector<int> loadAllObjectIDs();
+    std::vector<QPair<int, QString> >* loadAllObjectsData();
     int getAmountOfObjectRecords(int objectID);
     void loadRecords(int from, int to);
     //void loadRecords(QDateTime from, QDateTime to);
