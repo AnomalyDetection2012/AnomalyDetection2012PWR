@@ -136,8 +136,8 @@ void MainWindow::connectDatabase(){
 }
 
 void MainWindow::loadDataStandard(){// TODO balut a gdzie sa metody do tego?
-    int begin = ui->spinBox->value();
-    int end = ui->spinBox_2->value();
+    int begin = ui->loadFromSpinBox->value();
+    int end = ui->loadToSpinBox->value();
 /*
     DataLoader* dl = ct->loader;
     QProgressDialog progress("Pobieranie rekordów dla wybranego obiektu...", "Anuluj", 0, 40024, this);
@@ -172,8 +172,8 @@ void MainWindow::loadDataDate(){// TODO balut a gdzie sa metody do tego?
 
 void MainWindow::learnData(){
     int selectedMethodId = ui->comboBox->currentIndex();
-    int begin = ui->spinBox_4->value();
-    int end = ui->spinBox_3->value();
+    int begin = ui->fromProcessSpinBox->value();
+    int end = ui->toProcessSpinBox->value();
 
     ct->dataset->setMethodId(selectedMethodId);
     ct->dataset->teachData(begin, end);
@@ -181,8 +181,8 @@ void MainWindow::learnData(){
 
 void MainWindow::testData(){
     int selectedMethodId = ui->comboBox->currentIndex();
-    int begin = ui->spinBox_4->value();
-    int end = ui->spinBox_3->value();
+    int begin = ui->fromProcessSpinBox->value();
+    int end = ui->toProcessSpinBox->value();
 
     ct->dataset->setMethodId(selectedMethodId);
     ct->dataset->checkData(begin, end);
@@ -373,4 +373,36 @@ void MainWindow::resizeEvent(QResizeEvent * event)
     timer->setInterval(100);
     timer->setSingleShot(true);
     timer->start();
+}
+
+void MainWindow::rightClicked()
+{
+    int begin = ui->loadFromSpinBox->value() + ui->chartStepInterval->value();
+    int end = ui->loadToSpinBox->value() + ui->chartStepInterval->value();
+
+    if(end <= ct->dataset->datasetControler->dataset->getDataRecordsAmmount() && begin >= 0)
+    {
+        ui->loadFromSpinBox->setValue(begin);
+        ui->loadToSpinBox->setValue(end);
+        ui->fromProcessSpinBox->setValue(begin);
+        ui->toProcessSpinBox->setValue(end);
+        ui->webView->setInterval(begin, end);
+        redrawDataset();
+    }
+}
+
+void MainWindow::leftClicked()
+{
+    int begin = ui->loadFromSpinBox->value() - ui->chartStepInterval->value();
+    int end = ui->loadToSpinBox->value() - ui->chartStepInterval->value();
+
+    if(end <= ct->dataset->datasetControler->dataset->getDataRecordsAmmount() && begin >= 0)
+    {
+        ui->loadFromSpinBox->setValue(begin);
+        ui->loadToSpinBox->setValue(end);
+        ui->fromProcessSpinBox->setValue(begin);
+        ui->toProcessSpinBox->setValue(end);
+        ui->webView->setInterval(begin, end);
+        redrawDataset();
+    }
 }

@@ -50,6 +50,8 @@ private slots:
     void filterValuesLivelog();
     void setRefreshInterval();
     void updateSize();
+    void rightClicked();
+    void leftClicked();
 };
 
 #endif // MAINWINDOW_H
