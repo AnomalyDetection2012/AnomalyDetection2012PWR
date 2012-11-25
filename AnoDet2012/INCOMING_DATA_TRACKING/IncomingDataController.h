@@ -13,6 +13,7 @@
 #include <ConfigurationHandler/configurationhandler.h>
 #include <GUI_COMPONENTS/guicontroller.h>
 #include <GUI/mainwindow.h>
+#include <Alarms/notificationsender.h>
 
 
 using namespace QSql;
@@ -54,6 +55,8 @@ private:
     ConfigurationHandler *configuration;
     GUIController * guiController;
     MainWindow *mainWindow;
+    NotificationSender *notificationSender;
+
 
 public slots:
    void processNewData();  // process new data (if exists)

@@ -25,6 +25,7 @@ public:
     void newRecords(unsigned num);
     void newAnomalies(unsigned num);
     int getSelectedMethodId();
+    QString getSelectedObjectName();
     
 private:
     Ui::MainWindow *ui;
