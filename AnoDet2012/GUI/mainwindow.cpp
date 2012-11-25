@@ -205,6 +205,11 @@ void MainWindow::newAnomalies(unsigned num)
     ui->newAnomaliesNumLabel->setText(QString::number(ui->newAnomaliesNumLabel->text().toInt() + num));
 }
 
+int MainWindow::getSelectedMethodId()
+{
+    return ui->comboBox->currentIndex();
+}
+
 void MainWindow::on_filterValuesBtn_clicked()
 {
     DialogFilter dialogFilter;

@@ -168,10 +168,13 @@ void IncomingDataController::processNewData()
             {
                 vector <double> dataValues;
                 vector <double> mins, maxs;
+                vector <int> infos;
 
                 while(query_measurements.next())
                 {
                     int program_measurement_ID = query_measurements.value(0).toInt();
+                    infos.push_back(program_measurement_ID);
+
                     double value = query_measurements.value(1).toDouble();
 
                     double min = datasetConnector->getMinValue(program_measurement_ID);
@@ -194,11 +197,11 @@ void IncomingDataController::processNewData()
                     minsT[k] = mins[k];
                     maxsT[k] = maxs[k];
                 }
-                vector <bool> result = anomalyDetection->test(1,wrap, minsT, maxsT);    //TODO: which method?
+                vector <bool> result = anomalyDetection->test(mainWindow->getSelectedMethodId(),wrap, minsT, maxsT);
 
                 // add DataRecord to dataset
                 vector <double> nonInf(0);
-                vector <int> infos(0);
+
                 datasetConnector->newRecord((time_t)date.toTime_t(), dataValues, nonInf, infos, result[0]);
 
                 // redraw LiveLineChart

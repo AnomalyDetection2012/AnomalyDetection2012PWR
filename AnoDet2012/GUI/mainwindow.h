@@ -24,6 +24,7 @@ public:
     void redrawDataset();
     void newRecords(unsigned num);
     void newAnomalies(unsigned num);
+    int getSelectedMethodId();
     
 private:
     Ui::MainWindow *ui;
