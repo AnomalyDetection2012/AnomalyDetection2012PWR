@@ -50,6 +50,7 @@ void IncomingDataController::initialiseConnectors(ConnectorTracker *con){
     configuration = con->configuration;
     guiController = con->guiController;
     mainWindow = con->mainWindow;
+    notificationSender = con->sender;
 }
 
 void IncomingDataController::startListening()
@@ -151,11 +152,11 @@ void IncomingDataController::processNewData()
         {
             int record_id = query.value(0).toInt();
             int object_id = query.value(1).toInt();
-            QDateTime date = query.value(2).toDateTime();
+            QDateTime dateTime = query.value(2).toDateTime();
             int connection = query.value(3).toInt();
 
 
-            qDebug() << "New item:\t" << record_id << "\t" << object_id << "\t" << date.toString("dd.MM.yyyy hh:mm:ss.zzz") << "\t" << connection;
+            qDebug() << "New item:\t" << record_id << "\t" << object_id << "\t" << dateTime.toString("dd.MM.yyyy hh:mm:ss.zzz") << "\t" << connection;
 
             QString stat_measurements = statement_measurement.arg(record_id, 0, 10);
             QSqlQuery query_measurements(stat_measurements, db);
@@ -202,7 +203,7 @@ void IncomingDataController::processNewData()
                 // add DataRecord to dataset
                 vector <double> nonInf(0);
 
-                datasetConnector->newRecord((time_t)date.toTime_t(), dataValues, nonInf, infos, result[0]);
+                datasetConnector->newRecord((time_t)dateTime.toTime_t(), dataValues, nonInf, infos, result[0]);
 
                 // redraw LiveLineChart
                 guiController->refreshLiveLineChart();
@@ -210,7 +211,17 @@ void IncomingDataController::processNewData()
                 mainWindow->newRecords(1);
 
                 if(result[0])
+                {
                     mainWindow->newAnomalies(1);
+
+                    std::vector<QString> units;
+                    for(int i=0; i<infos.size(); i++)
+                    {
+                        units.push_back(datasetConnector->datasetControler->dataset->dataTable->measurementsInfos->getUnit(infos[i]));
+                    }
+                    //send notifications
+                    notificationSender->sendNotifications(mainWindow->getSelectedObjectName(), dateTime, datasetConnector->datasetControler->dataset->dataTable->dataNames, dataValues, units, mins, maxs);
+                }
             }
         }
 

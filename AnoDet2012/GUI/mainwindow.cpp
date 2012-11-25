@@ -212,6 +212,11 @@ int MainWindow::getSelectedMethodId()
     return ui->comboBox->currentIndex();
 }
 
+QString MainWindow::getSelectedObjectName()
+{
+    return objectsData[choosenObjectId].second;
+}
+
 void MainWindow::on_filterValuesBtn_clicked()
 {
     DialogFilter dialogFilter;

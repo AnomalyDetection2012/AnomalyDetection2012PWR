@@ -13,7 +13,7 @@ public:
     ~NotificationSender();
 
     void sendNotifications(QString *object, QVector<QString> *labels, QVector<double> *values);
-
+    void sendNotifications(QString &name, QDateTime &dateTime, std::vector<QString> &dataNames, std::vector<double> &values, std::vector<QString> &units, std::vector<double> &mins, std::vector<double> &maxs);
 
 private:
 
