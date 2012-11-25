@@ -13,6 +13,7 @@
 #include <QDateTime>
 #include <QSpacerItem>
 #include <QGridLayout>
+#include <QStandardItemModel>
 
 #define CHECKBOX_CHECKED 2
 
@@ -121,6 +122,7 @@ void MainWindow::connectDatabase(){
         ui->comboBox_2->setCurrentIndex(choosenObjectId);
         ui->label_12->setText(ui->comboBox_2->currentText());
         ui->selectObjectBox->setEnabled(true);
+        ui->comboBox_2->setEnabled(true);
 
         ui->connectionStatusLabel->setText(QString::fromUtf8("<font color='green'>Połączono</font>"));
         ui->statusBar->showMessage(QString::fromUtf8("   Połączenie ze wskazaną bazą danych zostało nawiązane"),10000);
@@ -274,7 +276,11 @@ void MainWindow::loadAllObjectRecords()
             this->statusOfObjectDataLoad = true;
             ui->livelogTab->setEnabled(true);
             ui->anomalyDetectionTab->setEnabled(true);
+
             ui->dataOverviewTab->setEnabled(true);
+            ui->refreshDatabaseTable->setEnabled(true);
+            ui->datasetTableView->setEnabled(true);
+
             ui->reportsTab->setEnabled(true);
             ui->subscriptionTab->setEnabled(true);
         }
@@ -410,4 +416,25 @@ void MainWindow::leftClicked()
         ui->webView->setInterval(begin, end);
         redrawDataset();
     }
+}
+
+void MainWindow::refreshDatabaseTable(){
+    DataRecordTable *dataTable = ct->dataset->datasetControler->dataset->dataTable;
+    int columns = dataTable->dataNames.size();
+    int rows = dataTable->records.size();
+    QStandardItemModel *model = new QStandardItemModel(rows, columns, this);
+
+    for(int i=0; i<columns; ++i){
+        model->setHorizontalHeaderItem(i, new QStandardItem(dataTable->dataNames[i]));
+    }
+
+    DataRecord *record;
+    for(int i=0; i<rows; ++i){
+        record = &(dataTable->records.at(i));
+        for(int j=0; j<columns; ++j){
+            model->setItem(i, j, new QStandardItem(QString::number(record->data[j])));
+        }
+    }
+
+    ui->datasetTableView->setModel(model);
 }

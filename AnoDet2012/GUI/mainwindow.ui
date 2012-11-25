@@ -30,7 +30,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="livelogTab">
        <property name="enabled">
@@ -300,7 +300,7 @@
         <item row="0" column="0">
          <widget class="QTabWidget" name="tabWidget_2">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tab_5">
            <attribute name="title">
@@ -473,7 +473,7 @@
             <item>
              <widget class="QTabWidget" name="tabWidget_3">
               <property name="currentIndex">
-               <number>0</number>
+               <number>4</number>
               </property>
               <widget class="QWidget" name="tab_7">
                <attribute name="title">
@@ -653,7 +653,37 @@
        <attribute name="title">
         <string>Przegląd danych</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_7"/>
+       <layout class="QGridLayout" name="gridLayout_7">
+        <item row="0" column="0">
+         <widget class="QTableView" name="datasetTableView">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="refreshDatabaseTable">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Refresh</string>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="reportsTab">
        <property name="enabled">
@@ -1351,6 +1381,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>refreshDatabaseTable</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>refreshDatabaseTable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>94</x>
+     <y>623</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>321</x>
+     <y>338</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>chooseObject()</slot>
@@ -1367,5 +1413,6 @@
   <slot>setRefreshInterval()</slot>
   <slot>rightClicked()</slot>
   <slot>leftClicked()</slot>
+  <slot>refreshDatabaseTable()</slot>
  </slots>
 </ui>

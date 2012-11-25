@@ -53,6 +53,7 @@ private slots:
     void updateSize();
     void rightClicked();
     void leftClicked();
+    void refreshDatabaseTable();
 };
 
 #endif // MAINWINDOW_H
