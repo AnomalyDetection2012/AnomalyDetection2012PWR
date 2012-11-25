@@ -1,6 +1,7 @@
 #include "connectortracker.h"
 #include "Dataset/DatasetConnector.h"
 #include "DataLoader/dataloader.h"
+#include "Alarms/notificationsender.h"
 #include "ConfigurationHandler/configurationhandler.h"
 #include "ANOMALY_DETECTION/algorithmcontroler.h"
 #include "INCOMING_DATA_TRACKING/IncomingDataController.h"
@@ -9,6 +10,7 @@
 ConnectorTracker::ConnectorTracker()
 {
     configuration = new ConfigurationHandler();
+    sender = new NotificationSender(configuration);
     dataset = new DatasetConnector();
     anomalyDetection = new AlgorithmControler();
     guiController = new GUIController(); // remember to set components
@@ -37,7 +39,7 @@ bool ConnectorTracker::createConnection(int objectId){
 
     if (!dbConnection->open())
     {
-        qDebug() << "An error was encountered: "<< QSqlError(dbConnection->lastError()).text();
+        qDebug() << "An error was encountered: " << QSqlError(dbConnection->lastError()).text();
         return false;
     }
     else

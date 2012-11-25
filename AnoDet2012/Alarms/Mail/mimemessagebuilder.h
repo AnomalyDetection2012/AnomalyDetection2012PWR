@@ -20,7 +20,7 @@ class MimeMessageBuilder
 public:
     MimeMessageBuilder(ConfigurationHandler *config);
     ~MimeMessageBuilder();
-    MimeMessage * build(QVector<Subscriber> *subscribers);
+    MimeMessage * build(QVector<Subscriber> *subscribers, QString *object, QVector<QString> *labels, QVector<double> *values);
 
 
 private:

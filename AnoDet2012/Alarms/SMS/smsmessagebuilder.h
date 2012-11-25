@@ -39,7 +39,7 @@ public:
 
     SMSMessageBuilder(ConfigurationHandler *config);
     ~SMSMessageBuilder();
-    SMSMessageBuilder::SMSMessage * build(QVector<Subscriber> *subscribers);
+    SMSMessageBuilder::SMSMessage * build(QVector<Subscriber> *subscribers, QString *object, QVector<QString> *labels, QVector<double> *values);
 
 
 private:

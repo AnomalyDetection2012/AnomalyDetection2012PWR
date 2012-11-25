@@ -91,7 +91,8 @@ void MimeMessageBuilder::reloadConfiguration()
     loadConfiguration();
 }
 
-MimeMessage * MimeMessageBuilder::build(QVector<Subscriber> *subscribers)
+// TODO: use additional parameters
+MimeMessage * MimeMessageBuilder::build(QVector<Subscriber> *subscribers, QString *object, QVector<QString> *labels, QVector<double> *values)
 {
     MimeMessage *message = new MimeMessage();
     message->setSender(new EmailAddress(*senderAddress, *senderField));
@@ -100,9 +101,16 @@ MimeMessage * MimeMessageBuilder::build(QVector<Subscriber> *subscribers)
     QVector<Subscriber>::iterator i;
     for (i = subscribers->begin(); i != subscribers->end(); ++i)
     {
-        message->addRecipient(new EmailAddress((*i).mail,
-                                               (*i).identifier),
-                                               MimeMessage::Bcc);
+        switch ((*i).notification)
+        {
+            case Mail:
+            case Both:
+                message->addRecipient(new EmailAddress((*i).mail,
+                                                       (*i).identifier),
+                                                       MimeMessage::Bcc);
+            default:
+                continue;
+        }
     }
 
     MimeHtml *html = new MimeHtml();
