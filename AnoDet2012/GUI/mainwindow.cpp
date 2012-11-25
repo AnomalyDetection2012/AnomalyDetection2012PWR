@@ -14,6 +14,7 @@
 #include <QSpacerItem>
 #include <QGridLayout>
 #include <QStandardItemModel>
+#include "GUI/datasettableview.h"
 
 #define CHECKBOX_CHECKED 2
 
@@ -422,19 +423,20 @@ void MainWindow::refreshDatabaseTable(){
     DataRecordTable *dataTable = ct->dataset->datasetControler->dataset->dataTable;
     int columns = dataTable->dataNames.size();
     int rows = dataTable->records.size();
-    QStandardItemModel *model = new QStandardItemModel(rows, columns, this);
+    DatasetTableView *model = new DatasetTableView(rows, columns, this);
+    model->setDataRecords(dataTable);
 
     for(int i=0; i<columns; ++i){
         model->setHorizontalHeaderItem(i, new QStandardItem(dataTable->dataNames[i]));
     }
 
-    DataRecord *record;
-    for(int i=0; i<rows; ++i){
-        record = &(dataTable->records.at(i));
-        for(int j=0; j<columns; ++j){
-            model->setItem(i, j, new QStandardItem(QString::number(record->data[j])));
-        }
-    }
+//    DataRecord *record;
+//    for(int i=0; i<rows; ++i){
+//        record = &(dataTable->records.at(i));
+//        for(int j=0; j<columns; ++j){
+//            model->setItem(i, j, new QStandardItem(QString::number(record->data[j])));
+//        }
+//    }
 
     ui->datasetTableView->setModel(model);
 }
