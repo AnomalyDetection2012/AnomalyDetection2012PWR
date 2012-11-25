@@ -58,6 +58,7 @@ void LiveLineChart::loadData()
             int showLastRecords = 50;   // show last 50 records on chart
             std::vector <std::vector <double> > values = dataset->getData(recordsNum - showLastRecords < 0 ? 0 : recordsNum - showLastRecords, recordsNum);
             std::vector <QString> dataNames = dataset->dataTable->dataNames;
+            std::vector <int> programMeasurementIds = dataset->dataTable->records[0].infoAddress;
 
             if(!this->filter.size())
                 initFilter(dataNames.size());
@@ -73,7 +74,7 @@ void LiveLineChart::loadData()
             for(int i=0;i<dataNames.size();i++)
             {
                 if(this->filter[i])
-                    url = url.append(dataNames[i].append(";"));
+                    url = url.append(dataNames[i]).append("[").append(dataset->dataTable->measurementsInfos->getUnit(programMeasurementIds[i])).append("];");
             }
 
             url = url.append("&values=");
@@ -115,6 +116,7 @@ void LiveLineChart::loadData()
         {
             std::vector <std::vector <double> > values = dataset->getData(this->begin,this->end);
             std::vector <QString> dataNames = dataset->dataTable->dataNames;
+            std::vector <int> programMeasurementIds = dataset->dataTable->records[0].infoAddress;
 
             if(!this->filter.size())
                 initFilter(dataNames.size());
@@ -130,7 +132,7 @@ void LiveLineChart::loadData()
             for(int i=0;i<dataNames.size();i++)
             {
                 if(this->filter[i])
-                    url = url.append(dataNames[i].append(";"));
+                    url = url.append(dataNames[i]).append("[").append(dataset->dataTable->measurementsInfos->getUnit(programMeasurementIds[i])).append("];");
             }
 
             url = url.append("&values=");

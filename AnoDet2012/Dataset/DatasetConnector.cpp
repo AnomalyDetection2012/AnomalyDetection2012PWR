@@ -79,6 +79,15 @@ QString DatasetConnector::getMeasurementName(int type_id)
     return NULL;
 }
 
+QString DatasetConnector::getUnit(int type_id)
+{
+    if(datasetControler != NULL)
+    {
+        return datasetControler->getUnit(type_id);
+    }
+    return NULL;
+}
+
 double DatasetConnector::getMinValue(int type_id)
 {
     if(datasetControler != NULL)

@@ -81,6 +81,11 @@ double DatasetControler::getMaxValue(int type_id)
     return this->dataset->dataTable->measurementsInfos->getMinValue(type_id);
 }
 
+QString DatasetControler::getUnit(int type_id)
+{
+    return this->dataset->dataTable->measurementsInfos->getUnit(type_id);
+}
+
 void DatasetControler::setMeasurementsInfo(MeasurementInfo *measurementsInfos)
 {
     dataset->setMeasurementsInfo(measurementsInfos);

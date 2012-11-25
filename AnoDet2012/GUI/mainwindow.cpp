@@ -71,14 +71,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ct->mainWindow = this;
     timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), SLOT(afterResize()));
+    connect(timer, SIGNAL(timeout()), SLOT(updateSize()));
 
-    int w = ui->webView->geometry().width() * 1.11;
+    /*int w = ui->webView->geometry().width() * 1.11;
     int h = ui->webView->geometry().height() * 1.72;
 
-    ui->webView->setSize(w,h);
+    ui->webView->setSize(w,h);*/
+    //updateSize();
 
-    qDebug() << ui->webView->geometry().height();
+    //qDebug() << ui->webView->geometry().height();
 }
 
 MainWindow::~MainWindow()
@@ -189,7 +190,8 @@ void MainWindow::testData(){
 }
 
 void MainWindow::redrawDataset(){
-    ui->webView->reloadData();
+    //ui->webView->reloadData();
+    updateSize();
     //qDebug()<<ui->webView->url();
 }
 
@@ -271,6 +273,7 @@ void MainWindow::loadAllObjectRecords()
             ui->reportsTab->setEnabled(true);
             ui->subscriptionTab->setEnabled(true);
         }
+        dl->loadMeasurementInfo();
     }
 }
 
@@ -284,7 +287,7 @@ void MainWindow::startLivelog()
 {
     ui->livelogChart->setDataset(ct->dataset->datasetControler->dataset);
     ct->guiController->setLiveLineChart(ui->livelogChart);
-    ct->guiController->refreshLiveLineChart();
+    //ct->guiController->refreshLiveLineChart();
     ct->incomingData->startListening();
 
     ui->livelogStatusLabel->setText(QString::fromUtf8("<b><font color='green'>Uruchomiony</font></b>"));
@@ -293,6 +296,8 @@ void MainWindow::startLivelog()
     ui->refreshIntervalLabel->setText(QString::number(ct->incomingData->getRefreshInterval()/1000)+ " " + ui->refreshIntervalSpin->suffix());
     ui->newAnomaliesNumLabel->setText("0");
     ui->newRecordsNumLabel->setText("0");
+
+    updateSize();
 }
 
 void MainWindow::stopLivelog()
@@ -343,7 +348,7 @@ void MainWindow::setRefreshInterval()
     ui->refreshIntervalLabel->setText(QString::number(ui->refreshIntervalSpin->value()) + " " + ui->refreshIntervalSpin->suffix());
 }
 
-void MainWindow::afterResize()
+void MainWindow::updateSize()
 {
     int w1 = ui->webView->geometry().width() * 1.30;
     int h1 = ui->webView->geometry().height() * 1.0;

@@ -49,7 +49,7 @@ private slots:
     void stopLivelog();
     void filterValuesLivelog();
     void setRefreshInterval();
-    void afterResize();
+    void updateSize();
 };
 
 #endif // MAINWINDOW_H
