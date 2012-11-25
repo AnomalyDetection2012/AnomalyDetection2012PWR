@@ -27,6 +27,7 @@ public:
     double getMinValue(int type_id);
     double getMaxValue(int type_id);
     void setAnomaly(int id, bool isAnomaly);
+    void setDatabaseAnomaly(int id, bool isAnomaly);
     std::vector<std::vector<double> > getData(int begin, int end);
 
 private:

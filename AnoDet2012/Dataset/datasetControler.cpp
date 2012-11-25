@@ -98,3 +98,7 @@ void DatasetControler::setAnomaly(int id, bool isAnomaly){
 vector<vector<double> > DatasetControler::getData(int begin, int end){
     return dataset->getData(begin, end);
 }
+
+void DatasetControler::setDatabaseAnomaly(int id, bool isAnomaly){
+    dataset->setDatabaseAnomaly(id, isAnomaly);
+}

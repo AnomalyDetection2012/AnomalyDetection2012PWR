@@ -22,6 +22,8 @@ public:
     void saveResults(std::vector<bool> &anomalies, int begin);
     void setMeasurementsInfo(MeasurementInfo *measurementsInfos);
     void setAnomaly(int id, bool isAnomaly);
+    void setDatabaseAnomaly(int id, bool isAnomaly);
+
 };
 
 #endif // DATARECORDTABLE_H

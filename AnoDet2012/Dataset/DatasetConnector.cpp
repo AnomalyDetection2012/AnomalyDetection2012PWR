@@ -119,6 +119,13 @@ void DatasetConnector::setAnomaly(int id, bool isAnomaly){
     }
 }
 
+void DatasetConnector::setDatabaseAnomaly(int id, bool isAnomaly){
+    if(datasetControler != NULL){
+        datasetControler->setDatabaseAnomaly(id, isAnomaly);
+    }
+}
+
+
 vector<vector<double> > DatasetConnector::getData(int begin, int end){
     if(datasetControler != NULL){
         return datasetControler->getData(begin, end);

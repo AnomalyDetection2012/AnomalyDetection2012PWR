@@ -9,6 +9,7 @@ DataRecord::DataRecord(time_t time, vector<double> &data, vector<double> &noninf
 	this->noninformativeData = noninformativeData;
 	this->infoAddress = infos;
 	this->isAnomaly = isAnomaly;
+    this->isDatabaseAnomaly = isAnomaly;
 }
 
 

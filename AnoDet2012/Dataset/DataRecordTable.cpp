@@ -71,3 +71,7 @@ void DataRecordTable::setMeasurementsInfo(MeasurementInfo *measurementsInfos)
 void DataRecordTable::setAnomaly(int id, bool isAnomaly){
     records[id].isAnomaly = isAnomaly;
 }
+
+void DataRecordTable::setDatabaseAnomaly(int id, bool isAnomaly){
+    records[id].isDatabaseAnomaly = isAnomaly;
+}

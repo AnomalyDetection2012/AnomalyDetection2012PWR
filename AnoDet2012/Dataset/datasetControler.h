@@ -21,6 +21,7 @@ public:
     void setMinMax(double* min, double* max);
     void setMeasurementsInfo(MeasurementInfo *measurementsInfos);
     void setAnomaly(int id, bool isAnomaly);
+    void setDatabaseAnomaly(int id, bool isAnomaly);
     QString getMeasurementName(int type_id);
     QString getUnit(int type_id);
     double getMinValue(int type_id);
