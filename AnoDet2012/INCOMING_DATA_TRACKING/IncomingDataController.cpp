@@ -2,7 +2,7 @@
 #include <sstream>
 
 static const QString statement_base = "SELECT CT.Rekord_ID, E.Obiekt_ID, E.Data, E.Typ_polaczenia FROM dbo.Rekord E JOIN CHANGETABLE(CHANGES dbo.Rekord, %1) AS CT ON E.Rekord_ID = CT.Rekord_ID WHERE CT.SYS_CHANGE_OPERATION='I' AND CT.SYS_CHANGE_VERSION <= %2 AND E.Obiekt_ID = %3;";
-static const QString statement_measurement = "SELECT [SCSWin].[dbo].[Wyniki_pomiar].[Program_pomiar_ID],[Wartosc], [SCSWin].[dbo].[Program_pomiar].[AlertMin], [SCSWin].[dbo].[Program_pomiar].[AlertMax], [Nazwa_pomiaru] FROM [SCSWin].[dbo].[Wyniki_pomiar] inner join [SCSWin].[dbo].[Program_pomiar] on [SCSWin].[dbo].[Wyniki_pomiar].[Program_pomiar_ID]=[SCSWin].[dbo].[Program_pomiar].[Program_pomiar_ID] WHERE [Rekord_ID]=%1;";
+static const QString statement_measurement = "SELECT  [Wyniki_pomiar].[Program_pomiar_ID],[Wartosc],  [Program_pomiar].[AlertMin],  [Program_pomiar].[AlertMax], [Nazwa_pomiaru] FROM  [Wyniki_pomiar] inner join  [Program_pomiar] on  [Wyniki_pomiar].[Program_pomiar_ID]= [Program_pomiar].[Program_pomiar_ID] WHERE [Rekord_ID]=%1;";
 
 IncomingDataController::IncomingDataController(QString server, QString dbName, QString username, QString password)
 {
@@ -49,6 +49,7 @@ void IncomingDataController::initialiseConnectors(ConnectorTracker *con){
     datasetConnector = con->dataset;
     configuration = con->configuration;
     guiController = con->guiController;
+    mainWindow = con->mainWindow;
 }
 
 void IncomingDataController::startListening()
@@ -64,6 +65,16 @@ void IncomingDataController::startListening(unsigned long interval)
 void IncomingDataController::stopListening()
 {
     timer->stop();
+}
+
+void IncomingDataController::setRefreshInterval(unsigned interval)
+{
+    this->timer->setInterval(interval);
+}
+
+unsigned IncomingDataController::getRefreshInterval()
+{
+    return this->timer->interval();
 }
 
 int IncomingDataController::getCurrVersionID()
@@ -157,10 +168,13 @@ void IncomingDataController::processNewData()
             {
                 vector <double> dataValues;
                 vector <double> mins, maxs;
+                vector <int> infos;
 
                 while(query_measurements.next())
                 {
                     int program_measurement_ID = query_measurements.value(0).toInt();
+                    infos.push_back(program_measurement_ID);
+
                     double value = query_measurements.value(1).toDouble();
 
                     double min = datasetConnector->getMinValue(program_measurement_ID);
@@ -183,15 +197,20 @@ void IncomingDataController::processNewData()
                     minsT[k] = mins[k];
                     maxsT[k] = maxs[k];
                 }
-                vector <bool> result = anomalyDetection->test(1,wrap, minsT, maxsT);    //TODO: which method?
+                vector <bool> result = anomalyDetection->test(mainWindow->getSelectedMethodId(),wrap, minsT, maxsT);
 
                 // add DataRecord to dataset
                 vector <double> nonInf(0);
-                vector <int> infos(0);
+
                 datasetConnector->newRecord((time_t)date.toTime_t(), dataValues, nonInf, infos, result[0]);
 
                 // redraw LiveLineChart
                 guiController->refreshLiveLineChart();
+
+                mainWindow->newRecords(1);
+
+                if(result[0])
+                    mainWindow->newAnomalies(1);
             }
         }
 

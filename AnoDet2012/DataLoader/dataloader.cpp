@@ -37,7 +37,7 @@ void DataLoader::initDataRecordTable()
     if(this->performDatabaseConnection())
     {
         this->recordSize = 0;
-        this->programAlarmIds = *(new vector<double>());
+        this->programPomiarIds = *(new vector<int>());
         this->recordIds = *(new vector<int>());
         vector<QString> dataNames;
 
@@ -50,7 +50,7 @@ void DataLoader::initDataRecordTable()
         } else {
             while (query.next()) {
                 ++this->recordSize;
-                this->programAlarmIds.push_back(query.value(0).toInt());
+                this->programPomiarIds.push_back(query.value(0).toInt());
                 dataNames.push_back(query.value(1).toString());
             }
             vector<QString> vcEmpty;
@@ -69,7 +69,7 @@ void DataLoader::loadMeasurementInfo()
 {
     if(this->performDatabaseConnection())
     {
-        QString statement("SELECT [Program_pomiar_ID], [Nazwa_pomiaru], [AlertMin], [AlertMax] FROM [SCSWin].[dbo].[Program_pomiar];");
+        QString statement("SELECT [Program_pomiar_ID], [Nazwa_pomiaru], [Unit], [minValue], [maxValue] FROM  [Program_pomiar];");
         QSqlQuery query(statement, db);
         query.setForwardOnly(true);
 
@@ -84,8 +84,9 @@ void DataLoader::loadMeasurementInfo()
                 QHash <QString, QVariant> m;
                 //m = new QHash <QString, QVariant>();
                 m.insert("MeasurementName",query.value(1));
-                m.insert("MinValue",query.value(2));
-                m.insert("MaxValue", query.value(3));
+                m.insert("Unit", query.value(2));
+                m.insert("MinValue",query.value(3));
+                m.insert("MaxValue", query.value(4));
 
                 this->measurementInfo.insert(query.value(0).toInt(), m);
             }
@@ -102,12 +103,12 @@ void DataLoader::loadAllRecords()
         QString statement("SELECT Rekord_ID, Data");
         for(int a = 0; a < this->recordSize; ++a)
         {
-            statement.append(", ["+QString::number(this->programAlarmIds[a])+"]");
+            statement.append(", ["+QString::number(this->programPomiarIds[a])+"]");
         }
-        statement.append("from (Select TOP 1600000 Wyniki_pomiar.Rekord_ID, Program_pomiar_ID, Wartosc, Data From Wyniki_pomiar left join Rekord on Rekord.Rekord_ID = Wyniki_pomiar.Rekord_ID where Rekord.Obiekt_ID = "+QString::number(this->objectId)+" order by Rekord_ID) p PIVOT( min(Wartosc) FOR Program_pomiar_ID IN (["+QString::number(this->programAlarmIds[0])+"]");
+        statement.append("from (Select TOP 1600000 Wyniki_pomiar.Rekord_ID, Program_pomiar_ID, Wartosc, Data From Wyniki_pomiar left join Rekord on Rekord.Rekord_ID = Wyniki_pomiar.Rekord_ID where Rekord.Obiekt_ID = "+QString::number(this->objectId)+" order by Rekord_ID) p PIVOT( min(Wartosc) FOR Program_pomiar_ID IN (["+QString::number(this->programPomiarIds[0])+"]");
         for(int a = 1; a < this->recordSize; ++a)
         {
-            statement.append(", ["+QString::number(this->programAlarmIds[a])+"]");
+            statement.append(", ["+QString::number(this->programPomiarIds[a])+"]");
         }
         statement.append(")) as pvt order by pvt.Rekord_ID");
 
@@ -119,25 +120,32 @@ void DataLoader::loadAllRecords()
         if (!query.isActive()) {
             qDebug() << "An error was encountered: "<< QSqlError(query.lastError()).text();
         } else {
-            while (query.next()) {
+            while (query.next())
+            {
+
                 vector<double> data(this->recordSize);
                 this->recordIds.push_back(query.value(0).toInt());
                 for(int a = 0; a < this->recordSize; ++a)
                 {
                     data[a] = query.value(a+2).toDouble();
                 }
-                dataset->newRecord(query.value(1).toDateTime().toTime_t(), data, *(new vector<double>(0)), *(new vector<int>(0)),false);
+                dataset->newRecord(query.value(1).toDateTime().toTime_t(), data, *(new vector<double>(0)), this->programPomiarIds,false);
                 this->progessBar->setValue(this->progessBar->value()+1);
+
+                if(this->progessBar->wasCanceled())
+                {
+                    break;
+                }
             }
         }
     }
 }
 
-vector<int> DataLoader::loadAllObjectIDs()
+vector<QPair<int, QString> >* DataLoader::loadAllObjectsData()
 {
     if(this->performDatabaseConnection())
     {
-        QString statement("SELECT TOP 17 [Obiekt_ID] FROM [SCSWin].[dbo].[Obiekt] where Nazwa_obiektu like '%Monitoring'");
+        QString statement("SELECT TOP 17 [Obiekt_ID], Nazwa_obiektu FROM  [Obiekt] where Nazwa_obiektu like '%Monitoring'");
 
         QSqlQuery query(statement, db);
         query.setForwardOnly(true);
@@ -145,22 +153,25 @@ vector<int> DataLoader::loadAllObjectIDs()
         if (!query.isActive()) {
             qDebug() << "An error was encountered: "<< QSqlError(query.lastError()).text();
         } else {
-            vector<int> objectIDs = *(new vector<int>(17));
+            vector<QPair<int, QString> >* objectsData = new vector<QPair<int, QString> >(17);
             int currentObject=0;
-            while (query.next()) {
-                objectIDs[currentObject++] = query.value(0).toInt();
+            while (query.next())
+            {
+                objectsData->at(currentObject) = *(new QPair<int, QString>(query.value(0).toInt(), query.value(1).toString()));
+                currentObject++;
+                this->progessBar->setValue(this->progessBar->value()+1);
             }
-            return objectIDs;
+            return objectsData;
         }
     }
-    return *(new vector<int>(0));
+    return NULL;
 }
 
 int DataLoader::getAmountOfObjectRecords(int objectID)
 {
     if(this->performDatabaseConnection())
     {
-        QString statement("SELECT COUNT(*) FROM [SCSWin].[dbo].[Rekord] where Obiekt_ID = "+QString::number(objectID)+" group by Obiekt_ID");
+        QString statement("SELECT COUNT(*) FROM  [Rekord] where Obiekt_ID = "+QString::number(objectID)+" group by Obiekt_ID");
 
         QSqlQuery query(statement, db);
         query.setForwardOnly(true);
@@ -189,12 +200,12 @@ void DataLoader::loadRecords(int from, int to)
         QString statement("SELECT Rekord_ID, Data");
         for(int a = 0; a < this->recordSize; ++a)
         {
-            statement.append(", ["+QString::number(this->programAlarmIds[a])+"]");
+            statement.append(", ["+QString::number(this->programPomiarIds[a])+"]");
         }
-        statement.append("from (Select TOP "+QString::number((to-from+1)*this->recordSize)+" Wyniki_pomiar.Rekord_ID, Program_pomiar_ID, Wartosc, Data From Wyniki_pomiar left join Rekord on Rekord.Rekord_ID = Wyniki_pomiar.Rekord_ID where Rekord.Obiekt_ID = "+QString::number(this->objectId)+" and Rekord.Rekord_ID>="+QString::number(firstRecordID)+" order by Rekord_ID) p PIVOT( min(Wartosc) FOR Program_pomiar_ID IN (["+QString::number(this->programAlarmIds[0])+"]");
+        statement.append("from (Select TOP "+QString::number((to-from+1)*this->recordSize)+" Wyniki_pomiar.Rekord_ID, Program_pomiar_ID, Wartosc, Data From Wyniki_pomiar left join Rekord on Rekord.Rekord_ID = Wyniki_pomiar.Rekord_ID where Rekord.Obiekt_ID = "+QString::number(this->objectId)+" and Rekord.Rekord_ID>="+QString::number(firstRecordID)+" order by Rekord_ID) p PIVOT( min(Wartosc) FOR Program_pomiar_ID IN (["+QString::number(this->programPomiarIds[0])+"]");
         for(int a = 1; a < this->recordSize; ++a)
         {
-            statement.append(", ["+QString::number(this->programAlarmIds[a])+"]");
+            statement.append(", ["+QString::number(this->programPomiarIds[a])+"]");
         }
         statement.append(")) as pvt where Rekord_ID>="+QString::number(firstRecordID)+" order by pvt.Rekord_ID");
 

@@ -81,6 +81,11 @@ double DatasetControler::getMaxValue(int type_id)
     return this->dataset->dataTable->measurementsInfos->getMinValue(type_id);
 }
 
+QString DatasetControler::getUnit(int type_id)
+{
+    return this->dataset->dataTable->measurementsInfos->getUnit(type_id);
+}
+
 void DatasetControler::setMeasurementsInfo(MeasurementInfo *measurementsInfos)
 {
     dataset->setMeasurementsInfo(measurementsInfos);
@@ -92,4 +97,8 @@ void DatasetControler::setAnomaly(int id, bool isAnomaly){
 
 vector<vector<double> > DatasetControler::getData(int begin, int end){
     return dataset->getData(begin, end);
+}
+
+void DatasetControler::setDatabaseAnomaly(int id, bool isAnomaly){
+    dataset->setDatabaseAnomaly(id, isAnomaly);
 }

@@ -23,9 +23,11 @@ public:
     double* getMaximals();
     void setMeasurementsInfo(MeasurementInfo *measurementsInfos);
     QString getMeasurementName(int type_id);
+    QString getUnit(int type_id);
     double getMinValue(int type_id);
     double getMaxValue(int type_id);
     void setAnomaly(int id, bool isAnomaly);
+    void setDatabaseAnomaly(int id, bool isAnomaly);
     std::vector<std::vector<double> > getData(int begin, int end);
 
 private:

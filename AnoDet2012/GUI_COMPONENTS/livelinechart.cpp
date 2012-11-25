@@ -4,12 +4,18 @@ LiveLineChart::LiveLineChart(QWidget *parent) :
     QWebView(parent)
 {
     this->logScale = false;
+    this->liveMode = true;
+    this->width = 660;
+    this->height = 350;
 }
 
 LiveLineChart::LiveLineChart(QWidget *parent, int width, int height, Dataset *dataset) :
     QWebView(parent), width(width), height(height), dataset(dataset)
 {
     this->logScale = false;
+    this->liveMode = true;
+    this->width = 660;
+    this->height = 350;
 }
 
 void LiveLineChart::setDataset(Dataset *dataset)
@@ -36,64 +42,132 @@ void LiveLineChart::setLinearScale()
     this->loadData();
 }
 
+void LiveLineChart::setSize(int width, int height)
+{
+    this->width = width;
+    this->height = height;
+}
+
 void LiveLineChart::loadData()
 {
     if(dataset != NULL)
     {
-        int recordsNum = dataset->getDataRecordsAmmount();
-        int showLastRecords = 50;   // show last 50 records on chart
-        std::vector <std::vector <double> > values = dataset->getData(recordsNum - showLastRecords < 0 ? 0 : recordsNum - showLastRecords, recordsNum);
-        std::vector <QString> dataNames = dataset->dataTable->dataNames;
-
-        if(!this->filter.size())
-            initFilter(dataNames.size());
-
-        int dimension = values[0].size();
-        std::vector <bool> anomalies = dataset->getAnomalies(recordsNum - showLastRecords < 0 ? 0 : recordsNum - showLastRecords, recordsNum);
-
-        QString url = "GUI_COMPONENTS/Line.html?&logscale=";
-        url = url.append(this->logScale?"true":"false");
-
-        url = url.append("&labels=");
-        for(int i=0;i<dataNames.size();i++)
+        if(this->liveMode)
         {
-            if(this->filter[i])
-                url = url.append(dataNames[i].append(";"));
-        }
+            int recordsNum = dataset->getDataRecordsAmmount();
+            int showLastRecords = 50;   // show last 50 records on chart
+            std::vector <std::vector <double> > values = dataset->getData(recordsNum - showLastRecords < 0 ? 0 : recordsNum - showLastRecords, recordsNum);
+            std::vector <QString> dataNames = dataset->dataTable->dataNames;
+            std::vector <int> programMeasurementIds = dataset->dataTable->records[0].infoAddress;
 
-        url = url.append("&values=");
-        for(int i=0;i<values.size() && i < 50;i++)
-        {
+            if(!this->filter.size())
+                initFilter(dataNames.size());
 
-            if(!anomalies[i])
+            std::vector <bool> anomalies = dataset->getAnomalies(recordsNum - showLastRecords < 0 ? 0 : recordsNum - showLastRecords, recordsNum);
+
+            QString url = "qrc:///googleChart/Line.html?&logscale=";
+            url = url.append(this->logScale?"true":"false");
+
+            url = url.append(QString("&width=%1&height=%2").arg(this->width,0,10).arg(this->height,0,10));
+
+            url = url.append("&labels=");
+            for(int i=0;i<dataNames.size();i++)
             {
-                url = url.append(" ,");
-
-                for(int j=0;j<values[0].size();j++)
-                {
-                    if(this->filter[j])
-                        url = url.append(QString::number(values[i][j])).append(',');
-                }
-
-                url = url.append(" , ;");
-            }
-            else //if anomaly
-            {
-                url = url.append("anomaly,");
-
-                for(int j=0;j<values[0].size();j++)
-                {
-                    if(this->filter[j])
-                        url = url.append(QString::number(values[i][j])).append(',');
-                }
-
-                url = url.append("anomaly,possible anomaly!;");
+                if(this->filter[i])
+                    url = url.append(dataNames[i]).append("[").append(dataset->dataTable->measurementsInfos->getUnit(programMeasurementIds[i])).append("];");
             }
 
-        }
+            url = url.append("&values=");
+            for(int i=0;i<values.size() && i < showLastRecords;i++)
+            {
 
-        //qDebug() << url;
-        this->load(QUrl(url));
+                if(!anomalies[i])
+                {
+                    url = url.append(" ,");
+
+                    for(int j=0;j<values[0].size();j++)
+                    {
+                        if(this->filter[j])
+                            url = url.append(QString::number(values[i][j])).append(',');
+                    }
+
+                    url = url.append(" , ;");
+                }
+                else //if anomaly
+                {
+                    url = url.append("anomaly,");
+
+                    for(int j=0;j<values[0].size();j++)
+                    {
+                        if(this->filter[j])
+                            url = url.append(QString::number(values[i][j])).append(',');
+                    }
+
+                    url = url.append("anomaly,possible anomaly!;");
+                }
+
+            }
+
+            //qDebug() << url;
+            this->load(QUrl(url));
+
+        }
+        else if(this->begin < this->end && this->begin >= 0)// if live mode disabled and beging and are correct
+        {
+            std::vector <std::vector <double> > values = dataset->getData(this->begin,this->end);
+            std::vector <QString> dataNames = dataset->dataTable->dataNames;
+            std::vector <int> programMeasurementIds = dataset->dataTable->records[0].infoAddress;
+
+            if(!this->filter.size())
+                initFilter(dataNames.size());
+
+            std::vector <bool> anomalies = dataset->getAnomalies(begin,end);
+
+            QString url = "qrc:///googleChart/Line.html?&logscale=";
+            url = url.append(this->logScale?"true":"false");
+
+            url = url.append(QString("&width=%1&height=%2").arg(this->width,0,10).arg(this->height,0,10));
+
+            url = url.append("&labels=");
+            for(int i=0;i<dataNames.size();i++)
+            {
+                if(this->filter[i])
+                    url = url.append(dataNames[i]).append("[").append(dataset->dataTable->measurementsInfos->getUnit(programMeasurementIds[i])).append("];");
+            }
+
+            url = url.append("&values=");
+            for(int i=0;i<values.size();i++)
+            {
+
+                if(!anomalies[i])
+                {
+                    url = url.append(" ,");
+
+                    for(int j=0;j<values[0].size();j++)
+                    {
+                        if(this->filter[j])
+                            url = url.append(QString::number(values[i][j])).append(',');
+                    }
+
+                    url = url.append(" , ;");
+                }
+                else //if anomaly
+                {
+                    url = url.append("anomaly,");
+
+                    for(int j=0;j<values[0].size();j++)
+                    {
+                        if(this->filter[j])
+                            url = url.append(QString::number(values[i][j])).append(',');
+                    }
+
+                    url = url.append("anomaly,possible anomaly!;");
+                }
+
+            }
+            //qDebug() << url;
+            this->load(QUrl(url));
+        }
     }
     else
     {
@@ -119,4 +193,15 @@ void LiveLineChart::removeFilter()
 std::vector<bool> LiveLineChart::getFilter()
 {
     return this->filter;
+}
+
+void LiveLineChart::setInterval(int begin, int end)
+{
+    this->begin = begin;
+    this->end = end;
+}
+
+void LiveLineChart::setLiveMode(bool mode)
+{
+    this->liveMode = mode;
 }

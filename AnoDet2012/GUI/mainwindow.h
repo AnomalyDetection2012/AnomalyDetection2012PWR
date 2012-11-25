@@ -8,6 +8,7 @@
 #include "ANOMALY_DETECTION/NEIGHBOUR/nearest_neighbor.h"
 #include "ANOMALY_DETECTION/BAYES/naive_bayes.h"
 #include "ANOMALY_DETECTION/DENSITY/densitymethod.h"
+#include <QResizeEvent>
 
 namespace Ui {
 class MainWindow;
@@ -21,12 +22,19 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void redrawDataset();
+    void newRecords(unsigned num);
+    void newAnomalies(unsigned num);
+    int getSelectedMethodId();
     
 private:
     Ui::MainWindow *ui;
     ConnectorTracker *ct;
     int choosenObjectId;
-    std::vector<int> objectIDs;
+    std::vector<QPair<int, QString> > objectsData;
+    void resizeEvent(QResizeEvent * event);
+    QTimer *timer;
+    bool statusOfDatabaseConnection;
+    bool statusOfObjectDataLoad;
 
 private slots:
     void chooseObject();
@@ -40,6 +48,12 @@ private slots:
     void showAnomaliesFromDB();
     void startLivelog();
     void stopLivelog();
+    void filterValuesLivelog();
+    void setRefreshInterval();
+    void updateSize();
+    void rightClicked();
+    void leftClicked();
+    void refreshDatabaseTable();
 };
 
 #endif // MAINWINDOW_H

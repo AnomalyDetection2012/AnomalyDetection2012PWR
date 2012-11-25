@@ -20,9 +20,13 @@ public:
     void reloadData();
     void setLogScale();
     void setLinearScale();
+    void setSize(int width, int height);
     void setFilter(std::vector<bool> filter);
     void removeFilter();
     std::vector<bool> getFilter();
+    void setInterval(int begin, int end);
+
+    void setLiveMode(bool mode);
 
 
     int width;
@@ -32,6 +36,9 @@ private:
     Dataset *dataset;
     bool logScale;
     std::vector<bool> filter;
+    int begin;
+    int end;
+    bool liveMode;
     
 signals:
     

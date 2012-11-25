@@ -17,7 +17,12 @@ MeasurementInfo::~MeasurementInfo()
 
 QString MeasurementInfo::getMeasurementName(int type_id)
 {
-    return ((QVariant)(measurementInfo.value(type_id).value("Nazwa_pomiaru"))).toString();
+    return ((QVariant)(measurementInfo.value(type_id).value("MeasurementName"))).toString();
+}
+
+QString MeasurementInfo::getUnit(int type_id)
+{
+    return ((QVariant)(measurementInfo.value(type_id).value("Unit"))).toString();
 }
 
 double MeasurementInfo::getMinValue(int type_id)

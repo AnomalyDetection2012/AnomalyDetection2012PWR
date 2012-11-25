@@ -18,12 +18,18 @@ KMeans::~KMeans(void)
 }
 
 void KMeans::initAlgorithm(){
+    vector<vector<double> >::iterator neighboursIt = this->neighbours.begin();
 	for(int a=0; a<clustersNumber; ++a){
-		this->clusters.push_back(new Cluster(this->pointSize, this->minSigmaSquare, this->maxSigmaSquare));
+        Cluster* newCluster = new Cluster(this->pointSize, this->minSigmaSquare, this->maxSigmaSquare);
+        if(neighboursIt!=this->neighbours.end())
+        {
+            newCluster->neighbours.push_back(&(*neighboursIt));
+            ++neighboursIt;
+        }
+        this->clusters.push_back(newCluster);
 	}
-	srand((unsigned)time(NULL));
-    vector<vector<double> >::iterator neighboursIt;
-	for(neighboursIt=this->neighbours.begin(); neighboursIt!=this->neighbours.end(); ++neighboursIt){
+    srand((unsigned)time(NULL));
+    for(;neighboursIt!=this->neighbours.end(); ++neighboursIt){
 		this->clusters.at(rand()%this->clustersNumber)->neighbours.push_back(&(*neighboursIt));
 	}
 	QList<Cluster*>::iterator clustersIt;

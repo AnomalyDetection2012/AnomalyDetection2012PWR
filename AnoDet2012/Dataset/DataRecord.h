@@ -10,6 +10,7 @@ public:
 	DataRecord(time_t time, std::vector<double> &data, std::vector<double> &noninformativeData, std::vector<int> &infos, bool isAnomaly);
 	~DataRecord(void);
 	bool isAnomaly;
+    bool isDatabaseAnomaly;
 	time_t time;
 	std::vector<double> data;
 	std::vector<double> noninformativeData;

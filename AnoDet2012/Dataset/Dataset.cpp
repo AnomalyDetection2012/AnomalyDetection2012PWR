@@ -61,3 +61,7 @@ void Dataset::setMeasurementsInfo(MeasurementInfo *measurementsInfos)
 void Dataset::setAnomaly(int id, bool isAnomaly){
     dataTable->setAnomaly(id, isAnomaly);
 }
+
+void Dataset::setDatabaseAnomaly(int id, bool isAnomaly){
+    dataTable->setDatabaseAnomaly(id, isAnomaly);
+}
