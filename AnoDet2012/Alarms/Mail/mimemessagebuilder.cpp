@@ -91,15 +91,14 @@ void MimeMessageBuilder::reloadConfiguration()
     loadConfiguration();
 }
 
-// TODO: use additional parameters
-MimeMessage * MimeMessageBuilder::build(QVector<Subscriber> *subscribers, QString *object, QVector<QString> *labels, QVector<double> *values)
+MimeMessage * MimeMessageBuilder::build(std::vector<Subscriber> &subscribers, QString &name, QDateTime &dateTime, std::vector<QString> &dataNames, std::vector<double> &values, std::vector<QString> &units, std::vector<double> &mins, std::vector<double> &maxs)
 {
     MimeMessage *message = new MimeMessage();
     message->setSender(new EmailAddress(*senderAddress, *senderField));
     message->setSubject(*messageTopic);
 
-    QVector<Subscriber>::iterator i;
-    for (i = subscribers->begin(); i != subscribers->end(); ++i)
+    std::vector<Subscriber>::iterator i;
+    for (i = subscribers.begin(); i != subscribers.end(); ++i)
     {
         switch ((*i).notification)
         {
@@ -113,8 +112,24 @@ MimeMessage * MimeMessageBuilder::build(QVector<Subscriber> *subscribers, QStrin
         }
     }
 
+    // Adds additional information
+    QString content(*body);
+    content.replace(QRegExp("{%OBJECT%}"), name);
+    content.replace(QRegExp("{%TIME%}"), dateTime.toString("hh:mm:ss dd.MM.yyyy"));
+
+    QString details;
+    for (int i = 0; i < values.size(); i++)
+    {
+        details.append(QString("<tr id='m_highlight'>"));
+        details.append(QString("<td id='m_content'>" + dataNames[i] + "</td>"));
+        details.append(QString("<td id='m_content'>" + QString::number(values[i]) + units[i] + "</td>"));
+        details.append(QString("<td id='m_content'><" + QString::number(mins[i]) + "; " + QString::number(maxs[i]) + "></td>"));
+        details.append(QString("</tr>"));
+    }
+    content.replace(QRegExp("{%DETAILS%}"), details);
+
     MimeHtml *html = new MimeHtml();
-    html->setHtml(*body);
+    html->setHtml(content);
     message->addPart(html);
 
     for (int i = 0; i < (imageFiles->size()); i++)

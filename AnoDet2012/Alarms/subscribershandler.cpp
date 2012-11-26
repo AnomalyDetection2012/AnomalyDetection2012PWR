@@ -3,7 +3,7 @@
 SubscribersHandler::SubscribersHandler(ConfigurationHandler *config)
 {
     this->config = config;
-    this->subscribers = new QVector<Subscriber>();
+    this->subscribers = new std::vector<Subscriber>();
     initialize();
 }
 
@@ -53,7 +53,7 @@ void SubscribersHandler::loadData()
         else
             sub->notification = None;
 
-        subscribers->append(*sub);
+        subscribers->push_back(*sub);
     }
 }
 
@@ -68,7 +68,7 @@ void SubscribersHandler::saveData()
     QDomElement d_subscribers = d_document.createElement("Subscribers");
     d_document.appendChild(d_subscribers);
 
-    QVector<Subscriber>::iterator i;
+    std::vector<Subscriber>::iterator i;
     for (i = subscribers->begin(); i != subscribers->end(); ++i)
     {
         QDomElement d_entry = d_document.createElement("subscriber");
@@ -117,14 +117,14 @@ void SubscribersHandler::saveData()
     }
 }
 
-QVector<Subscriber> * SubscribersHandler::getSubscribers()
+std::vector<Subscriber> * SubscribersHandler::getSubscribers()
 {
     return subscribers;
 }
 
 Subscriber * SubscribersHandler::getSubscriber(const QString &identifier)
 {
-    QVector<Subscriber>::iterator i;
+    std::vector<Subscriber>::iterator i;
     for (i = subscribers->begin(); i != subscribers->end(); ++i)
     {
         if (!(*i).identifier.compare(identifier))
@@ -138,7 +138,7 @@ Subscriber * SubscribersHandler::getSubscriber(const QString &identifier)
 
 bool SubscribersHandler::addSubscriber(const QString &identifier, const QString &mail, const QString &phone, NotificationType notification)
 {
-    QVector<Subscriber>::iterator i;
+    std::vector<Subscriber>::iterator i;
     for (i = subscribers->begin(); i != subscribers->end(); ++i)
     {
         if (!(*i).identifier.compare(identifier))
@@ -152,13 +152,13 @@ bool SubscribersHandler::addSubscriber(const QString &identifier, const QString 
     sub->mail = mail;
     sub->phone = phone;
     sub->notification = notification;
-    subscribers->append(*sub);
+    subscribers->push_back(*sub);
     return true;
 }
 
 bool SubscribersHandler::removeSubscriber(const QString &identifier)
 {
-    QVector<Subscriber>::iterator i;
+    std::vector<Subscriber>::iterator i;
     for (i = subscribers->begin(); i != subscribers->end(); ++i)
     {
         if (!(*i).identifier.compare(identifier))

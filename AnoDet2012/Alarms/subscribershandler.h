@@ -21,7 +21,7 @@ public:
     void loadData();
     void saveData();
 
-    QVector<Subscriber> * getSubscribers();
+    std::vector<Subscriber> * getSubscribers();
 
     Subscriber * getSubscriber(const QString &identifier);
     bool addSubscriber(const QString &identifier, const QString &mail, const QString &phone, NotificationType notification);
@@ -42,7 +42,7 @@ private:
 
     QFile *data;
 
-    QVector<Subscriber> *subscribers;
+    std::vector<Subscriber> *subscribers;
 
 
 };
