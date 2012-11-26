@@ -1,5 +1,4 @@
 #include <QtGui/QApplication>
-#include "guimainwindow.h"
 #include "INCOMING_DATA_TRACKING/IncomingDataController.h"
 #include "DataLoader/dataloader.h"
 #include "Dataset/MeasurementInfo.h"

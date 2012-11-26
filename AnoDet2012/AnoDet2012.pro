@@ -13,7 +13,6 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    guimainwindow.cpp \
     Dataset/InfoTable.cpp \
     Dataset/datasetControler.cpp \
     Dataset/DatasetConnector.cpp \
@@ -73,7 +72,7 @@ SOURCES += main.cpp \
     Alarms/subscribershandler.cpp \
     GUI/datasettableview.cpp
 
-HEADERS  += guimainwindow.h \
+HEADERS  += \
     Dataset/InfoTable.h \
     Dataset/datasetControler.h \
     Dataset/DatasetConnector.h \
@@ -136,7 +135,7 @@ HEADERS  += guimainwindow.h \
     Alarms/subscribershandler.h \
     GUI/datasettableview.h
 
-FORMS    += guimainwindow.ui \
+FORMS    += \
     GUI/mainwindow.ui \
     GUI/dialogfilter.ui
 

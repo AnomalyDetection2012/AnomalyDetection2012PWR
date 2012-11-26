@@ -18,9 +18,14 @@ int DataRecordTable::getLength(){
     return records.size();
 }
 
-int DataRecordTable::addRecord(time_t time, vector<double> &data, vector<double> &noninformativeData, vector<int> &infos, bool isAnomaly){
-	records.push_back(*(new DataRecord(time, data, noninformativeData, infos, isAnomaly)));
+int DataRecordTable::addRecord(time_t time, vector<double> &data, bool isAnomaly, vector<double> &noninformativeData, vector<int> &infos){
+    records.push_back(*(new DataRecord(time, data, isAnomaly, noninformativeData, infos)));
 	return records.size()-1;
+}
+
+int DataRecordTable::addRecord(time_t time, vector<double> &data, bool isAnomaly){
+    records.push_back(*(new DataRecord(time, data, isAnomaly)));
+    return records.size()-1;
 }
 
 void DataRecordTable::deleteBefore(time_t time){ // TODO co jesli nie sa posortowane wzgledem daty?
@@ -54,6 +59,17 @@ vector<bool> DataRecordTable::getAnomalies(int begin, int end){
     return result;
 }
 
+vector<bool> DataRecordTable::getDatabaseAnomalies(int begin, int end){
+    vector<bool> result;
+    vector<DataRecord>::iterator iter;
+    end-=begin;
+    for(iter = records.begin()+begin; iter != records.end() && end>=0; ++iter){
+        result.push_back(iter->isDatabaseAnomaly);
+        --end;
+    }
+    return result;
+}
+
 void DataRecordTable::saveResults(vector<bool> &anomalies, int begin){
     vector<DataRecord>::iterator iter;
     unsigned int n=0;
@@ -74,4 +90,8 @@ void DataRecordTable::setAnomaly(int id, bool isAnomaly){
 
 void DataRecordTable::setDatabaseAnomaly(int id, bool isAnomaly){
     records[id].isDatabaseAnomaly = isAnomaly;
+}
+
+void DataRecordTable::setPomiarIds(std::vector<int> ids){
+    this->programPomiarIds = ids;
 }

@@ -58,7 +58,7 @@ void LiveLineChart::loadData()
             int showLastRecords = 50;   // show last 50 records on chart
             std::vector <std::vector <double> > values = dataset->getData(recordsNum - showLastRecords < 0 ? 0 : recordsNum - showLastRecords, recordsNum);
             std::vector <QString> dataNames = dataset->dataTable->dataNames;
-            std::vector <int> programMeasurementIds = dataset->dataTable->records[0].infoAddress;
+            std::vector <int> programMeasurementIds = dataset->dataTable->programPomiarIds;
 
             if(!this->filter.size())
                 initFilter(dataNames.size());
@@ -95,7 +95,7 @@ void LiveLineChart::loadData()
                 }
                 else //if anomaly
                 {
-                    url = url.append("anomaly,");
+                    url = url.append("anomalia,");
 
                     for(int j=0;j<values[0].size();j++)
                     {
@@ -103,7 +103,7 @@ void LiveLineChart::loadData()
                             url = url.append(QString::number(values[i][j])).append(',');
                     }
 
-                    url = url.append("anomaly,possible anomaly!;");
+                    url = url.append("anomalia,wykryto anomaliê;");
                 }
 
             }
@@ -116,12 +116,13 @@ void LiveLineChart::loadData()
         {
             std::vector <std::vector <double> > values = dataset->getData(this->begin,this->end);
             std::vector <QString> dataNames = dataset->dataTable->dataNames;
-            std::vector <int> programMeasurementIds = dataset->dataTable->records[0].infoAddress;
+            std::vector <int> programMeasurementIds = dataset->dataTable->programPomiarIds;
 
             if(!this->filter.size())
                 initFilter(dataNames.size());
 
             std::vector <bool> anomalies = dataset->getAnomalies(begin,end);
+            std::vector <bool> databaseAnomalies = dataset->getDatabaseAnomalies(begin, end);
 
             QString url = "qrc:///googleChart/Line.html?&logscale=";
             url = url.append(this->logScale?"true":"false");
@@ -139,7 +140,7 @@ void LiveLineChart::loadData()
             for(int i=0;i<values.size();i++)
             {
 
-                if(!anomalies[i])
+                if(!anomalies[i] && !databaseAnomalies[i])
                 {
                     url = url.append(" ,");
 
@@ -153,7 +154,7 @@ void LiveLineChart::loadData()
                 }
                 else //if anomaly
                 {
-                    url = url.append("anomaly,");
+                    url = url.append("anomalia,");
 
                     for(int j=0;j<values[0].size();j++)
                     {
@@ -161,7 +162,13 @@ void LiveLineChart::loadData()
                             url = url.append(QString::number(values[i][j])).append(',');
                     }
 
-                    url = url.append("anomaly,possible anomaly!;");
+                    if(anomalies[i] && databaseAnomalies[i])
+                        url = url.append("zgodnoœæ,pokrywaj¹ca siê wykryta anomalia z BD;");
+                    else if(anomalies[i])
+                        url = url.append("anomalia,wykryto anomaliê;");
+                    else
+                        url = url.append("anomalia(BD),anomalia pobrana z BD;");
+
                 }
 
             }

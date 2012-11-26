@@ -15,6 +15,7 @@ void AlgorithmControler::initialiseConnectors(ConnectorTracker *con){
 }
 
 void AlgorithmControler::registerMethod(int i, Method *m){
+    methods.erase(i);
     methods.insert(make_pair(i, m));
 }
 

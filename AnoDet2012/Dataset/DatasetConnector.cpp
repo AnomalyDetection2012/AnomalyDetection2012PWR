@@ -27,10 +27,17 @@ int DatasetConnector::newInfo(string tableName, int id, vector<string> &infoReco
     return NULL;
 }
 
-int DatasetConnector::newRecord(time_t time, vector<double> &data, vector<double> &noninformativeData, vector<int> &infos, bool isAnomaly){
+int DatasetConnector::newRecord(time_t time, vector<double> &data, bool isAnomaly, vector<double> &noninformativeData, vector<int> &infos){
 	if(datasetControler != NULL){
-		return datasetControler->newRecord(time, data, noninformativeData, infos, isAnomaly);
+        return datasetControler->newRecord(time, data, isAnomaly, noninformativeData, infos);
 	}
+    return NULL;
+}
+
+int DatasetConnector::newRecord(time_t time, vector<double> &data, bool isAnomaly){
+    if(datasetControler != NULL){
+        return datasetControler->newRecord(time, data, isAnomaly);
+    }
     return NULL;
 }
 
@@ -64,9 +71,9 @@ void DatasetConnector::setMethodId(int id){
     }
 }
 
-void DatasetConnector::setMinMax(double* min, double* max){//TODO TEMPORARY
+void DatasetConnector::setMinMaxFromDataset(){
     if(datasetControler != NULL){
-        datasetControler->setMinMax(min, max);
+        datasetControler->setMinMaxFromDataset();
     }
 }
 
