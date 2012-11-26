@@ -257,7 +257,7 @@ void DataLoader::setAlarmFlagToRecords()
                 {
                     if((*recordIdsIt)==qRecordId)
                     {
-                        dataset->setAnomaly(currentRecord, true);
+                        dataset->setDatabaseAnomaly(currentRecord, true);
                         ++recordIdsIt;
                         ++currentRecord;
                         break;

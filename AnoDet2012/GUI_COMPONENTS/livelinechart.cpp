@@ -103,7 +103,7 @@ void LiveLineChart::loadData()
                             url = url.append(QString::number(values[i][j])).append(',');
                     }
 
-                    url = url.append("anomaly,possible anomaly!;");
+                    url = url.append("anomalia,wykryto anomaliê;");
                 }
 
             }
@@ -122,6 +122,7 @@ void LiveLineChart::loadData()
                 initFilter(dataNames.size());
 
             std::vector <bool> anomalies = dataset->getAnomalies(begin,end);
+            std::vector <bool> databaseAnomalies = dataset->getDatabaseAnomalies(begin, end);
 
             QString url = "qrc:///googleChart/Line.html?&logscale=";
             url = url.append(this->logScale?"true":"false");
@@ -139,7 +140,7 @@ void LiveLineChart::loadData()
             for(int i=0;i<values.size();i++)
             {
 
-                if(!anomalies[i])
+                if(!anomalies[i] && !databaseAnomalies[i])
                 {
                     url = url.append(" ,");
 
@@ -161,7 +162,13 @@ void LiveLineChart::loadData()
                             url = url.append(QString::number(values[i][j])).append(',');
                     }
 
-                    url = url.append("anomaly,possible anomaly!;");
+                    if(anomalies[i] && databaseAnomalies[i])
+                        url = url.append("zgodnoœæ,pokrywaj¹ca siê wykryta anomalia z BD;");
+                    else if(anomalies[i])
+                        url = url.append("anomalia,wykryto anomaliê;");
+                    else
+                        url = url.append("anomalia(BD),anomalia pobrana z BD;");
+
                 }
 
             }

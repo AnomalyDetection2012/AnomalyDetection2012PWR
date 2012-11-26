@@ -87,7 +87,7 @@ double DatasetControler::getMinValue(int type_id)
 
 double DatasetControler::getMaxValue(int type_id)
 {
-    return this->dataset->dataTable->measurementsInfos->getMinValue(type_id);
+    return this->dataset->dataTable->measurementsInfos->getMaxValue(type_id);
 }
 
 QString DatasetControler::getUnit(int type_id)

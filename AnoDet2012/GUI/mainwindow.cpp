@@ -271,6 +271,8 @@ void MainWindow::loadAllObjectRecords()
             ui->subscriptionTab->setEnabled(true);
         }
         dl->loadMeasurementInfo();
+        dl->setAlarmFlagToRecords();
+        ct->dataset->setMinMaxFromDataset();
     }
 }
 
