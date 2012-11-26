@@ -17,8 +17,6 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    QLabel* getLabel();
-
 private:
     Ui::MainWindow *ui;
 };

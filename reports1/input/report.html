@@ -1,19 +1,19 @@
 <html>
-        <body>
-            <div style="background:#ccc;border:1px solid #aaa;padding:20px;">
-            %INFO%
-            </div>
-            <div style="background:#ccc;border:1px solid #aaa;padding:20px;">
-            %INFO%
-            </div>
-            <div style="background:#ccc;border:1px solid #aaa;padding:20px;">
-            %INFO%
-            </div>
-            <div style="background:#ccc;border:1px solid #aaa;padding:20px;">
-            %INFO%
-            </div>
-            <div style="background:#ccc;border:1px solid #aaa;padding:20px;">
-            %CHART%
-            </div>
+	<head>
+		<style>
+			body{
+				font-family: "Times New Roman";
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Raport ze stanu bazy danych</h1>
+		<h5>
+		Liczba rekordów razem: %RECORDSSUM%
+		</h5>
+		<h5>
+		Liczba wykrytych alarmów razem: %ALARMSSUM%
+		</h5>
+		%BARCHART%
 	</body>
 </html>

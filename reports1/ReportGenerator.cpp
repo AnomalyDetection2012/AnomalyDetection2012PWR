@@ -25,11 +25,7 @@ bool ReportGenerator::generatePDF(QString templateFilename, QString outputAbsolu
 
     if(!templateFile.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        ql->setText("chuj");
         return false;
-    }else
-    {
-        ql->setText("nie chuj");
     }
 
     QTextStream templateStream(&templateFile);
@@ -57,7 +53,6 @@ bool ReportGenerator::generatePDF(QString templateFilename, QString outputAbsolu
     printer->setOutputFileName(outputAbsolutePath);
 
     WebViewPrinter* wv = new WebViewPrinter();
-    wv->ql = this->ql;
     wv->printer = printer;
 
     wv->setHtml(document.toHtml());
@@ -71,7 +66,7 @@ QString& ReportGenerator::lineChart(int width, int height, vector<vector<double>
     int records = data.size();
     int recordSize = data[0].size();
 
-    QString* url = new QString("https://chart.googleapis.com/chart?");
+    QString* url = new QString("<img src='https://chart.googleapis.com/chart?");
     url->append("cht=lc");
     url->append("&chs="+QString::number(width)+"x"+QString::number(height));
 
@@ -96,7 +91,7 @@ QString& ReportGenerator::lineChart(int width, int height, vector<vector<double>
 
     url->append("&chds=a");
 
-    url->append(additionalParameters);
+    url->append(additionalParameters+"' />");
 
     return *url;
 }
@@ -107,7 +102,7 @@ QString& ReportGenerator::verticalStackedBarChart(int height, vector<vector<doub
     int spaceBetweenGroups = (8.0/23.0)*barWidth;
     int bars = data[0].size();
 
-    QString* url = new QString("https://chart.googleapis.com/chart?");
+    QString* url = new QString("<img src='https://chart.googleapis.com/chart?");
     url->append("cht=bvs");
     url->append("&chs="+QString::number(spaceBetweenBars*(bars+1)+bars*barWidth+50)+"x"+QString::number(height));
 
@@ -128,7 +123,7 @@ QString& ReportGenerator::verticalStackedBarChart(int height, vector<vector<doub
 
     url->append("&chds=a");
 
-    url->append(additionalParameters);
+    url->append(additionalParameters+"' />");
 
     return *url;
 }
@@ -136,7 +131,7 @@ QString& ReportGenerator::verticalStackedBarChart(int height, vector<vector<doub
 QString& ReportGenerator::pieChart(int height, vector<double> &data, vector<QString> &labels, vector<QString> &legend, vector<QString> &colors)
 {
     QString dataAssembled = this->assemble(data, QString(","));
-    QString* url = new QString("https://chart.googleapis.com/chart?");
+    QString* url = new QString("<img src='https://chart.googleapis.com/chart?");
     url->append("cht=p");
     url->append("&chs="+QString::number(2*height)+"x"+QString::number(height));
     url->append("&chd=t:"+dataAssembled);
@@ -155,13 +150,16 @@ QString& ReportGenerator::pieChart(int height, vector<double> &data, vector<QStr
         QString colorsAssembled = this->assemble(colors, QString(","));
         url->append("&chco="+colorsAssembled);
     }
+
+    url->append("' />");
+
     return *url;
 }
 
 QString& ReportGenerator::pieChart3D(int height, vector<double> &data, vector<QString> &labels, vector<QString> &legend, vector<QString> &colors)
 {
     QString dataAssembled = this->assemble(data, QString(","));
-    QString* url = new QString("https://chart.googleapis.com/chart?");
+    QString* url = new QString("<img src='https://chart.googleapis.com/chart?");
     url->append("cht=p3");
     url->append("&chs="+QString::number(2.5*static_cast<double>(height))+"x"+QString::number(height));
     url->append("&chd=t:"+dataAssembled);
@@ -180,6 +178,9 @@ QString& ReportGenerator::pieChart3D(int height, vector<double> &data, vector<QS
         QString colorsAssembled = this->assemble(colors, QString(","));
         url->append("&chco="+colorsAssembled);
     }
+
+    url->append("' />");
+
     return *url;
 }
 

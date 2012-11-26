@@ -8,11 +8,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 }
 
-QLabel* MainWindow::getLabel()
-{
-    return ui->label;
-}
-
 MainWindow::~MainWindow()
 {
     delete ui;

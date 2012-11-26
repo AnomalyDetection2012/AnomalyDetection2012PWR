@@ -13,11 +13,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     ReportGenerator.cpp \
-    WebViewPrinter.cpp
+    WebViewPrinter.cpp \
+    Report.cpp
 
 HEADERS  += mainwindow.h \
     ReportGenerator.h \
-    WebViewPrinter.h
+    WebViewPrinter.h \
+    Report.h
 
 FORMS    += mainwindow.ui
 

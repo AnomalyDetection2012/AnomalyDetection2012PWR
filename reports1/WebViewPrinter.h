@@ -12,13 +12,11 @@ public:
     explicit WebViewPrinter(QWidget *parent = 0);
 
     QPrinter* printer;
-    QLabel* ql;
     
 signals:
     
 public slots:
     void drawDocument();
-    void laduje(int);
 };
 
 #endif // WEBVIEWPRINTER_H
