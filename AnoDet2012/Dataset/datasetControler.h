@@ -10,7 +10,8 @@ public:
 	~DatasetControler(void);
 	Dataset *dataset;
 	int newInfo(std::string tableName, int id, std::vector<std::string> &infoRecord);
-	int newRecord(time_t time, std::vector<double> &data, std::vector<double> &noninformativeData, std::vector<int> &infos, bool isAnomaly);
+    int newRecord(time_t time, std::vector<double> &data, bool isAnomaly, std::vector<double> &noninformativeData, std::vector<int> &infos);
+    int newRecord(time_t time, std::vector<double> &data, bool isAnomaly = false);
     void checkNewData(AlgorithmControler *ac);
     void checkAllData(AlgorithmControler *ac);
     void checkData(int begin, int end, AlgorithmControler *ac);
@@ -18,7 +19,7 @@ public:
     void setMethodId(int id);
     double* getMinimals();
     double* getMaximals();
-    void setMinMax(double* min, double* max);
+    void setMinMaxFromDataset();
     void setMeasurementsInfo(MeasurementInfo *measurementsInfos);
     void setAnomaly(int id, bool isAnomaly);
     void setDatabaseAnomaly(int id, bool isAnomaly);

@@ -37,6 +37,13 @@ private:
     bool statusOfDatabaseConnection;
     bool statusOfObjectDataLoad;
 
+    void reloadParams();
+    void changeBayesParams();
+    void changeDensityParams();
+    void changeNeighbourParams();
+    void changeRBFParams();
+    void changeSOMParams();
+
 private slots:
     void chooseObject();
     void connectDatabase();
@@ -55,6 +62,8 @@ private slots:
     void rightClicked();
     void leftClicked();
     void refreshDatabaseTable();
+    void changeMethodParams();
+    void openMethodsHelpWindow();
 };
 
 #endif // MAINWINDOW_H

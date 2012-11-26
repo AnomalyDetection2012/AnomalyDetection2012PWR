@@ -37,8 +37,12 @@ int Dataset::newInfo(string tableName, int id, vector<string> &infoRecord){
     return NULL;
 }
 
-int Dataset::newRecord(time_t time, vector<double> &data, vector<double> &noninformativeData, vector<int> &infos, bool isAnomaly){
-	return dataTable->addRecord(time, data, noninformativeData, infos, isAnomaly);
+int Dataset::newRecord(time_t time, vector<double> &data, bool isAnomaly, vector<double> &noninformativeData, vector<int> &infos){
+    return dataTable->addRecord(time, data, isAnomaly, noninformativeData, infos);
+}
+
+int Dataset::newRecord(time_t time, vector<double> &data, bool isAnomaly){
+    return dataTable->addRecord(time, data, isAnomaly);
 }
 
 vector<vector<double> > Dataset::getData(int begin, int end){
@@ -47,6 +51,10 @@ vector<vector<double> > Dataset::getData(int begin, int end){
 
 vector<bool> Dataset::getAnomalies(int begin, int end){
     return dataTable->getAnomalies(begin, end);
+}
+
+vector<bool> Dataset::getDatabaseAnomalies(int begin, int end){
+    return dataTable->getDatabaseAnomalies(begin, end);
 }
 
 void Dataset::saveResults(vector<bool> &anomalies, int begin){

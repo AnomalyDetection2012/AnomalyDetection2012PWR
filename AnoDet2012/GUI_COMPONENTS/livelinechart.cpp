@@ -58,7 +58,7 @@ void LiveLineChart::loadData()
             int showLastRecords = 50;   // show last 50 records on chart
             std::vector <std::vector <double> > values = dataset->getData(recordsNum - showLastRecords < 0 ? 0 : recordsNum - showLastRecords, recordsNum);
             std::vector <QString> dataNames = dataset->dataTable->dataNames;
-            std::vector <int> programMeasurementIds = dataset->dataTable->records[0].infoAddress;
+            std::vector <int> programMeasurementIds = dataset->dataTable->programPomiarIds;
 
             if(!this->filter.size())
                 initFilter(dataNames.size());
@@ -116,7 +116,7 @@ void LiveLineChart::loadData()
         {
             std::vector <std::vector <double> > values = dataset->getData(this->begin,this->end);
             std::vector <QString> dataNames = dataset->dataTable->dataNames;
-            std::vector <int> programMeasurementIds = dataset->dataTable->records[0].infoAddress;
+            std::vector <int> programMeasurementIds = dataset->dataTable->programPomiarIds;
 
             if(!this->filter.size())
                 initFilter(dataNames.size());
