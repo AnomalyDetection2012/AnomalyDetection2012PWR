@@ -9,6 +9,7 @@
 #include <QDomDocument>
 #include <QDomNode>
 #include <QDomElement>
+#include <QDateTime>
 #include "Alarms/Mail/mimemessage.h"
 #include "Alarms/Mail/mimehtml.h"
 #include "Alarms/Mail/mimeinlinefile.h"
@@ -20,7 +21,7 @@ class MimeMessageBuilder
 public:
     MimeMessageBuilder(ConfigurationHandler *config);
     ~MimeMessageBuilder();
-    MimeMessage * build(QVector<Subscriber> *subscribers, QString *object, QVector<QString> *labels, QVector<double> *values);
+    MimeMessage * build(std::vector<Subscriber> &subscribers, QString &name, QDateTime &dateTime, std::vector<QString> &dataNames, std::vector<double> &values, std::vector<QString> &units, std::vector<double> &mins, std::vector<double> &maxs);
 
 
 private:
