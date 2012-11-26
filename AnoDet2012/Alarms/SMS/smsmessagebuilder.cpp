@@ -84,12 +84,11 @@ void SMSMessageBuilder::reloadConfiguration()
     loadConfiguration();
 }
 
-// TODO: use additional parameters
-SMSMessageBuilder::SMSMessage * SMSMessageBuilder::build(QVector<Subscriber> *subscribers, QString *object, QVector<QString> *labels, QVector<double> *values)
+SMSMessageBuilder::SMSMessage * SMSMessageBuilder::build(std::vector<Subscriber> &subscribers, QString &name, QDateTime &dateTime, std::vector<QString> &dataNames, std::vector<double> &values, std::vector<QString> &units, std::vector<double> &mins, std::vector<double> &maxs)
 {
     QString to = QString("");
-    QVector<Subscriber>::iterator i;
-    for (i = subscribers->begin(); i != subscribers->end(); ++i)
+    std::vector<Subscriber>::iterator i;
+    for (i = subscribers.begin(); i != subscribers.end(); ++i)
     {
         switch ((*i).notification)
         {
@@ -103,10 +102,15 @@ SMSMessageBuilder::SMSMessage * SMSMessageBuilder::build(QVector<Subscriber> *su
     }
     to.resize(to.length() - 1);
 
+    // Adds additional information
+    QString content(*body);
+    content.replace(QRegExp("{%OBJECT%}"), name);
+    content.replace(QRegExp("{%TIME%}"), dateTime.toString("hh:mm:ss dd.MM.yyyy"));
+
     SMSMessageBuilder::SMSMessage *msg = new SMSMessageBuilder::SMSMessage();
     *msg = *templateMessage;
     msg->to = to;
-    msg->message = *body;
+    msg->message = content;
 
     return msg;
 }

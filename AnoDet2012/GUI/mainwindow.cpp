@@ -49,7 +49,9 @@ MainWindow::MainWindow(QWidget *parent) :
     Method *met = new RandomMethod();
     algorithm->registerMethod(0, met);
     name = new QString("SOM");
-    TopologyMap map(this,20,20,10);
+    TopologyMap map(this,ct->configuration->getAlgorithmParameter(*name, "Width").toInt(),
+                    ct->configuration->getAlgorithmParameter(*name, "Height").toInt(),
+                    10);
     met = new SOMNetwork(ct->configuration->getAlgorithmParameter(*name, "Width").toInt(),
                                       ct->configuration->getAlgorithmParameter(*name, "Height").toInt(),
                                       ct->configuration->getAlgorithmParameter(*name, "Inputs").toInt(),
@@ -463,27 +465,47 @@ void MainWindow::reloadParams(){
 
     //Bayes
     name = new QString("BAYES");
+    ui->bayes_features->setValue(ct->configuration->getAlgorithmParameter(*name, "FeaturesCount").toInt());
 
 
     //Neighbour
     name = new QString("NEIGHBOUR");
+    ui->neighbour_features->setValue(ct->configuration->getAlgorithmParameter(*name,"FeaturesCount").toInt());
+    ui->neighbour_k->setValue(ct->configuration->getAlgorithmParameter(*name,"K").toInt());
 
 
     //Density
     name = new QString("DENSITY");
-
+    ui->density_deviation->setValue(ct->configuration->getAlgorithmParameter(*name,"LOFResultDeviation").toDouble());
+    ui->density_neighbours->setValue(ct->configuration->getAlgorithmParameter(*name,"Neighbors").toInt());
 }
 
 void MainWindow::changeBayesParams(){
+    QString *name = new QString("Algorithm.BAYES");
+    ct->configuration->setPropertyValue(*name,"FeaturesCount",ui->bayes_features->value());
 
+    Method *met = new NaiveBayes(ct->configuration->getPropertyValue(*name, "FeaturesCount").toInt());
+    ct->anomalyDetection->registerMethod(2, met);
 }
 
 void MainWindow::changeDensityParams(){
+    QString *name = new QString("Algorithm.DENSITY");
+    ct->configuration->setPropertyValue(*name,"LOFResultDeviation",ui->density_deviation->value());
+    ct->configuration->setPropertyValue(*name,"Neighbors",ui->density_neighbours->value());
 
+    Method *met = new DensityMethod(ct->configuration->getPropertyValue(*name, "LOFResultDeviation").toDouble(),
+                            ct->configuration->getPropertyValue(*name, "Neighbors").toInt());
+    ct->anomalyDetection->registerMethod(4, met);
 }
 
 void MainWindow::changeNeighbourParams(){
+    QString *name = new QString("Algorithm.NEIGHBOUR");
+    ct->configuration->setPropertyValue(*name,"FeaturesCount",ui->neighbour_features->value());
+    ct->configuration->setPropertyValue(*name,"K",ui->neighbour_k->value());
 
+    Method *met = new NearestNeighbor(ct->configuration->getPropertyValue(*name, "FeaturesCount").toInt(),
+                              ct->configuration->getPropertyValue(*name, "K").toInt());
+    ct->anomalyDetection->registerMethod(3, met);
 }
 
 void MainWindow::changeRBFParams(){
@@ -499,13 +521,15 @@ void MainWindow::changeSOMParams(){
     ct->configuration->setPropertyValue(*name,"MaxAlpha",ui->som_alpha->value());
     ct->configuration->setPropertyValue(*name,"MaxIterations",ui->som_iters->value());
 
-    TopologyMap map(this,20,20,10);
-    Method *met = new SOMNetwork(ct->configuration->getAlgorithmParameter(*name, "Width").toInt(),
-                                      ct->configuration->getAlgorithmParameter(*name, "Height").toInt(),
-                                      ct->configuration->getAlgorithmParameter(*name, "Inputs").toInt(),
-                                      ct->configuration->getAlgorithmParameter(*name, "MaxRadius").toDouble(),
-                                      ct->configuration->getAlgorithmParameter(*name, "MaxAlpha").toDouble(),
-                                      ct->configuration->getAlgorithmParameter(*name, "MaxIterations").toDouble(),
+    TopologyMap map(this,ct->configuration->getAlgorithmParameter(*name, "Width").toInt(),
+                    ct->configuration->getAlgorithmParameter(*name, "Height").toInt(),
+                    10);
+    Method *met = new SOMNetwork(ct->configuration->getPropertyValue(*name, "Width").toInt(),
+                                      ct->configuration->getPropertyValue(*name, "Height").toInt(),
+                                      ct->configuration->getPropertyValue(*name, "Inputs").toInt(),
+                                      ct->configuration->getPropertyValue(*name, "MaxRadius").toDouble(),
+                                      ct->configuration->getPropertyValue(*name, "MaxAlpha").toDouble(),
+                                      ct->configuration->getPropertyValue(*name, "MaxIterations").toDouble(),
                                       map);
     ct->anomalyDetection->registerMethod(1, met);
 }

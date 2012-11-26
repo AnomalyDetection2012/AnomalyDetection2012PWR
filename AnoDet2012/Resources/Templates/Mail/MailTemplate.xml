@@ -8,7 +8,6 @@
 		<image file="a5676d5286c290f2ccc28b1ff145088a.jpg" id="a5676d5286c290f2ccc28b1ff145088a" type="image/jpg"/>
 	</images>
 	<tags>
-		<tag key="{%TEST%}" value="bleh"/>
-		<tag key="%TODAY%" value="Nawet zacny..."/>
+		<tag key="{%TEST%}" value="test"/>
 	</tags>
 </Description>
