@@ -69,7 +69,7 @@ void DataLoader::loadMeasurementInfo()
 {
     if(this->performDatabaseConnection())
     {
-        QString statement("SELECT [Program_pomiar_ID], [Nazwa_pomiaru], [AlertMin], [AlertMax] FROM  [Program_pomiar];");
+        QString statement("SELECT [Program_pomiar_ID], [Nazwa_pomiaru], [Unit], [minValue], [maxValue] FROM  [Program_pomiar];");
         QSqlQuery query(statement, db);
         query.setForwardOnly(true);
 
@@ -84,8 +84,9 @@ void DataLoader::loadMeasurementInfo()
                 QHash <QString, QVariant> m;
                 //m = new QHash <QString, QVariant>();
                 m.insert("MeasurementName",query.value(1));
-                m.insert("MinValue",query.value(2));
-                m.insert("MaxValue", query.value(3));
+                m.insert("Unit", query.value(2));
+                m.insert("MinValue",query.value(3));
+                m.insert("MaxValue", query.value(4));
 
                 this->measurementInfo.insert(query.value(0).toInt(), m);
             }

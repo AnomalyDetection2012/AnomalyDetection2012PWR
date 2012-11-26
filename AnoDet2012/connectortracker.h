@@ -5,6 +5,7 @@
 
 
 class ConfigurationHandler;
+class NotificationSender;
 class DatasetConnector;
 class AlgorithmControler;
 class IncomingDataController;
@@ -25,6 +26,7 @@ private:
 public:
     QSqlDatabase *dbConnection;
     ConfigurationHandler *configuration;
+    NotificationSender *sender;
     DatasetConnector *dataset;
     AlgorithmControler *anomalyDetection;
     IncomingDataController *incomingData;

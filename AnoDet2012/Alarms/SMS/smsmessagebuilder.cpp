@@ -84,14 +84,22 @@ void SMSMessageBuilder::reloadConfiguration()
     loadConfiguration();
 }
 
-SMSMessageBuilder::SMSMessage * SMSMessageBuilder::build(QVector<Subscriber> *subscribers)
+// TODO: use additional parameters
+SMSMessageBuilder::SMSMessage * SMSMessageBuilder::build(QVector<Subscriber> *subscribers, QString *object, QVector<QString> *labels, QVector<double> *values)
 {
     QString to = QString("");
     QVector<Subscriber>::iterator i;
     for (i = subscribers->begin(); i != subscribers->end(); ++i)
     {
-        to += (*i).phone;
-        to += QString(",");
+        switch ((*i).notification)
+        {
+            case SMS:
+            case Both:
+                to += (*i).phone;
+                to += QString(",");
+            default:
+                continue;
+        }
     }
     to.resize(to.length() - 1);
 

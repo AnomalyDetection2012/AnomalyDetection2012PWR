@@ -323,7 +323,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="spinBox">
+                  <widget class="QSpinBox" name="loadFromSpinBox">
                    <property name="maximum">
                     <number>99999</number>
                    </property>
@@ -341,7 +341,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="spinBox_2">
+                  <widget class="QSpinBox" name="loadToSpinBox">
                    <property name="maximum">
                     <number>99999</number>
                    </property>
@@ -473,7 +473,7 @@
             <item>
              <widget class="QTabWidget" name="tabWidget_3">
               <property name="currentIndex">
-               <number>0</number>
+               <number>4</number>
               </property>
               <widget class="QWidget" name="tab_7">
                <attribute name="title">
@@ -521,7 +521,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QSpinBox" name="spinBox_4">
+           <widget class="QSpinBox" name="fromProcessSpinBox">
             <property name="maximum">
              <number>99999</number>
             </property>
@@ -535,7 +535,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QSpinBox" name="spinBox_3">
+           <widget class="QSpinBox" name="toProcessSpinBox">
             <property name="maximum">
              <number>99999</number>
             </property>
@@ -587,7 +587,7 @@
         <item row="4" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout_13">
           <item>
-           <widget class="QPushButton" name="pushButton_10">
+           <widget class="QPushButton" name="leftBtn">
             <property name="text">
              <string>&lt;&lt;</string>
             </property>
@@ -607,12 +607,18 @@
            </spacer>
           </item>
           <item>
-           <widget class="QSpinBox" name="spinBox_5">
+           <widget class="QSpinBox" name="chartStepInterval">
             <property name="minimumSize">
              <size>
               <width>50</width>
               <height>0</height>
              </size>
+            </property>
+            <property name="maximum">
+             <number>1000</number>
+            </property>
+            <property name="value">
+             <number>20</number>
             </property>
            </widget>
           </item>
@@ -630,7 +636,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_11">
+           <widget class="QPushButton" name="rightBtn">
             <property name="text">
              <string>&gt;&gt;</string>
             </property>
@@ -647,7 +653,37 @@
        <attribute name="title">
         <string>Przegląd danych</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_7"/>
+       <layout class="QGridLayout" name="gridLayout_7">
+        <item row="0" column="0">
+         <widget class="QTableView" name="datasetTableView">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="refreshDatabaseTable">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Refresh</string>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="reportsTab">
        <property name="enabled">
@@ -709,7 +745,7 @@
              <item>
               <widget class="QLabel" name="label_12">
                <property name="enabled">
-                <bool>true</bool>
+                <bool>false</bool>
                </property>
                <property name="font">
                 <font>
@@ -749,7 +785,7 @@
              <item>
               <widget class="QComboBox" name="comboBox_2">
                <property name="enabled">
-                <bool>true</bool>
+                <bool>false</bool>
                </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -1128,8 +1164,8 @@
    <slot>chooseObject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>521</x>
-     <y>128</y>
+     <x>308</x>
+     <y>176</y>
     </hint>
     <hint type="destinationlabel">
      <x>321</x>
@@ -1144,8 +1180,8 @@
    <slot>connectDatabase()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>274</x>
-     <y>459</y>
+     <x>307</x>
+     <y>534</y>
     </hint>
     <hint type="destinationlabel">
      <x>321</x>
@@ -1224,8 +1260,8 @@
    <slot>loadAllObjectRecords()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>129</x>
-     <y>158</y>
+     <x>197</x>
+     <y>266</y>
     </hint>
     <hint type="destinationlabel">
      <x>321</x>
@@ -1288,8 +1324,8 @@
    <slot>filterValuesLivelog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>531</x>
-     <y>153</y>
+     <x>609</x>
+     <y>190</y>
     </hint>
     <hint type="destinationlabel">
      <x>639</x>
@@ -1313,6 +1349,54 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>rightBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>rightClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>590</x>
+     <y>624</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>627</x>
+     <y>653</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>leftBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>leftClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>43</x>
+     <y>625</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>26</x>
+     <y>652</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>refreshDatabaseTable</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>refreshDatabaseTable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>94</x>
+     <y>623</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>321</x>
+     <y>338</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>chooseObject()</slot>
@@ -1327,5 +1411,8 @@
   <slot>stopLivelog()</slot>
   <slot>filterValuesLivelog()</slot>
   <slot>setRefreshInterval()</slot>
+  <slot>rightClicked()</slot>
+  <slot>leftClicked()</slot>
+  <slot>refreshDatabaseTable()</slot>
  </slots>
 </ui>

@@ -13,6 +13,7 @@ public:
     ~MeasurementInfo();
 
     QString getMeasurementName(int type_id);
+    QString getUnit(int type_id);
     double getMinValue(int type_id);
     double getMaxValue(int type_id);
 

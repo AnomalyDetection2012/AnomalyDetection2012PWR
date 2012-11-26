@@ -79,6 +79,15 @@ QString DatasetConnector::getMeasurementName(int type_id)
     return NULL;
 }
 
+QString DatasetConnector::getUnit(int type_id)
+{
+    if(datasetControler != NULL)
+    {
+        return datasetControler->getUnit(type_id);
+    }
+    return NULL;
+}
+
 double DatasetConnector::getMinValue(int type_id)
 {
     if(datasetControler != NULL)
@@ -109,6 +118,13 @@ void DatasetConnector::setAnomaly(int id, bool isAnomaly){
         datasetControler->setAnomaly(id, isAnomaly);
     }
 }
+
+void DatasetConnector::setDatabaseAnomaly(int id, bool isAnomaly){
+    if(datasetControler != NULL){
+        datasetControler->setDatabaseAnomaly(id, isAnomaly);
+    }
+}
+
 
 vector<vector<double> > DatasetConnector::getData(int begin, int end){
     if(datasetControler != NULL){

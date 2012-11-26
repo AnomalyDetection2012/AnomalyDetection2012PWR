@@ -24,6 +24,8 @@ public:
     void redrawDataset();
     void newRecords(unsigned num);
     void newAnomalies(unsigned num);
+    int getSelectedMethodId();
+    QString getSelectedObjectName();
     
 private:
     Ui::MainWindow *ui;
@@ -49,7 +51,10 @@ private slots:
     void stopLivelog();
     void filterValuesLivelog();
     void setRefreshInterval();
-    void afterResize();
+    void updateSize();
+    void rightClicked();
+    void leftClicked();
+    void refreshDatabaseTable();
 };
 
 #endif // MAINWINDOW_H

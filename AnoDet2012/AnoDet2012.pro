@@ -68,7 +68,10 @@ SOURCES += main.cpp \
     Alarms/Mail/mailsender.cpp \
     Alarms/Mail/emailaddress.cpp \
     Alarms/SMS/smssender.cpp \
-    Alarms/SMS/smsmessagebuilder.cpp
+    Alarms/SMS/smsmessagebuilder.cpp \
+    Alarms/notificationsender.cpp \
+    Alarms/subscribershandler.cpp \
+    GUI/datasettableview.cpp
 
 HEADERS  += guimainwindow.h \
     Dataset/InfoTable.h \
@@ -128,7 +131,10 @@ HEADERS  += guimainwindow.h \
     Alarms/Mail/mailsender.h \
     Alarms/Mail/emailaddress.h \
     Alarms/SMS/smssender.h \
-    Alarms/SMS/smsmessagebuilder.h
+    Alarms/SMS/smsmessagebuilder.h \
+    Alarms/notificationsender.h \
+    Alarms/subscribershandler.h \
+    GUI/datasettableview.h
 
 FORMS    += guimainwindow.ui \
     GUI/mainwindow.ui \
