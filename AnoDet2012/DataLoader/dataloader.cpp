@@ -56,6 +56,7 @@ void DataLoader::initDataRecordTable()
             vector<QString> vcEmpty;
             vector<vector<string> > vvcEmpty;
             dataset->createDatasetControler("", vvcEmpty, dataNames, vcEmpty);
+            dataset->datasetControler->dataset->dataTable->setPomiarIds(this->programPomiarIds);
         }
     }
 }
@@ -129,7 +130,7 @@ void DataLoader::loadAllRecords()
                 {
                     data[a] = query.value(a+2).toDouble();
                 }
-                dataset->newRecord(query.value(1).toDateTime().toTime_t(), data, *(new vector<double>(0)), this->programPomiarIds,false);
+                dataset->newRecord(query.value(1).toDateTime().toTime_t(), data);
                 this->progessBar->setValue(this->progessBar->value()+1);
 
                 if(this->progessBar->wasCanceled())
@@ -224,7 +225,7 @@ void DataLoader::loadRecords(int from, int to)
                 {
                     data.push_back(query.value(a+2).toDouble());
                 }
-                dataset->newRecord(query.value(1).toDateTime().toTime_t(), data, *(new vector<double>(0)), *(new vector<int>(0)),false);
+                dataset->newRecord(query.value(1).toDateTime().toTime_t(), data, false, *(new vector<double>(0)), *(new vector<int>(0)));
             }
         }
     }

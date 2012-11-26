@@ -70,7 +70,7 @@ MainWindow::MainWindow(QWidget *parent) :
                             ct->configuration->getAlgorithmParameter(*name, "Neighbors").toInt());
     algorithm->registerMethod(4, met);
 
-
+    reloadParams();
     ct->mainWindow = this;
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), SLOT(updateSize()));
@@ -119,7 +119,6 @@ void MainWindow::connectDatabase(){
         {
             ui->comboBox_2->addItem((*objectsDataIt).second);
         }
-        //ui->comboBox_2->resize();
         ui->comboBox_2->setCurrentIndex(choosenObjectId);
         ui->label_12->setText(ui->comboBox_2->currentText());
         ui->selectObjectBox->setEnabled(true);
@@ -138,38 +137,21 @@ void MainWindow::connectDatabase(){
 
 }
 
-void MainWindow::loadDataStandard(){// TODO balut a gdzie sa metody do tego?
+void MainWindow::loadDataStandard(){
     int begin = ui->loadFromSpinBox->value();
     int end = ui->loadToSpinBox->value();
-/*
-    DataLoader* dl = ct->loader;
-    QProgressDialog progress("Pobieranie rekordów dla wybranego obiektu...", "Anuluj", 0, 40024, this);
-    progress.setWindowModality(Qt::WindowModal);
-    dl->progessBar = &progress;
-    dl->initDataRecordTable();
-    dl->loadAllRecords();
-    dl->setAlarmFlagToRecords();
-*/
-    // TODO TEMP
-    int size = ct->dataset->datasetControler->dataset->dataTable->records.size();
-    double* min = new double[size];
-    double* max = new double[size];
-    for(int i=0;i<size;++i){
-        min[i]=-1000;
-        max[i]=1000;
-    }
-    ct->dataset->setMinMax(min, max);
 
     ui->webView->setDataset(ct->dataset->datasetControler->dataset);
     ui->webView->setInterval(begin, end);
 
-    //ui->webView->reloadData();
     redrawDataset();
 }
 
-void MainWindow::loadDataDate(){// TODO balut a gdzie sa metody do tego?
+void MainWindow::loadDataDate(){
 
     ui->webView->setDataset(ct->dataset->datasetControler->dataset);
+
+
     redrawDataset();
 }
 
@@ -193,9 +175,7 @@ void MainWindow::testData(){
 }
 
 void MainWindow::redrawDataset(){
-    //ui->webView->reloadData();
     updateSize();
-    //qDebug()<<ui->webView->url();
 }
 
 void MainWindow::newRecords(unsigned num)
@@ -435,13 +415,95 @@ void MainWindow::refreshDatabaseTable(){
         model->setHorizontalHeaderItem(i, new QStandardItem(dataTable->dataNames[i]));
     }
 
-//    DataRecord *record;
-//    for(int i=0; i<rows; ++i){
-//        record = &(dataTable->records.at(i));
-//        for(int j=0; j<columns; ++j){
-//            model->setItem(i, j, new QStandardItem(QString::number(record->data[j])));
-//        }
-//    }
-
     ui->datasetTableView->setModel(model);
+}
+
+void MainWindow::changeMethodParams(){
+    int openedTab = ui->tabWidget_3->currentIndex();
+    switch(openedTab){
+    case 0:
+        changeSOMParams();
+        break;
+    case 1:
+        changeRBFParams();
+        break;
+    case 2:
+        changeBayesParams();
+        break;
+    case 3:
+        changeNeighbourParams();
+        break;
+    case 4:
+        changeDensityParams();
+        break;
+    default:
+        break;
+    }
+}
+
+void MainWindow::openMethodsHelpWindow(){//TODO trzeba jakis opis walnac
+
+}
+
+void MainWindow::reloadParams(){
+    //SOM
+    QString *name;
+    name = new QString("SOM");
+    ui->som_width->setValue(ct->configuration->getAlgorithmParameter(*name, "Width").toInt());
+    ui->som_height->setValue(ct->configuration->getAlgorithmParameter(*name, "Height").toInt());
+    ui->som_inputs->setValue(ct->configuration->getAlgorithmParameter(*name, "Inputs").toInt());
+    ui->som_radius->setValue(ct->configuration->getAlgorithmParameter(*name, "MaxRadius").toDouble());
+    ui->som_alpha->setValue(ct->configuration->getAlgorithmParameter(*name, "MaxAlpha").toDouble());
+    ui->som_iters->setValue(ct->configuration->getAlgorithmParameter(*name, "MaxIterations").toDouble());
+
+    //RBF
+
+
+    //Bayes
+    name = new QString("BAYES");
+
+
+    //Neighbour
+    name = new QString("NEIGHBOUR");
+
+
+    //Density
+    name = new QString("DENSITY");
+
+}
+
+void MainWindow::changeBayesParams(){
+
+}
+
+void MainWindow::changeDensityParams(){
+
+}
+
+void MainWindow::changeNeighbourParams(){
+
+}
+
+void MainWindow::changeRBFParams(){
+
+}
+
+void MainWindow::changeSOMParams(){
+    QString *name = new QString("Algorithm.SOM");
+    ct->configuration->setPropertyValue(*name,"Width",ui->som_width->value());
+    ct->configuration->setPropertyValue(*name,"Height",ui->som_height->value());
+    ct->configuration->setPropertyValue(*name,"Inputs",ui->som_inputs->value());
+    ct->configuration->setPropertyValue(*name,"MaxRadius",ui->som_radius->value());
+    ct->configuration->setPropertyValue(*name,"MaxAlpha",ui->som_alpha->value());
+    ct->configuration->setPropertyValue(*name,"MaxIterations",ui->som_iters->value());
+
+    TopologyMap map(this,20,20,10);
+    Method *met = new SOMNetwork(ct->configuration->getAlgorithmParameter(*name, "Width").toInt(),
+                                      ct->configuration->getAlgorithmParameter(*name, "Height").toInt(),
+                                      ct->configuration->getAlgorithmParameter(*name, "Inputs").toInt(),
+                                      ct->configuration->getAlgorithmParameter(*name, "MaxRadius").toDouble(),
+                                      ct->configuration->getAlgorithmParameter(*name, "MaxAlpha").toDouble(),
+                                      ct->configuration->getAlgorithmParameter(*name, "MaxIterations").toDouble(),
+                                      map);
+    ct->anomalyDetection->registerMethod(1, met);
 }

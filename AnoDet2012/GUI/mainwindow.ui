@@ -17,8 +17,8 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+   <layout class="QVBoxLayout" name="verticalLayout_9">
+    <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="enabled">
        <bool>true</bool>
@@ -30,7 +30,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>5</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="livelogTab">
        <property name="enabled">
@@ -468,42 +468,177 @@
                 </item>
                </widget>
               </item>
+              <item>
+               <widget class="QToolButton" name="methodsHelpButton">
+                <property name="text">
+                 <string>?</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="somSetButton">
+                <property name="text">
+                 <string>Set Parameters</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
             <item>
              <widget class="QTabWidget" name="tabWidget_3">
               <property name="currentIndex">
-               <number>4</number>
+               <number>0</number>
               </property>
               <widget class="QWidget" name="tab_7">
                <attribute name="title">
                 <string>SOM</string>
                </attribute>
+               <layout class="QVBoxLayout" name="verticalLayout_10">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_11">
+                  <item>
+                   <widget class="QLabel" name="label_17">
+                    <property name="text">
+                     <string>Szerokość</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QSpinBox" name="som_width">
+                    <property name="maximum">
+                     <number>999</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_19">
+                    <property name="text">
+                     <string>Wysokość</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QSpinBox" name="som_height">
+                    <property name="maximum">
+                     <number>999</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_24">
+                    <property name="text">
+                     <string>Liczba wejść</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QSpinBox" name="som_inputs">
+                    <property name="maximum">
+                     <number>999</number>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_14">
+                  <item>
+                   <widget class="QLabel" name="label_26">
+                    <property name="text">
+                     <string>Promień</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QDoubleSpinBox" name="som_radius">
+                    <property name="maximum">
+                     <double>999.990000000000009</double>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_27">
+                    <property name="text">
+                     <string>Alpha</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QDoubleSpinBox" name="som_alpha">
+                    <property name="maximum">
+                     <double>999.990000000000009</double>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_25">
+                    <property name="text">
+                     <string>Liczba Iteracji</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QDoubleSpinBox" name="som_iters">
+                    <property name="maximum">
+                     <double>999.990000000000009</double>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
               </widget>
               <widget class="QWidget" name="tab_8">
                <attribute name="title">
                 <string>RBF</string>
                </attribute>
+               <layout class="QVBoxLayout" name="verticalLayout_11">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_15"/>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_16"/>
+                </item>
+               </layout>
               </widget>
               <widget class="QWidget" name="tab_9">
                <attribute name="title">
                 <string>Naive Bayes</string>
                </attribute>
+               <layout class="QVBoxLayout" name="verticalLayout_12">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_17"/>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_18"/>
+                </item>
+               </layout>
               </widget>
               <widget class="QWidget" name="tab_10">
                <attribute name="title">
                 <string>Neural Network</string>
                </attribute>
+               <layout class="QVBoxLayout" name="verticalLayout_13">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_19"/>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_20"/>
+                </item>
+               </layout>
               </widget>
               <widget class="QWidget" name="tab_11">
                <attribute name="title">
                 <string>LOF</string>
                </attribute>
-              </widget>
-              <widget class="QWidget" name="tab_12">
-               <attribute name="title">
-                <string>KNN</string>
-               </attribute>
+               <layout class="QVBoxLayout" name="verticalLayout_14">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_21"/>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_22"/>
+                </item>
+               </layout>
               </widget>
              </widget>
             </item>
@@ -1397,6 +1532,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>somSetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>changeMethodParams()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>579</x>
+     <y>162</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>321</x>
+     <y>338</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>chooseObject()</slot>
@@ -1414,5 +1565,7 @@
   <slot>rightClicked()</slot>
   <slot>leftClicked()</slot>
   <slot>refreshDatabaseTable()</slot>
+  <slot>changeMethodParams()</slot>
+  <slot>openMethodsHelpWindow()</slot>
  </slots>
 </ui>
