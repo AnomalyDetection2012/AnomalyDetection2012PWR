@@ -95,7 +95,7 @@ void LiveLineChart::loadData()
                 }
                 else //if anomaly
                 {
-                    url = url.append("anomaly,");
+                    url = url.append("anomalia,");
 
                     for(int j=0;j<values[0].size();j++)
                     {
@@ -154,7 +154,7 @@ void LiveLineChart::loadData()
                 }
                 else //if anomaly
                 {
-                    url = url.append("anomaly,");
+                    url = url.append("anomalia,");
 
                     for(int j=0;j<values[0].size();j++)
                     {
