@@ -5,6 +5,7 @@ SubscribersHandler::SubscribersHandler(ConfigurationHandler *config)
     this->config = config;
     this->subscribers = new std::vector<Subscriber>();
     initialize();
+    loadData();
 }
 
 SubscribersHandler::~SubscribersHandler()

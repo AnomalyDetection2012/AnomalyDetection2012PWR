@@ -10,6 +10,7 @@
 #include <QDomNode>
 #include <QDomElement>
 #include <QDateTime>
+#include <QTextStream>
 #include "Alarms/subscriber.h"
 #include "ConfigurationHandler/configurationhandler.h"
 

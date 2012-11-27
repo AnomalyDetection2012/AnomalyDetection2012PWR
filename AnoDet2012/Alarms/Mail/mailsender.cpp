@@ -31,10 +31,17 @@ MimeMessageBuilder * MailSender::getMessageBuilder()
 
 bool MailSender::sendMail(MimeMessage *message)
 {
-    bool result = sender->connectToHost() &&
-	              sender->login() &&
-				  sender->sendMail(*message);
-    sender->quit();
+    if (message != NULL)
+    {
+        bool result = sender->connectToHost() &&
+                      sender->login() &&
+                      sender->sendMail(*message);
+        sender->quit();
 
-    return result;
+        return result;
+    }
+    else
+    {
+        return false;
+    }
 }

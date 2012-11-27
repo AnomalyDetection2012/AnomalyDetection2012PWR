@@ -4,6 +4,6 @@
 		plain.txt
 	</body>
 	<tags>
-		<tag key="{%TEST%}" value="test"/>
+		<tag key="__TAG_TEST" value="test"/>
 	</tags>
 </Description>

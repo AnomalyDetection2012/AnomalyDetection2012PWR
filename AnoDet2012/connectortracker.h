@@ -3,7 +3,6 @@
 
 #include <QtSql>
 
-
 class ConfigurationHandler;
 class NotificationSender;
 class DatasetConnector;
@@ -21,6 +20,7 @@ public:
     bool createConnection(int objectId);
 
 private:
+
 
 
 public:
