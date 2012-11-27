@@ -1,1 +1,1 @@
-Upsss! W obiekcie {%OBJECT%} o {%TIME%} zosta�a wykryta anomalia!
+﻿Upsss! W obiekcie ${OBJECT} o ${TIME} została wykryta anomalia!
