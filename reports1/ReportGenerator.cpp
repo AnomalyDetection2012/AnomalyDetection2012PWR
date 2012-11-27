@@ -61,29 +61,48 @@ bool ReportGenerator::generatePDF(QString templateFilename, QString outputAbsolu
 
 }
 
+QString& ReportGenerator::table(vector<vector<double> > &data, vector<QString> *headers)
+{
+    QString* table = new QString("<table border='1' cellspacing='0' cellpadding='0' >");
+
+    if(headers!=NULL){
+        table->append("<tr>");
+        vector<QString>::iterator headersIt;
+
+        for(headersIt = headers->begin(); headersIt!=headers->end(); ++headersIt)
+        {
+            table->append("<th style='border: 1px solid black; text-align:right;'>"+(*headersIt)+"</th>");
+        }
+        table->append("</tr>");
+    }
+
+    vector<vector<double> >::iterator dataIt;
+    vector<double>::iterator dataRecordIt;
+
+    for(dataIt = data.begin(); dataIt!=data.end(); ++dataIt)
+    {
+        table->append("<tr>");
+        for(dataRecordIt = (*dataIt).begin(); dataRecordIt!=(*dataIt).end(); ++dataRecordIt)
+        {
+            table->append("<td style='border: 1px solid black; text-align:right;'>"+QString::number(*dataRecordIt)+"</td>");
+        }
+        table->append("</tr>");
+    }
+
+    table->append("</table>");
+
+    return *table;
+}
+
 QString& ReportGenerator::lineChart(int width, int height, vector<vector<double> > &data, vector<QString> &labels, vector<QString> &colors, QString additionalParameters)
 {
     int records = data.size();
     int recordSize = data[0].size();
 
-    QString* url = new QString("<img src='https://chart.googleapis.com/chart?");
+    QString* url = new QString("https://chart.googleapis.com/chart?");
+
     url->append("cht=lc");
     url->append("&chs="+QString::number(width)+"x"+QString::number(height));
-
-    vector<QString> valueSets;
-    for(int recordValue=0; recordValue<recordSize; ++recordValue)
-    {
-        valueSets.push_back(*(new QString("")));
-        for(int currentRecord=0; currentRecord<records; ++currentRecord)
-        {
-            valueSets[recordValue].append(QString::number(data[currentRecord][recordValue]));
-            if(currentRecord<(records-1))
-            {
-                valueSets[recordValue].append(QString(","));
-            }
-        }
-    }
-    url->append("&chd=t:"+this->assemble(valueSets, QString("|")));
 
     url->append("&chxt=x,y&chxl=0:|"+this->assemble(labels, QString("|")));
 
@@ -91,9 +110,61 @@ QString& ReportGenerator::lineChart(int width, int height, vector<vector<double>
 
     url->append("&chds=a");
 
-    url->append(additionalParameters+"' />");
+    url->append(additionalParameters);
 
-    return *url;
+    int urlSize = url->size();
+
+    vector<QString> charts;
+    vector<QString> valueSets;
+    int record=0;
+    while(record<records)
+    {
+        charts.push_back(*url+"&chd=t:");
+        valueSets.clear();
+        for(int recordValue = 0; recordValue<recordSize; ++recordValue)
+        {
+            valueSets.push_back(QString(""));
+        }
+        for(; record<records;)
+        {
+            // Counting number of chars in url with new record
+            int currentChartUrlLength = urlSize+7+(recordSize-1);
+            for(int recordValue = 0; recordValue<recordSize; ++recordValue)
+            {
+                currentChartUrlLength+=valueSets[recordValue].size();
+                currentChartUrlLength+=QString::number(data[record][recordValue]).size();
+                currentChartUrlLength+=recordSize;
+            }
+            if(currentChartUrlLength<=2048)
+            {
+                // We are trying to use another record, so lets add values to current chart url
+                for(int recordValue = 0; recordValue<recordSize; ++recordValue)
+                {
+                    if(valueSets[recordValue].size()!=0)
+                    {
+                        valueSets[recordValue].append(","+QString::number(data[record][recordValue]));
+                    }else{
+                        valueSets[recordValue].append(QString::number(data[record][recordValue]));
+                    }
+                }
+                ++record;
+            }else{
+                // Because of this record url becomes too large, so we have to break loop
+                break;
+            }
+        }
+        charts.back().append(this->assemble(valueSets, QString("|")));
+    }
+
+    // TODO przejdü po chartach i dodaj <img
+    vector<QString>::iterator chartsIt;
+    for(chartsIt=charts.begin(); chartsIt!=charts.end(); ++chartsIt)
+    {
+        (*chartsIt).prepend("<img src='");
+        (*chartsIt).append("' />");
+    }
+
+    return this->assemble(charts, QString(""));
 }
 
 QString& ReportGenerator::verticalStackedBarChart(int height, vector<vector<double> > &data, vector<QString> &labels, vector<QString> &colors, int barWidth, QString additionalParameters)

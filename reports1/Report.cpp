@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <QDebug>
+#include <QFile>
 
 using namespace std;
 
@@ -50,17 +51,20 @@ void Report::reportFromDatabase(QString outputAbsolutePath){
 void Report::reportFromObjectNewRecords(int objectID, QString outputAbsPath)
 {
     vector<vector<double> > data;
-    double val = 1.0;
-    for(int a=0; a<50; ++a)
+    for(int a=0; a<100; ++a)
     {
         data.push_back(*(new vector<double>(0)));
 
-        val = static_cast<double>(rand()%10);
-
-        for(int b=0;b<20;++b)
+        for(int b=0;b<33;++b)
         {
             data[a].push_back(static_cast<double>(rand()%100)/10.0);
         }
+    }
+
+    vector<QString> headers;
+    for(int a=0;a<20;++a)
+    {
+        headers.push_back(QString::number(a));
     }
 
     vector<double> data1;
@@ -104,14 +108,11 @@ void Report::reportFromObjectNewRecords(int objectID, QString outputAbsPath)
     this->generator->addVariable("ALARMSSUM", "5");
     this->generator->addVariable("LINECHART", this->generator->lineChart(600, 300, data, labels, colors));
 
-    QString c = this->generator->lineChart(600, 300, data, labels, colors);
-
-    qDebug() << QString::number(c.size());
-
-    qDebug() << c ;
+    qDebug() << this->generator->lineChart(600, 300, data, labels, colors);
 
     this->generator->addVariable("PIECHART3D",
                                  this->generator->pieChart3D(300, data1, legend, legend, colors));
+    this->generator->addVariable("TABLE", this->generator->table(data, &headers));
 
     this->generator->generatePDF("newRecords.html", outputAbsPath);
 }
