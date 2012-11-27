@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>input/report.html</file>
+        <file>input/bla.txt</file>
+        <file>input/newRecords.html</file>
+    </qresource>
+</RCC>
