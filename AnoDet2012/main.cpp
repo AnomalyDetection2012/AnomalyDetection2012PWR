@@ -15,12 +15,12 @@ int main(int argc, char *argv[])
     srand(time(NULL));
     qsrand(time(NULL));
 
-//    QApplication a(argc, argv);
-//    MainWindow w;
-//    w.show();
-//    return a.exec();
-
     QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
+
+    /*QApplication a(argc, argv);
 
     ConfigurationHandler *config = new ConfigurationHandler();
     NotificationSender *sender = new NotificationSender(config);
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     std::vector<double> maxs;
         maxs.push_back(90.0);
 
-    sender->sendNotifications(name, dateTime, dataNames, values, units, mins, maxs);
+    sender->sendNotifications(name, dateTime, dataNames, values, units, mins, maxs);*/
 
     return a.exec();
 }
