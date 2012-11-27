@@ -8,7 +8,7 @@ DataRecord::DataRecord(time_t time, vector<double> &data, bool isAnomaly, vector
 	this->data = data;
 	this->noninformativeData = noninformativeData;
     this->infoAddress = infos;
-    this->isAnomaly = false;
+    this->isAnomaly = isAnomaly;
     this->isDatabaseAnomaly = isAnomaly;
 }
 
