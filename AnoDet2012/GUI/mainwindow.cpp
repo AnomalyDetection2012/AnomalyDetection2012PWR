@@ -93,7 +93,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::chooseObject(){
     choosenObjectId = ui->comboBox_2->currentIndex();
-    ct->configuration->setPropertyValue("SelectedObject", "Object_ID", choosenObjectId );
+    ct->configuration->setPropertyValue("SelectedObject", "Object_ID", choosenObjectId);
     ui->label_12->setText(ui->comboBox_2->currentText());
 }
 
@@ -198,6 +198,11 @@ int MainWindow::getSelectedMethodId()
 QString MainWindow::getSelectedObjectName()
 {
     return objectsData[choosenObjectId].second;
+}
+
+int MainWindow::getSelectedObjectId()
+{
+    return objectsData[choosenObjectId].first;
 }
 
 void MainWindow::on_filterValuesBtn_clicked()
