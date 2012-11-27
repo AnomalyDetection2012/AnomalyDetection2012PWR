@@ -134,7 +134,7 @@ void IncomingDataController::processNewData()
         return;
     }
 
-    int chosenObjId = configuration->getPropertyValue("SelectedObject","Object_ID").toInt();
+    int chosenObjId = mainWindow->getSelectedObjectId(); //configuration->getPropertyValue("SelectedObject","Object_ID").toInt();
 
     QString statement = statement_base.arg(lastVersionID, 0, 10).arg(currVersion, 0, 10).arg(chosenObjId, 0, 10);
 
