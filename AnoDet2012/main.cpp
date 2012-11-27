@@ -6,34 +6,39 @@
 #include "GUI/mainwindow.h"
 
 
+#include "ConfigurationHandler/configurationhandler.h"
+#include "Alarms/notificationsender.h"
+
+
 int main(int argc, char *argv[])
 {
     srand(time(NULL));
     qsrand(time(NULL));
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
 
-
-//    GUIMainWindow w;
+//    QApplication a(argc, argv);
+//    MainWindow w;
 //    w.show();
+//    return a.exec();
 
-//    IncomingDataController *incControl = new IncomingDataController("RAFAL-PC\\SQLEXPRESS","SCSWin","sa","tajnehaslo");
-//    IncomingDataController *incControl = new IncomingDataController("BalutKomputer","SCSWin","sa","qwe123!");
-//    incControl->startListening();
-//    DataLoader* dl = new DataLoader(3, "RAFAL-PC\\SQLEXPRESS", "SCSWin", "sa", "tajnehaslo");
-//    dl->initDataRecordTable();
-//    dl->loadRecords(2000);
-//    dl->setAlarmFlagToRecords();
-//    dl->printRecords();
-//    dl->removeAllRecords();
-//    dl->loadMeasurementInfo();
-//    qDebug() << "liczba zaczytanych: " << dl->measurementInfo.size();
+    QApplication a(argc, argv);
 
-//    qDebug() <<"pomiar 10: " << dl->measurementInfo.value(10).value("MeasurementName").toString();
+    ConfigurationHandler *config = new ConfigurationHandler();
+    NotificationSender *sender = new NotificationSender(config);
 
+    QString name = "obiekt";
+    QDateTime dateTime = QDateTime::currentDateTime();
+    std::vector<QString> dataNames;
+        dataNames.push_back(QString("Temperatura"));
+    std::vector<QString> units;
+        units.push_back(QString("C"));
+    std::vector<double> values;
+        values.push_back(44.5);
+    std::vector<double> mins;
+        mins.push_back(-90.0);
+    std::vector<double> maxs;
+        maxs.push_back(90.0);
 
-
+    sender->sendNotifications(name, dateTime, dataNames, values, units, mins, maxs);
 
     return a.exec();
 }

@@ -41,8 +41,9 @@ void SMSMessageBuilder::initialize()
     QFile f_body(location + QString("/") + d_body.text().trimmed());
     if (f_body.open(QIODevice::ReadOnly))
     {
-        QByteArray buffer = f_body.readAll();
-        body = new QString(buffer);
+        QTextStream stream(&f_body);
+        stream.setCodec("UTF-8");
+        body = new QString(stream.readAll());
     }
 
     // Reads tags
@@ -86,31 +87,38 @@ void SMSMessageBuilder::reloadConfiguration()
 
 SMSMessageBuilder::SMSMessage * SMSMessageBuilder::build(std::vector<Subscriber> &subscribers, QString &name, QDateTime &dateTime, std::vector<QString> &dataNames, std::vector<double> &values, std::vector<QString> &units, std::vector<double> &mins, std::vector<double> &maxs)
 {
-    QString to = QString("");
-    std::vector<Subscriber>::iterator i;
-    for (i = subscribers.begin(); i != subscribers.end(); ++i)
+    if (subscribers.size() > 0)
     {
-        switch ((*i).notification)
+        QString to = QString("");
+        std::vector<Subscriber>::iterator i;
+        for (i = subscribers.begin(); i != subscribers.end(); ++i)
         {
-            case SMS:
-            case Both:
-                to += (*i).phone;
-                to += QString(",");
-            default:
-                continue;
+            switch ((*i).notification)
+            {
+                case SMS:
+                case Both:
+                    to += (*i).phone;
+                    to += QString(",");
+                default:
+                    continue;
+            }
         }
+        to.resize(to.length() - 1);
+
+        // Adds additional information
+        QString content(*body);
+        content.replace(QRegExp("\\$\\{OBJECT\\}"), name);
+        content.replace(QRegExp("\\$\\{TIME\\}"), dateTime.toString("hh:mm:ss dd.MM.yyyy"));
+
+        SMSMessageBuilder::SMSMessage *msg = new SMSMessageBuilder::SMSMessage();
+        *msg = *templateMessage;
+        msg->to = to;
+        msg->message = content;
+
+        return msg;
     }
-    to.resize(to.length() - 1);
-
-    // Adds additional information
-    QString content(*body);
-    content.replace(QRegExp("{%OBJECT%}"), name);
-    content.replace(QRegExp("{%TIME%}"), dateTime.toString("hh:mm:ss dd.MM.yyyy"));
-
-    SMSMessageBuilder::SMSMessage *msg = new SMSMessageBuilder::SMSMessage();
-    *msg = *templateMessage;
-    msg->to = to;
-    msg->message = content;
-
-    return msg;
+    else
+    {
+        return NULL;
+    }
 }

@@ -40,8 +40,9 @@ void MimeMessageBuilder::initialize()
     QFile f_body(location + QString("/") + d_body.text().trimmed());
     if (f_body.open(QIODevice::ReadOnly))
     {
-        QByteArray buffer = f_body.readAll();
-        body = new QString(buffer);
+        QTextStream stream(&f_body);
+        stream.setCodec("UTF-8");
+        body = new QString(stream.readAll());
     }
 
     // Reads images
@@ -93,52 +94,59 @@ void MimeMessageBuilder::reloadConfiguration()
 
 MimeMessage * MimeMessageBuilder::build(std::vector<Subscriber> &subscribers, QString &name, QDateTime &dateTime, std::vector<QString> &dataNames, std::vector<double> &values, std::vector<QString> &units, std::vector<double> &mins, std::vector<double> &maxs)
 {
-    MimeMessage *message = new MimeMessage();
-    message->setSender(new EmailAddress(*senderAddress, *senderField));
-    message->setSubject(*messageTopic);
-
-    std::vector<Subscriber>::iterator i;
-    for (i = subscribers.begin(); i != subscribers.end(); ++i)
+    if (subscribers.size() > 0)
     {
-        switch ((*i).notification)
+        MimeMessage *message = new MimeMessage();
+        message->setSender(new EmailAddress(*senderAddress, *senderField));
+        message->setSubject(*messageTopic);
+
+        std::vector<Subscriber>::iterator i;
+        for (i = subscribers.begin(); i != subscribers.end(); ++i)
         {
-            case Mail:
-            case Both:
-                message->addRecipient(new EmailAddress((*i).mail,
-                                                       (*i).identifier),
-                                                       MimeMessage::Bcc);
-            default:
-                continue;
+            switch ((*i).notification)
+            {
+                case Mail:
+                case Both:
+                    message->addRecipient(new EmailAddress((*i).mail,
+                                                           (*i).identifier),
+                                                           MimeMessage::Bcc);
+                default:
+                    continue;
+            }
         }
+
+        // Adds additional information
+        QString content(*body);
+        content.replace(QRegExp("\\$\\{OBJECT\\}"), name);
+        content.replace(QRegExp("\\$\\{TIME\\}"), dateTime.toString("hh:mm:ss dd.MM.yyyy"));
+
+        QString details;
+        for (int i = 0; i < values.size(); i++)
+        {
+            details.append(QString("<tr id='m_highlight'>"));
+            details.append(QString("<td id='m_content'>" + dataNames[i] + "</td>"));
+            details.append(QString("<td id='m_content'>" + QString::number(values[i]) + units[i] + "</td>"));
+            details.append(QString("<td id='m_content'><" + QString::number(mins[i]) + "; " + QString::number(maxs[i]) + "></td>"));
+            details.append(QString("</tr>"));
+        }
+        content.replace(QRegExp("\\$\\{DETAILS\\}"), details);
+
+        MimeHtml *html = new MimeHtml();
+        html->setHtml(content);
+        message->addPart(html);
+
+        for (int i = 0; i < (imageFiles->size()); i++)
+        {
+            MimeInlineFile *image = new MimeInlineFile(new QFile((*imageFiles)[i]));
+            image->setContentId((*imageIdentifiers)[i]);
+            image->setContentType((*imageTypes)[i]);
+            message->addPart(image);
+        }
+
+        return message;
     }
-
-    // Adds additional information
-    QString content(*body);
-    content.replace(QRegExp("{%OBJECT%}"), name);
-    content.replace(QRegExp("{%TIME%}"), dateTime.toString("hh:mm:ss dd.MM.yyyy"));
-
-    QString details;
-    for (int i = 0; i < values.size(); i++)
+    else
     {
-        details.append(QString("<tr id='m_highlight'>"));
-        details.append(QString("<td id='m_content'>" + dataNames[i] + "</td>"));
-        details.append(QString("<td id='m_content'>" + QString::number(values[i]) + units[i] + "</td>"));
-        details.append(QString("<td id='m_content'><" + QString::number(mins[i]) + "; " + QString::number(maxs[i]) + "></td>"));
-        details.append(QString("</tr>"));
+        return NULL;
     }
-    content.replace(QRegExp("{%DETAILS%}"), details);
-
-    MimeHtml *html = new MimeHtml();
-    html->setHtml(content);
-    message->addPart(html);
-
-    for (int i = 0; i < (imageFiles->size()); i++)
-    {
-        MimeInlineFile *image = new MimeInlineFile(new QFile((*imageFiles)[i]));
-        image->setContentId((*imageIdentifiers)[i]);
-        image->setContentType((*imageTypes)[i]);
-        message->addPart(image);
-    }
-
-    return message;
 }

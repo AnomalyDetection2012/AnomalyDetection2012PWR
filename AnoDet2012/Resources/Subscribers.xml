@@ -1,21 +1,27 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Subscribers>
 	<subscriber>
-		<identifier>Paweł Gruszka</identifier>
-		<mail>pgruszka@gmail.com</mail>
-		<phone>48664123456</phone>
-		<notification>Both</notification>
+		<identifier>Paweł P.</identifier>
+		<mail>rencilp@gmail.com</mail>
+		<phone>48664922733</phone>
+		<notification>None</notification>
 	</subscriber>
 	<subscriber>
-		<identifier>Tomasz Żelazny</identifier>
-		<mail>żelazo@hotmail.com</mail>
-		<phone>48690444666</phone>
-		<notification>SMS</notification>
+		<identifier>Adrian Z.</identifier>
+		<mail>lastverb@gmail.com</mail>
+		<phone>48693633312</phone>
+		<notification>None</notification>
 	</subscriber>
 	<subscriber>
-		<identifier>Justyna Jahn</identifier>
-		<mail>justyna.jahn@gmail.com</mail>
-		<phone>48662876543</phone>
+		<identifier>Rafał M.</identifier>
+		<mail>rafal.maliszewski@gmail.com</mail>
+		<phone>48661217745</phone>
+		<notification>None</notification>
+	</subscriber>
+	<subscriber>
+		<identifier>Paweł Ł.</identifier>
+		<mail>emc206@gmail.com</mail>
+		<phone>48515789790</phone>
 		<notification>None</notification>
 	</subscriber>
 </Subscribers>
