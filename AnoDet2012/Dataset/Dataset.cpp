@@ -27,6 +27,14 @@ int Dataset::getDataRecordsAmmount(){
     return dataTable->getLength();
 }
 
+QPair<int,int> Dataset::getIndexRecordInterval(QDateTime begin, QDateTime end){
+    return dataTable->getIndexRecordInterval(begin, end);
+}
+
+QPair<QDateTime,QDateTime> Dataset::getDateTimeRecordInterval(int begin, int end){
+    return dataTable->getDateTimeRecordInterval(begin, end);
+}
+
 int Dataset::newInfo(string tableName, int id, vector<string> &infoRecord){
 	vector<InfoTable>::iterator iter;
 	for(iter = infoTables.begin(); iter != infoTables.end(); ++iter){

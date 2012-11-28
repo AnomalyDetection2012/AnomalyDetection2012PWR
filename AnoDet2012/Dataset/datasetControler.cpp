@@ -111,3 +111,11 @@ vector<vector<double> > DatasetControler::getData(int begin, int end){
 void DatasetControler::setDatabaseAnomaly(int id, bool isAnomaly){
     dataset->setDatabaseAnomaly(id, isAnomaly);
 }
+
+QPair<int,int> DatasetControler::getIndexRecordInterval(QDateTime begin, QDateTime end){
+    return dataset->getIndexRecordInterval(begin, end);
+}
+
+QPair<QDateTime,QDateTime> DatasetControler::getDateTimeRecordInterval(int begin, int end){
+    return dataset->getDateTimeRecordInterval(begin, end);
+}

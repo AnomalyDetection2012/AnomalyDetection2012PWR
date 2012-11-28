@@ -150,3 +150,18 @@ double* DatasetConnector::getMaximals(){
         return datasetControler->getMaximals();
     }
 }
+
+QPair<int,int> DatasetConnector::getIndexRecordInterval(QDateTime begin, QDateTime end){
+    if(datasetControler != NULL){
+        return datasetControler->getIndexRecordInterval(begin, end);
+    }
+    return QPair<int,int>(-1,-1);
+}
+
+QPair<QDateTime,QDateTime> DatasetConnector::getDateTimeRecordInterval(int begin, int end){
+    if(datasetControler != NULL){
+        return datasetControler->getDateTimeRecordInterval(begin, end);
+    }
+    QDateTime curr = QDateTime::currentDateTime();
+    return QPair<QDateTime,QDateTime>(curr,curr);
+}

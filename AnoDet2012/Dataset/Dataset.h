@@ -18,6 +18,8 @@ public:
 	std::vector<InfoTable> infoTables;
 	DataRecordTable *dataTable;
     int getDataRecordsAmmount();
+    QPair<int,int> getIndexRecordInterval(QDateTime begin, QDateTime end);
+    QPair<QDateTime,QDateTime> getDateTimeRecordInterval(int begin, int end);
 	int newInfo(std::string tableName, int id, std::vector<std::string> &infoRecord);
     int newRecord(QDateTime time, std::vector<double> &data, bool isAnomaly, std::vector<double> &noninformativeData, std::vector<int> &infos);
     int newRecord(QDateTime time, std::vector<double> &data, bool isAnomaly = false);

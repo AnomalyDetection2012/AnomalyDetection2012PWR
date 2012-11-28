@@ -28,6 +28,8 @@ public:
     double getMinValue(int type_id);
     double getMaxValue(int type_id);
     std::vector<std::vector<double> > getData(int begin, int end);
+    QPair<int,int> getIndexRecordInterval(QDateTime begin, QDateTime end);
+    QPair<QDateTime,QDateTime> getDateTimeRecordInterval(int begin, int end);
 
 private:
     int methodId;

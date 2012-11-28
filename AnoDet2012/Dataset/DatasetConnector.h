@@ -30,6 +30,8 @@ public:
     void setAnomaly(int id, bool isAnomaly);
     void setDatabaseAnomaly(int id, bool isAnomaly);
     std::vector<std::vector<double> > getData(int begin, int end);
+    QPair<int,int> getIndexRecordInterval(QDateTime begin, QDateTime end);
+    QPair<QDateTime,QDateTime> getDateTimeRecordInterval(int begin, int end);
 
 private:
     AlgorithmControler *anomalyDetection;

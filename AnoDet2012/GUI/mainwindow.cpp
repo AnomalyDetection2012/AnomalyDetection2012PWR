@@ -146,6 +146,11 @@ void MainWindow::loadDataStandard(){
     ui->webView->setDataset(ct->dataset->datasetControler->dataset);
     ui->webView->setInterval(begin, end);
 
+    QPair<QDateTime,QDateTime> interval = ct->dataset->getDateTimeRecordInterval(begin, end);
+
+    ui->loadFromDateTime->setDateTime(interval.first);
+    ui->loadToDateTime->setDateTime(interval.second);
+
     redrawDataset();
 }
 
@@ -153,8 +158,13 @@ void MainWindow::loadDataDate(){
     QDateTime beginDate = ui->loadFromDateTime->dateTime();
     QDateTime endDate = ui->loadToDateTime->dateTime();
 
-    ui->webView->setDataset(ct->dataset->datasetControler->dataset);
+    QPair<int,int> interval = ct->dataset->getIndexRecordInterval(beginDate, endDate);
 
+    ui->webView->setDataset(ct->dataset->datasetControler->dataset);
+    ui->webView->setInterval(interval.first, interval.second);
+
+    ui->loadFromSpinBox->setValue(interval.first);
+    ui->loadToSpinBox->setValue(interval.second);
 
     redrawDataset();
 }
@@ -388,6 +398,10 @@ void MainWindow::rightClicked()
     int begin = ui->loadFromSpinBox->value() + ui->chartStepInterval->value();
     int end = ui->loadToSpinBox->value() + ui->chartStepInterval->value();
 
+    QPair<QDateTime,QDateTime> interval = ct->dataset->getDateTimeRecordInterval(begin, end);
+    ui->loadFromDateTime->setDateTime(interval.first);
+    ui->loadToDateTime->setDateTime(interval.second);
+
     if(end <= ct->dataset->datasetControler->dataset->getDataRecordsAmmount() && begin >= 0)
     {
         ui->loadFromSpinBox->setValue(begin);
@@ -403,6 +417,10 @@ void MainWindow::leftClicked()
 {
     int begin = ui->loadFromSpinBox->value() - ui->chartStepInterval->value();
     int end = ui->loadToSpinBox->value() - ui->chartStepInterval->value();
+
+    QPair<QDateTime,QDateTime> interval = ct->dataset->getDateTimeRecordInterval(begin, end);
+    ui->loadFromDateTime->setDateTime(interval.first);
+    ui->loadToDateTime->setDateTime(interval.second);
 
     if(end <= ct->dataset->datasetControler->dataset->getDataRecordsAmmount() && begin >= 0)
     {
