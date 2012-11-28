@@ -17,6 +17,7 @@
 #include "GUI/datasettableview.h"
 
 #define CHECKBOX_CHECKED 2
+#define CHART_RECORDS_LIMIT 1000
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -146,12 +147,37 @@ void MainWindow::loadDataStandard(){
     ui->webView->setDataset(ct->dataset->datasetControler->dataset);
     ui->webView->setInterval(begin, end);
 
-    QPair<QDateTime,QDateTime> interval = ct->dataset->getDateTimeRecordInterval(begin, end);
+    int count = end - begin;
+    if(count > CHART_RECORDS_LIMIT)
+    {
+        QMessageBox msgBox;;
+        msgBox.setInformativeText(QString::fromUtf8("Wybrany przedział zawiera ") + QString::number(count) + QString::fromUtf8(" rekordów.\nMaksymalna liczba rekordów do wyświetlenia to ") + QString::number(CHART_RECORDS_LIMIT) + ".");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setWindowTitle(QString::fromUtf8("Przekroczono limit"));
 
-    ui->loadFromDateTime->setDateTime(interval.first);
-    ui->loadToDateTime->setDateTime(interval.second);
+        // workaround for not working setMinimumWidth:
+        QSpacerItem* horizontalSpacer = new QSpacerItem(350, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        QGridLayout* layout = (QGridLayout*)msgBox.layout();
+        layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
 
-    redrawDataset();
+        msgBox.exec();
+    }
+    else
+    {
+        ui->webView->setDataset(ct->dataset->datasetControler->dataset);
+        ui->webView->setInterval(begin, end);
+
+        QPair<QDateTime,QDateTime> interval = ct->dataset->getDateTimeRecordInterval(begin, end);
+
+        ui->loadFromDateTime->setDateTime(interval.first);
+        ui->loadToDateTime->setDateTime(interval.second);
+
+        redrawDataset();
+    }
+
+
 }
 
 void MainWindow::loadDataDate(){
@@ -160,13 +186,35 @@ void MainWindow::loadDataDate(){
 
     QPair<int,int> interval = ct->dataset->getIndexRecordInterval(beginDate, endDate);
 
-    ui->webView->setDataset(ct->dataset->datasetControler->dataset);
-    ui->webView->setInterval(interval.first, interval.second);
 
-    ui->loadFromSpinBox->setValue(interval.first);
-    ui->loadToSpinBox->setValue(interval.second);
+    int count = interval.second - interval.first;
+    if(count > CHART_RECORDS_LIMIT)
+    {
+        QMessageBox msgBox;;
+        msgBox.setInformativeText(QString::fromUtf8("Wybrany przedział zawiera ") + QString::number(count) + QString::fromUtf8(" rekordów.\nMaksymalna liczba rekordów do wyświetlenia to ") + QString::number(CHART_RECORDS_LIMIT) + ".");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setWindowTitle(QString::fromUtf8("Przekroczono limit"));
 
-    redrawDataset();
+        // workaround for not working setMinimumWidth:
+        QSpacerItem* horizontalSpacer = new QSpacerItem(350, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        QGridLayout* layout = (QGridLayout*)msgBox.layout();
+        layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
+
+        msgBox.exec();
+    }
+    else
+    {
+        ui->webView->setDataset(ct->dataset->datasetControler->dataset);
+        ui->webView->setInterval(interval.first, interval.second);
+
+        ui->loadFromSpinBox->setValue(interval.first);
+        ui->loadToSpinBox->setValue(interval.second);
+
+        redrawDataset();
+    }
+
 }
 
 void MainWindow::learnData(){
