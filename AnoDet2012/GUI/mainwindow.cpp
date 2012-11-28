@@ -195,7 +195,7 @@ int MainWindow::getSelectedMethodId()
     return ui->comboBox->currentIndex();
 }
 
-QString MainWindow::getSelectedObjectName()
+QString& MainWindow::getSelectedObjectName()
 {
     return objectsData[choosenObjectId].second;
 }

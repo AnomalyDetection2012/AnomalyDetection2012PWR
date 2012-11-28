@@ -25,7 +25,7 @@ public:
     void newRecords(unsigned num);
     void newAnomalies(unsigned num);
     int getSelectedMethodId();
-    QString getSelectedObjectName();
+    QString& getSelectedObjectName();
     int getSelectedObjectId();
     
 private:
