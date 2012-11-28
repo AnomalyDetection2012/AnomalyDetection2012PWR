@@ -18,17 +18,17 @@ int DataRecordTable::getLength(){
     return records.size();
 }
 
-int DataRecordTable::addRecord(time_t time, vector<double> &data, bool isAnomaly, vector<double> &noninformativeData, vector<int> &infos){
+int DataRecordTable::addRecord(QDateTime time, vector<double> &data, bool isAnomaly, vector<double> &noninformativeData, vector<int> &infos){
     records.push_back(*(new DataRecord(time, data, isAnomaly, noninformativeData, infos)));
 	return records.size()-1;
 }
 
-int DataRecordTable::addRecord(time_t time, vector<double> &data, bool isAnomaly){
+int DataRecordTable::addRecord(QDateTime time, vector<double> &data, bool isAnomaly){
     records.push_back(*(new DataRecord(time, data, isAnomaly)));
     return records.size()-1;
 }
 
-void DataRecordTable::deleteBefore(time_t time){ // TODO co jesli nie sa posortowane wzgledem daty?
+void DataRecordTable::deleteBefore(QDateTime time){ // TODO co jesli nie sa posortowane wzgledem daty?
 	vector<DataRecord>::iterator iter;
 	int n=0;
 	for(iter = records.begin(); iter != records.end() && iter->time <= time; ++iter){

@@ -37,11 +37,11 @@ int Dataset::newInfo(string tableName, int id, vector<string> &infoRecord){
     return NULL;
 }
 
-int Dataset::newRecord(time_t time, vector<double> &data, bool isAnomaly, vector<double> &noninformativeData, vector<int> &infos){
+int Dataset::newRecord(QDateTime time, vector<double> &data, bool isAnomaly, vector<double> &noninformativeData, vector<int> &infos){
     return dataTable->addRecord(time, data, isAnomaly, noninformativeData, infos);
 }
 
-int Dataset::newRecord(time_t time, vector<double> &data, bool isAnomaly){
+int Dataset::newRecord(QDateTime time, vector<double> &data, bool isAnomaly){
     return dataTable->addRecord(time, data, isAnomaly);
 }
 

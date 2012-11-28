@@ -17,11 +17,11 @@ int DatasetControler::newInfo(string tableName, int id, vector<string> &infoReco
 	return dataset->newInfo(tableName,id,infoRecord);
 }
 
-int DatasetControler::newRecord(time_t time, vector<double> &data, bool isAnomaly, vector<double> &noninformativeData, vector<int> &infos){
+int DatasetControler::newRecord(QDateTime time, vector<double> &data, bool isAnomaly, vector<double> &noninformativeData, vector<int> &infos){
     return dataset->newRecord(time, data, isAnomaly, noninformativeData, infos);
 }
 
-int DatasetControler::newRecord(time_t time, vector<double> &data, bool isAnomaly){
+int DatasetControler::newRecord(QDateTime time, vector<double> &data, bool isAnomaly){
     return dataset->newRecord(time, data, isAnomaly);
 }
 

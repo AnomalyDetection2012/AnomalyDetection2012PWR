@@ -130,7 +130,7 @@ void DataLoader::loadAllRecords()
                 {
                     data[a] = query.value(a+2).toDouble();
                 }
-                dataset->newRecord(query.value(1).toDateTime().toTime_t(), data);
+                dataset->newRecord(query.value(1).toDateTime(), data);
                 this->progessBar->setValue(this->progessBar->value()+1);
 
                 if(this->progessBar->wasCanceled())
@@ -225,7 +225,7 @@ void DataLoader::loadRecords(int from, int to)
                 {
                     data.push_back(query.value(a+2).toDouble());
                 }
-                dataset->newRecord(query.value(1).toDateTime().toTime_t(), data, false, *(new vector<double>(0)), *(new vector<int>(0)));
+                dataset->newRecord(query.value(1).toDateTime(), data, false, *(new vector<double>(0)), *(new vector<int>(0)));
             }
         }
     }

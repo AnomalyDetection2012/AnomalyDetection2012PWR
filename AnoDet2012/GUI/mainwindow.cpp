@@ -150,6 +150,8 @@ void MainWindow::loadDataStandard(){
 }
 
 void MainWindow::loadDataDate(){
+    QDateTime beginDate = ui->loadFromDateTime->dateTime();
+    QDateTime endDate = ui->loadToDateTime->dateTime();
 
     ui->webView->setDataset(ct->dataset->datasetControler->dataset);
 

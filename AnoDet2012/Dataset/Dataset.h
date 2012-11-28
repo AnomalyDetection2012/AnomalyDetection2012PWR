@@ -19,8 +19,8 @@ public:
 	DataRecordTable *dataTable;
     int getDataRecordsAmmount();
 	int newInfo(std::string tableName, int id, std::vector<std::string> &infoRecord);
-    int newRecord(time_t time, std::vector<double> &data, bool isAnomaly, std::vector<double> &noninformativeData, std::vector<int> &infos);
-    int newRecord(time_t time, std::vector<double> &data, bool isAnomaly = false);
+    int newRecord(QDateTime time, std::vector<double> &data, bool isAnomaly, std::vector<double> &noninformativeData, std::vector<int> &infos);
+    int newRecord(QDateTime time, std::vector<double> &data, bool isAnomaly = false);
     std::vector<std::vector<double> > getData(int begin, int end);
     std::vector<bool> getAnomalies(int begin, int end);
     std::vector<bool> getDatabaseAnomalies(int begin, int end);

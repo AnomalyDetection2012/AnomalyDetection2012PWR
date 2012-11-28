@@ -2,7 +2,7 @@
 
 using namespace std;
 
-DataRecord::DataRecord(time_t time, vector<double> &data, bool isAnomaly, vector<double> &noninformativeData, vector<int> &infos)
+DataRecord::DataRecord(QDateTime time, vector<double> &data, bool isAnomaly, vector<double> &noninformativeData, vector<int> &infos)
 {
 	this->time = time;
 	this->data = data;
@@ -12,7 +12,7 @@ DataRecord::DataRecord(time_t time, vector<double> &data, bool isAnomaly, vector
     this->isDatabaseAnomaly = isAnomaly;
 }
 
-DataRecord::DataRecord(time_t time, vector<double> &data, bool isAnomaly)
+DataRecord::DataRecord(QDateTime time, vector<double> &data, bool isAnomaly)
 {
     this->time = time;
     this->data = data;

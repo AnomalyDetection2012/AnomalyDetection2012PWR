@@ -27,14 +27,14 @@ int DatasetConnector::newInfo(string tableName, int id, vector<string> &infoReco
     return NULL;
 }
 
-int DatasetConnector::newRecord(time_t time, vector<double> &data, bool isAnomaly, vector<double> &noninformativeData, vector<int> &infos){
+int DatasetConnector::newRecord(QDateTime time, vector<double> &data, bool isAnomaly, vector<double> &noninformativeData, vector<int> &infos){
 	if(datasetControler != NULL){
         return datasetControler->newRecord(time, data, isAnomaly, noninformativeData, infos);
 	}
     return NULL;
 }
 
-int DatasetConnector::newRecord(time_t time, vector<double> &data, bool isAnomaly){
+int DatasetConnector::newRecord(QDateTime time, vector<double> &data, bool isAnomaly){
     if(datasetControler != NULL){
         return datasetControler->newRecord(time, data, isAnomaly);
     }
