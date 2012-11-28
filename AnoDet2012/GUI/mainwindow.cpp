@@ -322,6 +322,7 @@ void MainWindow::loadAllObjectRecords()
         progress.setWindowModality(Qt::WindowModal);
         dl->progessBar = &progress;
         progress.show();
+        progress.setValue(0);
         dl->initDataRecordTable();
         dl->loadAllRecords();
         if(!progress.wasCanceled())
