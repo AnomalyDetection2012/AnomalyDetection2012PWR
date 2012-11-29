@@ -10,8 +10,8 @@ public:
 	~DatasetControler(void);
 	Dataset *dataset;
 	int newInfo(std::string tableName, int id, std::vector<std::string> &infoRecord);
-    int newRecord(time_t time, std::vector<double> &data, bool isAnomaly, std::vector<double> &noninformativeData, std::vector<int> &infos);
-    int newRecord(time_t time, std::vector<double> &data, bool isAnomaly = false);
+    int newRecord(QDateTime time, std::vector<double> &data, bool isAnomaly, std::vector<double> &noninformativeData, std::vector<int> &infos);
+    int newRecord(QDateTime time, std::vector<double> &data, bool isAnomaly = false);
     void checkNewData(AlgorithmControler *ac);
     void checkAllData(AlgorithmControler *ac);
     void checkData(int begin, int end, AlgorithmControler *ac);
@@ -28,6 +28,8 @@ public:
     double getMinValue(int type_id);
     double getMaxValue(int type_id);
     std::vector<std::vector<double> > getData(int begin, int end);
+    QPair<int,int> getIndexRecordInterval(QDateTime begin, QDateTime end);
+    QPair<QDateTime,QDateTime> getDateTimeRecordInterval(int begin, int end);
 
 private:
     int methodId;

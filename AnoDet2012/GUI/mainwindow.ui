@@ -375,7 +375,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QDateTimeEdit" name="dateTimeEdit_2"/>
+                  <widget class="QDateTimeEdit" name="loadFromDateTime"/>
                  </item>
                 </layout>
                </item>
@@ -389,7 +389,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QDateTimeEdit" name="dateTimeEdit"/>
+                  <widget class="QDateTimeEdit" name="loadToDateTime"/>
                  </item>
                 </layout>
                </item>

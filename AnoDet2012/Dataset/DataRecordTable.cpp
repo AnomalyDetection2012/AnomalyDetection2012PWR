@@ -18,17 +18,40 @@ int DataRecordTable::getLength(){
     return records.size();
 }
 
-int DataRecordTable::addRecord(time_t time, vector<double> &data, bool isAnomaly, vector<double> &noninformativeData, vector<int> &infos){
+QPair<int,int> DataRecordTable::getIndexRecordInterval(QDateTime begin, QDateTime end){
+    int beginIdx = -1;
+    int endIdx = -1;
+
+    for(int i=0; i<records.size(); i++){
+        if(records[i].time >= begin){
+            beginIdx = i;
+            break;
+        }
+    }
+
+    for(int i=beginIdx; i< records.size(); i++){
+        if(records[i].time <= end)
+            endIdx = i; //dont break, get the latest record with given end date
+    }
+
+    return QPair<int,int>(beginIdx, endIdx);
+}
+
+QPair<QDateTime,QDateTime> DataRecordTable::getDateTimeRecordInterval(int begin, int end){
+    return QPair<QDateTime,QDateTime>(records[begin].time, records[end].time);
+}
+
+int DataRecordTable::addRecord(QDateTime time, vector<double> &data, bool isAnomaly, vector<double> &noninformativeData, vector<int> &infos){
     records.push_back(*(new DataRecord(time, data, isAnomaly, noninformativeData, infos)));
 	return records.size()-1;
 }
 
-int DataRecordTable::addRecord(time_t time, vector<double> &data, bool isAnomaly){
+int DataRecordTable::addRecord(QDateTime time, vector<double> &data, bool isAnomaly){
     records.push_back(*(new DataRecord(time, data, isAnomaly)));
     return records.size()-1;
 }
 
-void DataRecordTable::deleteBefore(time_t time){ // TODO co jesli nie sa posortowane wzgledem daty?
+void DataRecordTable::deleteBefore(QDateTime time){ // TODO co jesli nie sa posortowane wzgledem daty?
 	vector<DataRecord>::iterator iter;
 	int n=0;
 	for(iter = records.begin(); iter != records.end() && iter->time <= time; ++iter){

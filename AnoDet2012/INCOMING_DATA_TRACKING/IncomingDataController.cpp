@@ -203,7 +203,7 @@ void IncomingDataController::processNewData()
                 // add DataRecord to dataset
                 vector <double> nonInf(0);
 
-                datasetConnector->newRecord((time_t)dateTime.toTime_t(), dataValues, result[0], nonInf, infos);
+                datasetConnector->newRecord(dateTime, dataValues, result[0], nonInf, infos);
 
                 // redraw LiveLineChart
                 guiController->refreshLiveLineChart();

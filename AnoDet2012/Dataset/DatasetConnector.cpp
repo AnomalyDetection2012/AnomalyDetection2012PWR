@@ -27,14 +27,14 @@ int DatasetConnector::newInfo(string tableName, int id, vector<string> &infoReco
     return NULL;
 }
 
-int DatasetConnector::newRecord(time_t time, vector<double> &data, bool isAnomaly, vector<double> &noninformativeData, vector<int> &infos){
+int DatasetConnector::newRecord(QDateTime time, vector<double> &data, bool isAnomaly, vector<double> &noninformativeData, vector<int> &infos){
 	if(datasetControler != NULL){
         return datasetControler->newRecord(time, data, isAnomaly, noninformativeData, infos);
 	}
     return NULL;
 }
 
-int DatasetConnector::newRecord(time_t time, vector<double> &data, bool isAnomaly){
+int DatasetConnector::newRecord(QDateTime time, vector<double> &data, bool isAnomaly){
     if(datasetControler != NULL){
         return datasetControler->newRecord(time, data, isAnomaly);
     }
@@ -149,4 +149,19 @@ double* DatasetConnector::getMaximals(){
     if(datasetControler != NULL){
         return datasetControler->getMaximals();
     }
+}
+
+QPair<int,int> DatasetConnector::getIndexRecordInterval(QDateTime begin, QDateTime end){
+    if(datasetControler != NULL){
+        return datasetControler->getIndexRecordInterval(begin, end);
+    }
+    return QPair<int,int>(-1,-1);
+}
+
+QPair<QDateTime,QDateTime> DatasetConnector::getDateTimeRecordInterval(int begin, int end){
+    if(datasetControler != NULL){
+        return datasetControler->getDateTimeRecordInterval(begin, end);
+    }
+    QDateTime curr = QDateTime::currentDateTime();
+    return QPair<QDateTime,QDateTime>(curr,curr);
 }

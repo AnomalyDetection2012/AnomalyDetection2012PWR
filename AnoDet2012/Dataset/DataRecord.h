@@ -7,12 +7,12 @@
 class DataRecord
 {
 public:
-    DataRecord(time_t time, std::vector<double> &data, bool isAnomaly, std::vector<double> &noninformativeData, std::vector<int> &infos);
-    DataRecord(time_t time, std::vector<double> &data, bool isAnomaly = false);
+    DataRecord(QDateTime time, std::vector<double> &data, bool isAnomaly, std::vector<double> &noninformativeData, std::vector<int> &infos);
+    DataRecord(QDateTime time, std::vector<double> &data, bool isAnomaly = false);
 	~DataRecord(void);
 	bool isAnomaly;
     bool isDatabaseAnomaly;
-	time_t time;
+    QDateTime time;
 	std::vector<double> data;
 	std::vector<double> noninformativeData;
 	std::vector<int> infoAddress;
