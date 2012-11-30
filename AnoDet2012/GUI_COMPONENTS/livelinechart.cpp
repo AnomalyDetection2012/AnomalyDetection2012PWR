@@ -56,7 +56,8 @@ void LiveLineChart::loadData()
         {
             int recordsNum = dataset->getDataRecordsAmmount();
             int showLastRecords = 50;   // show last 50 records on chart
-            std::vector <std::vector <double> > values = dataset->getData(recordsNum - showLastRecords < 0 ? 0 : recordsNum - showLastRecords, recordsNum);
+            int beg = recordsNum - showLastRecords < 0 ? 0 : recordsNum - showLastRecords;
+            std::vector <std::vector <double> > values = dataset->getData(beg , recordsNum);
             std::vector <QString> dataNames = dataset->dataTable->dataNames;
             std::vector <int> programMeasurementIds = dataset->dataTable->programPomiarIds;
 
@@ -83,7 +84,7 @@ void LiveLineChart::loadData()
 
                 if(!anomalies[i])
                 {
-                    url = url.append(" ,");
+                    url = url.append(dataset->dataTable->records[beg + i].time.toString("dd.MM.yyyy hh:mm:ss")).append(",");
 
                     for(int j=0;j<values[0].size();j++)
                     {
@@ -95,7 +96,7 @@ void LiveLineChart::loadData()
                 }
                 else //if anomaly
                 {
-                    url = url.append("anomalia,");
+                    url = url.append("anomalia(").append(dataset->dataTable->records[beg + i].time.toString("dd.MM.yyyy hh:mm:ss")).append("),");
 
                     for(int j=0;j<values[0].size();j++)
                     {
@@ -142,7 +143,8 @@ void LiveLineChart::loadData()
 
                 if(!anomalies[i] && !databaseAnomalies[i])
                 {
-                    url = url.append(" ,");
+                    //url = url.append(" ,");
+                    url = url.append(dataset->dataTable->records[this->begin + i].time.toString("dd.MM.yyyy hh:mm:ss")).append(",");
 
                     for(int j=0;j<values[0].size();j++)
                     {
@@ -154,7 +156,8 @@ void LiveLineChart::loadData()
                 }
                 else //if anomaly
                 {
-                    url = url.append("anomalia,");
+                    //url = url.append("anomalia,");
+                    url = url.append("anomalia(").append(dataset->dataTable->records[this->begin + i].time.toString("dd.MM.yyyy hh:mm:ss")).append("),");
 
                     for(int j=0;j<values[0].size();j++)
                     {
