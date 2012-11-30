@@ -486,11 +486,12 @@ void MainWindow::refreshDatabaseTable(){
     DataRecordTable *dataTable = ct->dataset->datasetControler->dataset->dataTable;
     int columns = dataTable->dataNames.size();
     int rows = dataTable->records.size();
-    DatasetTableView *model = new DatasetTableView(rows, columns, this);
+    DatasetTableView *model = new DatasetTableView(rows, columns+1, this);
     model->setDataRecords(dataTable);
-
-    for(int i=0; i<columns; ++i){
-        model->setHorizontalHeaderItem(i, new QStandardItem(dataTable->dataNames[i]));
+    QString *dataCzas = new QString("Data i czas");
+    model->setHorizontalHeaderItem(0, new QStandardItem(*dataCzas));
+    for(int i=1; i<=columns; ++i){
+        model->setHorizontalHeaderItem(i, new QStandardItem(dataTable->dataNames[i-1]));
     }
 
     ui->datasetTableView->setModel(model);
