@@ -325,6 +325,19 @@ void MainWindow::loadAllObjectRecords()
         progress.setValue(0);
         dl->initDataRecordTable();
         dl->loadAllRecords();
+
+        if(progress.wasCanceled())
+            return;
+
+        progress.setLabelText(QString::fromUtf8("Pobieranie danych anomalii dla wybranego obiektu..."));
+        progress.setCancelButtonText("Anuluj");
+        progress.setMinimum(0);
+        progress.setValue(0);
+
+        dl->loadMeasurementInfo();
+        dl->setAlarmFlagToRecords();
+        ct->dataset->setMinMaxFromDataset();
+
         if(!progress.wasCanceled())
         {
             this->statusOfObjectDataLoad = true;
@@ -338,9 +351,6 @@ void MainWindow::loadAllObjectRecords()
             ui->reportsTab->setEnabled(true);
             ui->subscriptionTab->setEnabled(true);
         }
-        dl->loadMeasurementInfo();
-        dl->setAlarmFlagToRecords();
-        ct->dataset->setMinMaxFromDataset();
     }
 }
 
