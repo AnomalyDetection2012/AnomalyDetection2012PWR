@@ -70,7 +70,10 @@ SOURCES += main.cpp \
     Alarms/SMS/smsmessagebuilder.cpp \
     Alarms/notificationsender.cpp \
     Alarms/subscribershandler.cpp \
-    GUI/datasettableview.cpp
+    GUI/datasettableview.cpp \
+    Reports/WebViewPrinter.cpp \
+    Reports/ReportGenerator.cpp \
+    Reports/Report.cpp
 
 HEADERS  += \
     Dataset/InfoTable.h \
@@ -133,7 +136,10 @@ HEADERS  += \
     Alarms/SMS/smsmessagebuilder.h \
     Alarms/notificationsender.h \
     Alarms/subscribershandler.h \
-    GUI/datasettableview.h
+    GUI/datasettableview.h \
+    Reports/WebViewPrinter.h \
+    Reports/ReportGenerator.h \
+    Reports/Report.h
 
 FORMS    += \
     GUI/mainwindow.ui \
