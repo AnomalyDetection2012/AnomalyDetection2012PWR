@@ -21,7 +21,7 @@ ReportGenerator::ReportGenerator(QObject *parent) :
 
 bool ReportGenerator::generatePDF(QString templateFilename, QString outputAbsolutePath)
 {
-    QFile templateFile(":/input/"+templateFilename);
+    QFile templateFile(":/reports/Reports/"+templateFilename);
 
     if(!templateFile.open(QIODevice::ReadOnly | QIODevice::Text))
     {
@@ -238,6 +238,7 @@ QString& ReportGenerator::pieChart(int height, vector<double> &data, vector<QStr
     url->append("cht=p");
     url->append("&chs="+QString::number(2*height)+"x"+QString::number(height));
     url->append("&chd=t:"+dataAssembled);
+    url->append("&chds=a");
     if(!labels.empty())
     {
         QString labelsAssembled = this->assemble(labels, QString("|"));
@@ -266,6 +267,7 @@ QString& ReportGenerator::pieChart3D(int height, vector<double> &data, vector<QS
     url->append("cht=p3");
     url->append("&chs="+QString::number(2.5*static_cast<double>(height))+"x"+QString::number(height));
     url->append("&chd=t:"+dataAssembled);
+    url->append("&chds=a");
     if(!labels.empty())
     {
         QString labelsAssembled = this->assemble(labels, QString("|"));

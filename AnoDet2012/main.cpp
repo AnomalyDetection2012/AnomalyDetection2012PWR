@@ -4,6 +4,7 @@
 #include "Dataset/MeasurementInfo.h"
 #include "GUI_COMPONENTS/livelinechart.h"
 #include "GUI/mainwindow.h"
+#include "Reports/Report.h"
 
 int main(int argc, char *argv[])
 {

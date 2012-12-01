@@ -14,7 +14,9 @@
 #include <QSpacerItem>
 #include <QGridLayout>
 #include <QStandardItemModel>
+#include <QFileDialog>
 #include "GUI/datasettableview.h"
+#include "Reports/Report.h"
 
 #define CHECKBOX_CHECKED 2
 #define CHART_RECORDS_LIMIT 1000
@@ -606,4 +608,8 @@ void MainWindow::changeSOMParams(){
                                       ct->configuration->getPropertyValue(*name, "MaxIterations").toDouble(),
                                       map);
     ct->anomalyDetection->registerMethod(1, met);
+}
+void MainWindow::generateReportFromDatabase()
+{
+    this->ct->reports->reportFromDatabase(QFileDialog::getSaveFileName(this));
 }

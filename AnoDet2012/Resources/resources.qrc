@@ -1,10 +1,12 @@
 <RCC>
     <qresource prefix="/images">
         <file>db.png</file>
-        <file>Reports/newRecords.html</file>
-        <file>Reports/report.html</file>
     </qresource>
     <qresource prefix="/googleChart">
         <file>Line.html</file>
+    </qresource>
+    <qresource prefix="/reports">
+        <file>Reports/reportFromDatabase.html</file>
+        <file>Reports/queries/countingAlarmsGroupedByTypeForObject.sql</file>
     </qresource>
 </RCC>

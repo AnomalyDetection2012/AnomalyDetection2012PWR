@@ -9,6 +9,8 @@
 #include "ANOMALY_DETECTION/BAYES/naive_bayes.h"
 #include "ANOMALY_DETECTION/DENSITY/densitymethod.h"
 #include <QResizeEvent>
+#include <QProgressDialog>
+#include <QFileDialog>
 
 namespace Ui {
 class MainWindow;
@@ -29,10 +31,10 @@ public:
     int getSelectedObjectId();
     
 private:
+    std::vector<QPair<int, QString> > objectsData;
     Ui::MainWindow *ui;
     ConnectorTracker *ct;
     int choosenObjectId;
-    std::vector<QPair<int, QString> > objectsData;
     void resizeEvent(QResizeEvent * event);
     QTimer *timer;
     bool statusOfDatabaseConnection;
@@ -65,6 +67,7 @@ private slots:
     void refreshDatabaseTable();
     void changeMethodParams();
     void openMethodsHelpWindow();
+    void generateReportFromDatabase();
 };
 
 #endif // MAINWINDOW_H

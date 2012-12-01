@@ -11,6 +11,7 @@ class IncomingDataController;
 class DataLoader;
 class GUIController;
 class MainWindow;
+class Report;
 
 class ConnectorTracker
 {
@@ -31,6 +32,7 @@ public:
     AlgorithmControler *anomalyDetection;
     IncomingDataController *incomingData;
     DataLoader *loader;
+    Report* reports;
     GUIController *guiController;
     bool isConnected;
     MainWindow *mainWindow;

@@ -7,6 +7,7 @@
 #include "INCOMING_DATA_TRACKING/IncomingDataController.h"
 #include "GUI_COMPONENTS/guicontroller.h"
 #include "GUI/mainwindow.h"
+#include "Reports/Report.h"
 
 ConnectorTracker::ConnectorTracker()
 {
@@ -50,6 +51,8 @@ bool ConnectorTracker::createConnection(int objectId){
 
     incomingData = new IncomingDataController(dbConnection);
     loader = new DataLoader(objectId, dbConnection);
+    reports = new Report(dbConnection);
+    reports->initialiseConnectors(this);
     incomingData->initialiseConnectors(this);
     loader->initialiseConnectors(this);
     isConnected = true;

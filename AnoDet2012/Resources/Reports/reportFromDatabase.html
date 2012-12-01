@@ -1,0 +1,57 @@
+<html>
+	<head>
+		<style>
+			body{
+				font-family: "Times New Roman";
+			}
+		</style>
+	</head>
+	<body>
+		<center><h1>Raport ze stanu bazy danych</h1></center>
+		<br /><br />
+		<h5>
+		Liczba rekordów razem: %RECORDSSUM%<br />
+		Liczba wykrytych alarmów razem: %ALARMSSUM%
+		</h5>
+		<br /><br /><br />
+		<h4>Wykres s³upkowy iloœci rekordów dla ka¿dego obiektu</h4>
+		<div>%BARCHARTRECORDSFOREACHOBJECT%</div>
+		<br /><br />
+		<h4>Wykres ko³owy alarmów dla wszystkich obiektów</h4>
+		<div>%PIECHARTALL%</div>
+		<br /><br />
+		<h4>Wykresy ko³owe alarmów dla ka¿dego obiektu</h4>
+		<table cellspacing='10'>
+		<tr>
+			<td>%OBJECTNAME1%<br />%PIECHARTOBJECT1%</td>
+			<td>%OBJECTNAME2%<br />%PIECHARTOBJECT2%</td>
+			<td>%OBJECTNAME3%<br />%PIECHARTOBJECT3%</td>
+		</tr>
+		<tr>
+			<td>%OBJECTNAME4%<br />%PIECHARTOBJECT4%</td>
+			<td>%OBJECTNAME5%<br />%PIECHARTOBJECT5%</td>
+			<td>%OBJECTNAME6%<br />%PIECHARTOBJECT6%</td>
+		</tr>
+		<tr>
+			<td>%OBJECTNAME7%<br />%PIECHARTOBJECT7%</td>
+			<td>%OBJECTNAME8%<br />%PIECHARTOBJECT8%</td>
+			<td>%OBJECTNAME9%<br />%PIECHARTOBJECT9%</td>
+		</tr>
+		<tr>
+			<td>%OBJECTNAME10%<br />%PIECHARTOBJECT10%</td>
+			<td>%OBJECTNAME11%<br />%PIECHARTOBJECT11%</td>
+			<td>%OBJECTNAME12%<br />%PIECHARTOBJECT12%</td>
+		</tr>
+		<tr>
+			<td>%OBJECTNAME13%<br />%PIECHARTOBJECT13%</td>
+			<td>%OBJECTNAME14%<br />%PIECHARTOBJECT14%</td>
+			<td>%OBJECTNAME15%<br />%PIECHARTOBJECT15%</td>
+		</tr>
+		<tr>
+			<td>%OBJECTNAME16%<br />%PIECHARTOBJECT16%</td>
+			<td>%OBJECTNAME17%<br />%PIECHARTOBJECT17%</td>
+			<td></td>
+		</tr>
+		</table>
+	</body>
+</html>

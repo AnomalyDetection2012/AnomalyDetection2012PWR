@@ -30,7 +30,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="livelogTab">
        <property name="enabled">
@@ -1142,7 +1142,24 @@
        <attribute name="title">
         <string>Raporty</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_9"/>
+       <layout class="QGridLayout" name="gridLayout_9">
+        <item row="0" column="0">
+         <widget class="QGroupBox" name="groupBox">
+          <property name="title">
+           <string>Baza danych</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_16">
+           <item>
+            <widget class="QPushButton" name="pushButton_10">
+             <property name="text">
+              <string>Raport z bazy danych</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="subscriptionTab">
        <property name="enabled">
@@ -1863,6 +1880,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_10</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>generateReportFromDatabase()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>320</x>
+     <y>354</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>321</x>
+     <y>338</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>chooseObject()</slot>
@@ -1882,5 +1915,6 @@
   <slot>refreshDatabaseTable()</slot>
   <slot>changeMethodParams()</slot>
   <slot>openMethodsHelpWindow()</slot>
+  <slot>generateReportFromDatabase()</slot>
  </slots>
 </ui>
