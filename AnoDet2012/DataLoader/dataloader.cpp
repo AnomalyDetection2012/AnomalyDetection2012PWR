@@ -267,6 +267,7 @@ void DataLoader::setAlarmFlagToRecords()
                         ++recordIdsIt;
                         ++currentRecord;
                     }
+                    this->progessBar->setValue(this->progessBar->value()+1);
                 }
 
             }

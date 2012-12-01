@@ -327,6 +327,19 @@ void MainWindow::loadAllObjectRecords()
         progress.setValue(0);
         dl->initDataRecordTable();
         dl->loadAllRecords();
+
+        if(progress.wasCanceled())
+            return;
+
+        progress.setLabelText(QString::fromUtf8("Pobieranie danych anomalii dla wybranego obiektu..."));
+        progress.setCancelButtonText("Anuluj");
+        progress.setMinimum(0);
+        progress.setValue(0);
+
+        dl->loadMeasurementInfo();
+        dl->setAlarmFlagToRecords();
+        ct->dataset->setMinMaxFromDataset();
+
         if(!progress.wasCanceled())
         {
             this->statusOfObjectDataLoad = true;
@@ -340,9 +353,6 @@ void MainWindow::loadAllObjectRecords()
             ui->reportsTab->setEnabled(true);
             ui->subscriptionTab->setEnabled(true);
         }
-        dl->loadMeasurementInfo();
-        dl->setAlarmFlagToRecords();
-        ct->dataset->setMinMaxFromDataset();
     }
 }
 
@@ -488,11 +498,12 @@ void MainWindow::refreshDatabaseTable(){
     DataRecordTable *dataTable = ct->dataset->datasetControler->dataset->dataTable;
     int columns = dataTable->dataNames.size();
     int rows = dataTable->records.size();
-    DatasetTableView *model = new DatasetTableView(rows, columns, this);
+    DatasetTableView *model = new DatasetTableView(rows, columns+1, this);
     model->setDataRecords(dataTable);
-
-    for(int i=0; i<columns; ++i){
-        model->setHorizontalHeaderItem(i, new QStandardItem(dataTable->dataNames[i]));
+    QString *dataCzas = new QString("Data i czas");
+    model->setHorizontalHeaderItem(0, new QStandardItem(*dataCzas));
+    for(int i=1; i<=columns; ++i){
+        model->setHorizontalHeaderItem(i, new QStandardItem(dataTable->dataNames[i-1]));
     }
 
     ui->datasetTableView->setModel(model);

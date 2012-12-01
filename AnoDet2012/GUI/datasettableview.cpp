@@ -21,7 +21,9 @@ QVariant DatasetTableView::data(const QModelIndex &index, int role) const
     switch (role)
     {
     case Qt::DisplayRole:
-        return QVariant(QString::number(record->data[index.column()]));
+        if(index.column() > 0)
+            return QVariant(QString::number(record->data[index.column()-1]));
+        return QVariant(record->time);
     case Qt::BackgroundRole:
         if(record->isAnomaly){
             return QVariant(QColor(Qt::red));
