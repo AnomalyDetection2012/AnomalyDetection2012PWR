@@ -25,6 +25,7 @@ public:
     DatasetConnector* dataset;
     QProgressDialog* progessBar;
 
+    std::vector<int> recordIds;
 
     DataLoader(int objectId, QString server, QString dbName, QString username, QString password);
     DataLoader(int objectId, QSqlDatabase *dbConn);
@@ -42,7 +43,6 @@ public:
 
 private:
     std::vector<int> programPomiarIds;
-    std::vector<int> recordIds;
     bool performDatabaseConnection();
     int getRecordIDOfFirstRecord(int begin);
     //int getRecordIDOfFirstRecord(QDateTime begin);

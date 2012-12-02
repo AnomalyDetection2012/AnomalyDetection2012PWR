@@ -81,6 +81,7 @@ private slots:
     void changeMethodParams();
     void openMethodsHelpWindow();
     void generateReportFromDatabase();
+    void generateReportFromDataRange();
 	void discardChanges();
     void applyChanges();
     void collapseSubscribers();

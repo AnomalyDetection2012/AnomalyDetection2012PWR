@@ -746,10 +746,6 @@ void MainWindow::deleteSubscriber()
             ct->sender->getSubscribersHandler()->removeSubscriber(sub);
         }
 
-        //
-        //
-        //
-
         ui->treeWidget->clear();
         createSubscribersTree();
 

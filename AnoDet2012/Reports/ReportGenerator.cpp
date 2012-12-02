@@ -95,7 +95,7 @@ QString& ReportGenerator::table(vector<vector<double> > &data, vector<QString> *
 }
 QString& ReportGenerator::table(vector<vector<QString> > &data, vector<QString> *headers)
 {
-    QString* table = new QString("<table border='1' cellspacing='0' cellpadding='0' >");
+    QString* table = new QString("<table border='1' cellspacing='0' cellpadding='1' >");
 
     if(headers!=NULL){
         table->append("<tr>");
@@ -182,6 +182,7 @@ QString& ReportGenerator::lineChart(int width, int height, vector<vector<double>
                 ++record;
             }else{
                 // Because of this record url becomes too large, so we have to break loop
+                --record;
                 break;
             }
         }

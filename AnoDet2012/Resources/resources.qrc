@@ -8,5 +8,6 @@
     <qresource prefix="/reports">
         <file>Reports/reportFromDatabase.html</file>
         <file>Reports/queries/countingAlarmsGroupedByTypeForObject.sql</file>
+        <file>Reports/reportFromDataRange.html</file>
     </qresource>
 </RCC>
