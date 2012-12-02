@@ -14,6 +14,8 @@ public:
 
     void sendNotifications(QString &name, QDateTime &dateTime, std::vector<QString> &dataNames, std::vector<double> &values, std::vector<QString> &units, std::vector<double> &mins, std::vector<double> &maxs);
 
+    SubscribersHandler * getSubscribersHandler();
+
 
 private:
 

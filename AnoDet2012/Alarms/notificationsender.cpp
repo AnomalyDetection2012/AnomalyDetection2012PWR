@@ -19,3 +19,8 @@ void NotificationSender::sendNotifications(QString &name, QDateTime &dateTime, s
     mailSender->sendMail(mailSender->getMessageBuilder()->build(subs, name, dateTime, dataNames, values, units, mins, maxs));
     smsSender->sendSMS(smsSender->getMessageBuilder()->build(subs, name, dateTime, dataNames, values, units, mins, maxs));
 }
+
+SubscribersHandler * NotificationSender::getSubscribersHandler()
+{
+    return handler;
+}
