@@ -369,6 +369,10 @@ void MainWindow::loadAllObjectRecords()
 
             ui->reportsTab->setEnabled(true);
             ui->subscriptionTab->setEnabled(true);
+
+            ui->reportDataRangeFrom->setMaximum(this->ct->dataset->datasetControler->dataset->dataTable->getLength()-2);
+            ui->reportDataRangeTo->setMaximum(this->ct->dataset->datasetControler->dataset->dataTable->getLength()-1);
+            ui->reportDataRangeTo->setValue(this->ct->dataset->datasetControler->dataset->dataTable->getLength()-1);
         }
 
     }
@@ -643,6 +647,9 @@ void MainWindow::generateReportFromDatabase()
 {
     QString absolutePath = QFileDialog::getSaveFileName(this,"Zapisz raport", QString(), tr("Pdf document (*.pdf)"));
 
+    if(absolutePath.trimmed().isEmpty())
+            return;
+
     DialogBusy dialogBusy;
     dialogBusy.setModal(true);
     dialogBusy.setLabelText("Trwa generowanie raportu...");
@@ -654,6 +661,37 @@ void MainWindow::generateReportFromDatabase()
 
     QMessageBox msgBox;
     msgBox.setInformativeText(QString::fromUtf8("Raport zostaÅ‚ pomyÅ›lnie wygenerowany."));
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.setWindowTitle(QString::fromUtf8("Raport"));
+
+    // workaround for not working setMinimumWidth:
+    QSpacerItem* horizontalSpacer = new QSpacerItem(350, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QGridLayout* layout = (QGridLayout*)msgBox.layout();
+    layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
+
+    msgBox.exec();
+}
+
+void MainWindow::generateReportFromDataRange()
+{
+    QString absolutePath = QFileDialog::getSaveFileName(this,"Zapisz raport", QString(), tr("Pdf document (*.pdf)"));
+
+    if(absolutePath.trimmed().isEmpty())
+        return;
+
+    DialogBusy dialogBusy;
+    dialogBusy.setModal(true);
+    dialogBusy.setLabelText("Trwa generowanie raportu...");
+    dialogBusy.show();
+
+    this->ct->reports->reportFromDataRange(ui->reportDataRangeFrom->value(), ui->reportDataRangeTo->value(), this->getSelectedObjectName(), absolutePath);
+
+    dialogBusy.close();
+
+    QMessageBox msgBox;
+    msgBox.setInformativeText(QString::fromUtf8("Raport zosta³ pomyœlnie wygenerowany."));
     msgBox.setStandardButtons(QMessageBox::Ok);
     msgBox.setDefaultButton(QMessageBox::Ok);
     msgBox.setIcon(QMessageBox::Information);
