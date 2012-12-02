@@ -104,7 +104,7 @@ void LiveLineChart::loadData()
                             url = url.append(QString::number(values[i][j])).append(',');
                     }
 
-                    url = url.append("anomalia,wykryto anomaliê;");
+                    url = url.append(QString::fromUtf8("anomalia,wykryto anomaliÄ™;"));
                 }
 
             }
@@ -166,11 +166,11 @@ void LiveLineChart::loadData()
                     }
 
                     if(anomalies[i] && databaseAnomalies[i])
-                        url = url.append("zgodnoœæ,pokrywaj¹ca siê wykryta anomalia z BD;");
+                        url = url.append(QString::fromUtf8("zgodnoÅ›Ä‡,pokrywajÄ…ca siÄ™ wykryta anomalia z BD;"));
                     else if(anomalies[i])
-                        url = url.append("anomalia,wykryto anomaliê;");
+                        url = url.append(QString::fromUtf8("anomalia,wykryto anomaliÄ™;"));
                     else
-                        url = url.append("anomalia(BD),anomalia pobrana z BD;");
+                        url = url.append(QString::fromUtf8("anomalia(BD),anomalia pobrana z BD;"));
 
                 }
 

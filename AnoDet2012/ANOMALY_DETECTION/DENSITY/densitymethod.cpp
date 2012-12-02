@@ -99,7 +99,7 @@ void DensityMethod::learn(vector< vector<double> > &set, vector<bool> &target){
     this->init(setIter->size());
     vector<bool>::iterator targetIter=target.begin();
     for(;setIter!=set.end();setIter++){
-        if(*targetIter){
+        if(!(*targetIter)){
             for(int a=0;a<setIter->size();++a){
                 this->dataSet[a]<<setIter->at(a);
             }
