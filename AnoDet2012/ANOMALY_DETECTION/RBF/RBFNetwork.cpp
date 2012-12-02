@@ -4,16 +4,17 @@
 #include <vector>
 #include <iostream>
 #include <math.h>
+#include <QDebug>
 
 using namespace std;
 
 RBFNetwork::RBFNetwork(
-	double learnFactor, double sigmoidalActivationFunctionBeta, double quantizationErrorThreshold, int generations, double randomWeightScaleFactor, double clustersNumber, int pointSize, double kmeansMinSigmaSquare, 
+    double learnFactor, double sigmoidalActivationFunctionBeta, double quantizationErrorThreshold, int generations, double randomWeightScaleFactor, int clustersNumber, int pointSize, double kmeansMinSigmaSquare,
     double kmeansMaxSigmaSquare, double kmeansStepImprovement, int kmeansIterations, vector<vector<double> >& neighbours)
-	:learnFactor(learnFactor),  generations(generations), clustersNumber(clustersNumber), pointSize(pointSize), 
-	 kmeansMinSigmaSquare(kmeansMinSigmaSquare), kmeansMaxSigmaSquare(kmeansMaxSigmaSquare), kmeansStepImprovement(kmeansStepImprovement), 
-	 kmeansIterations(kmeansIterations), neighbours(neighbours), randomWeightScaleFactor(randomWeightScaleFactor),
-	 sigmoidalActivationFunctionBeta(sigmoidalActivationFunctionBeta), quantizationErrorThreshold(quantizationErrorThreshold)
+    :learnFactor(learnFactor),  generations(generations), clustersNumber(clustersNumber), pointSize(pointSize),
+     kmeansMinSigmaSquare(kmeansMinSigmaSquare), kmeansMaxSigmaSquare(kmeansMaxSigmaSquare), kmeansStepImprovement(kmeansStepImprovement),
+     kmeansIterations(kmeansIterations), neighbours(neighbours), randomWeightScaleFactor(randomWeightScaleFactor),
+     sigmoidalActivationFunctionBeta(sigmoidalActivationFunctionBeta), quantizationErrorThreshold(quantizationErrorThreshold)
 {
     this->inputLayer = new vector<double>(this->pointSize);
 
@@ -21,14 +22,23 @@ RBFNetwork::RBFNetwork(
                               this->pointSize, this->kmeansIterations, this->kmeansStepImprovement, this->neighbours);
     this->kmeans->initAlgorithm();
 
-	QList<Cluster*>::iterator clustersIt;
+    QList<Cluster*>::iterator clustersIt;
 
     for(clustersIt = this->kmeans->clusters.begin();clustersIt != this->kmeans->clusters.end();++clustersIt)
     {
-		this->hiddenLayer.push_back(new HiddenNeuron(*clustersIt, this->inputLayer));
-	}
+        this->hiddenLayer.push_back(new HiddenNeuron(*clustersIt, this->inputLayer));
+    }
 
-	this->kmeans->runAlgorithm();
+    this->kmeans->runAlgorithm();
+}
+RBFNetwork::RBFNetwork(
+    double learnFactor, double sigmoidalActivationFunctionBeta, double quantizationErrorThreshold, int generations, double randomWeightScaleFactor, int clustersNumber, double kmeansMinSigmaSquare,
+    double kmeansMaxSigmaSquare, double kmeansStepImprovement, int kmeansIterations)
+    :learnFactor(learnFactor),  generations(generations), clustersNumber(clustersNumber),
+     kmeansMinSigmaSquare(kmeansMinSigmaSquare), kmeansMaxSigmaSquare(kmeansMaxSigmaSquare), kmeansStepImprovement(kmeansStepImprovement),
+     kmeansIterations(kmeansIterations), randomWeightScaleFactor(randomWeightScaleFactor),
+      sigmoidalActivationFunctionBeta(sigmoidalActivationFunctionBeta), quantizationErrorThreshold(quantizationErrorThreshold), neighbours(*(new vector<vector<double> >(0)))
+{
 }
 
 
@@ -36,6 +46,26 @@ RBFNetwork::~RBFNetwork(void)
 {
 }
 
+void RBFNetwork::init(vector<vector<double> > &data)
+{
+    this->pointSize = data[0].size();
+    this->neighbours = data;
+
+    this->inputLayer = new vector<double>(this->pointSize);
+
+    this->kmeans = new KMeans(this->clustersNumber, this->kmeansMinSigmaSquare, this->kmeansMaxSigmaSquare,
+                              this->pointSize, this->kmeansIterations, this->kmeansStepImprovement, this->neighbours);
+    this->kmeans->initAlgorithm();
+
+    QList<Cluster*>::iterator clustersIt;
+
+    for(clustersIt = this->kmeans->clusters.begin();clustersIt != this->kmeans->clusters.end();++clustersIt)
+    {
+        this->hiddenLayer.push_back(new HiddenNeuron(*clustersIt, this->inputLayer));
+    }
+
+    this->kmeans->runAlgorithm();
+}
 
 void RBFNetwork::addOutput()
 {
@@ -151,6 +181,9 @@ void RBFNetwork::learn(vector<vector<double> > &set, vector<bool> &target)
 {
     this->outputLayer.clear();
     this->addOutput();
+
+    this->init(set);
+
     vector<vector<double> > setpointsSet;
     vector<bool>::iterator targetIt;
 

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <limits>
+#include <QDebug>
 
 using namespace std;
 
@@ -17,7 +18,8 @@ KMeans::~KMeans(void)
 {
 }
 
-void KMeans::initAlgorithm(){
+void KMeans::initAlgorithm()
+{
     vector<vector<double> >::iterator neighboursIt = this->neighbours.begin();
 	for(int a=0; a<clustersNumber; ++a){
         Cluster* newCluster = new Cluster(this->pointSize, this->minSigmaSquare, this->maxSigmaSquare);

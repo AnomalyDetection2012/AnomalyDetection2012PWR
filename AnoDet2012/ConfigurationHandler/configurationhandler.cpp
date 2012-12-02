@@ -75,7 +75,7 @@ void ConfigurationHandler::initialize()
         settings->setValue("QuantizationErrorThreshold", 0.001);
         settings->setValue("Generations", 100);
         settings->setValue("RandomWeightScaleFactor", 0.1);
-        settings->setValue("ClustersNumber", 27.0);
+        settings->setValue("ClustersNumber", 28);
         settings->setValue("PointSize", 4);
         settings->setValue("MinSigmaSquare", 0.0001);
         settings->setValue("MaxSigmaSquare", 0.1);

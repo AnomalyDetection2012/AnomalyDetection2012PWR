@@ -8,16 +8,19 @@
 class RBFNetwork : public Method
 {
 public:
-	double learnFactor, randomWeightScaleFactor, clustersNumber, kmeansMinSigmaSquare, kmeansMaxSigmaSquare, kmeansStepImprovement, sigmoidalActivationFunctionBeta, quantizationErrorThreshold;
-	int generations, pointSize, kmeansIterations;
+    double learnFactor, randomWeightScaleFactor, kmeansMinSigmaSquare, kmeansMaxSigmaSquare, kmeansStepImprovement, sigmoidalActivationFunctionBeta, quantizationErrorThreshold;
+    int generations, pointSize, kmeansIterations, clustersNumber;
 	KMeans* kmeans;
 	std::vector<double>* inputLayer;
 	QList<HiddenNeuron*> hiddenLayer;
 	QList<OutputNeuron*> outputLayer;
     std::vector<std::vector<double> >& neighbours;
 
-    RBFNetwork(double learnFactor, double sigmoidalActivationFunctionBeta, double quantizationErrorThreshold, int generations, double randomWeightScaleFactor, double clustersNumber, int pointSize, double kmeansMinSigmaSquare, double kmeansMaxSigmaSquare, double kmeansStepImprovement, int kmeansIterations, std::vector<std::vector<double> >& neighbours);
-	~RBFNetwork(void);
+    RBFNetwork(double learnFactor, double sigmoidalActivationFunctionBeta, double quantizationErrorThreshold, int generations, double randomWeightScaleFactor, int clustersNumber, int pointSize, double kmeansMinSigmaSquare, double kmeansMaxSigmaSquare, double kmeansStepImprovement, int kmeansIterations, std::vector<std::vector<double> >& neighbours);
+    RBFNetwork(double learnFactor, double sigmoidalActivationFunctionBeta, double quantizationErrorThreshold, int generations, double randomWeightScaleFactor, int clustersNumber, double kmeansMinSigmaSquare, double kmeansMaxSigmaSquare, double kmeansStepImprovement, int kmeansIterations);
+    ~RBFNetwork(void);
+
+    void init(std::vector<std::vector<double> > &data);
 
 	void addOutput();
 	void calculateOutputs();

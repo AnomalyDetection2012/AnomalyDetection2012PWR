@@ -92,6 +92,20 @@ MainWindow::MainWindow(QWidget *parent) :
                             ct->configuration->getAlgorithmParameter(*name, "Neighbors").toInt());
     algorithm->registerMethod(4, met);
 
+    name = new QString("RBF");
+    met = new RBFNetwork(ct->configuration->getAlgorithmParameter(*name, "LearnFactor").toDouble(),
+                         ct->configuration->getAlgorithmParameter(*name, "SigmoidalActivationFunctionBeta").toDouble(),
+                         ct->configuration->getAlgorithmParameter(*name, "QuantizationErrorThreshold").toDouble(),
+                         ct->configuration->getAlgorithmParameter(*name, "Generations").toInt(),
+                         ct->configuration->getAlgorithmParameter(*name, "RandomWeightScaleFactor").toDouble(),
+                         ct->configuration->getAlgorithmParameter(*name, "ClustersNumber").toInt(),
+                         ct->configuration->getAlgorithmParameter(*name, "MinSigmaSquare").toDouble(),
+                         ct->configuration->getAlgorithmParameter(*name, "MaxSigmaSquare").toDouble(),
+                         ct->configuration->getAlgorithmParameter(*name, "StepImprovement").toDouble(),
+                         ct->configuration->getAlgorithmParameter(*name, "Iterations").toInt()
+                         );
+    algorithm->registerMethod(5, met);
+
     reloadParams();
     ct->mainWindow = this;
     timer = new QTimer(this);
@@ -373,6 +387,7 @@ void MainWindow::loadAllObjectRecords()
             ui->reportDataRangeFrom->setMaximum(this->ct->dataset->datasetControler->dataset->dataTable->getLength()-2);
             ui->reportDataRangeTo->setMaximum(this->ct->dataset->datasetControler->dataset->dataTable->getLength()-1);
             ui->reportDataRangeTo->setValue(this->ct->dataset->datasetControler->dataset->dataTable->getLength()-1);
+
         }
 
     }
@@ -570,6 +585,15 @@ void MainWindow::reloadParams(){
     ui->som_iters->setValue(ct->configuration->getAlgorithmParameter(*name, "MaxIterations").toDouble());
 
     //RBF
+    name = new QString("RBF");
+    ui->rbf_alpha->setValue(ct->configuration->getAlgorithmParameter(*name, "LearnFactor").toDouble());
+    ui->rbf_beta->setValue(ct->configuration->getAlgorithmParameter(*name, "SigmoidalActivationFunctionBeta").toDouble());
+    ui->rbf_iterations->setValue(ct->configuration->getAlgorithmParameter(*name, "Generations").toInt());
+    ui->rbf_randomWeightsDeviation->setValue(ct->configuration->getAlgorithmParameter(*name, "RandomWeightScaleFactor").toDouble());
+    ui->rbf_clusters->setValue(ct->configuration->getAlgorithmParameter(*name, "ClustersNumber").toInt());
+    ui->rbf_minSquare->setValue(ct->configuration->getAlgorithmParameter(*name, "MinSigmaSquare").toDouble());
+    ui->rbf_maxSquare->setValue(ct->configuration->getAlgorithmParameter(*name, "MaxSigmaSquare").toDouble());
+    ui->rbf_minStepImprovement->setValue(ct->configuration->getAlgorithmParameter(*name, "StepImprovement").toDouble());
 
 
     //Bayes
@@ -618,7 +642,28 @@ void MainWindow::changeNeighbourParams(){
 }
 
 void MainWindow::changeRBFParams(){
+    QString* name = new QString("RBF");
+    ct->configuration->setPropertyValue(*name, "LearnFactor", ui->rbf_alpha->value());
+    ct->configuration->setPropertyValue(*name, "SigmoidalActivationFunctionBeta", ui->rbf_beta->value());
+    ct->configuration->setPropertyValue(*name, "Generations", ui->rbf_iterations->value());
+    ct->configuration->setPropertyValue(*name, "RandomWeightScaleFactor", ui->rbf_randomWeightsDeviation->value());
+    ct->configuration->setPropertyValue(*name, "ClustersNumber", ui->rbf_clusters->value());
+    ct->configuration->setPropertyValue(*name, "MinSigmaSquare", ui->rbf_minSquare->value());
+    ct->configuration->setPropertyValue(*name, "MaxSigmaSquare", ui->rbf_maxSquare->value());
+    ct->configuration->setPropertyValue(*name, "StepImprovement", ui->rbf_minStepImprovement->value());
 
+    Method* met = new RBFNetwork(ct->configuration->getAlgorithmParameter(*name, "LearnFactor").toDouble(),
+                         ct->configuration->getAlgorithmParameter(*name, "SigmoidalActivationFunctionBeta").toDouble(),
+                         ct->configuration->getAlgorithmParameter(*name, "QuantizationErrorThreshold").toDouble(),
+                         ct->configuration->getAlgorithmParameter(*name, "Generations").toInt(),
+                         ct->configuration->getAlgorithmParameter(*name, "RandomWeightScaleFactor").toDouble(),
+                         ct->configuration->getAlgorithmParameter(*name, "ClustersNumber").toInt(),
+                         ct->configuration->getAlgorithmParameter(*name, "MinSigmaSquare").toDouble(),
+                         ct->configuration->getAlgorithmParameter(*name, "MaxSigmaSquare").toDouble(),
+                         ct->configuration->getAlgorithmParameter(*name, "StepImprovement").toDouble(),
+                         ct->configuration->getAlgorithmParameter(*name, "Iterations").toInt()
+                         );
+    ct->anomalyDetection->registerMethod(5, met);
 }
 
 void MainWindow::changeSOMParams(){

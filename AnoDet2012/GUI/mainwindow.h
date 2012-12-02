@@ -8,6 +8,7 @@
 #include "ANOMALY_DETECTION/NEIGHBOUR/nearest_neighbor.h"
 #include "ANOMALY_DETECTION/BAYES/naive_bayes.h"
 #include "ANOMALY_DETECTION/DENSITY/densitymethod.h"
+#include "ANOMALY_DETECTION/RBF/RBFNetwork.h"
 #include "Alarms/subscriber.h"
 #include <QResizeEvent>
 #include <QProgressDialog>
