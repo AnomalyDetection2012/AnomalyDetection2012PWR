@@ -8,10 +8,16 @@
 #include "ANOMALY_DETECTION/NEIGHBOUR/nearest_neighbor.h"
 #include "ANOMALY_DETECTION/BAYES/naive_bayes.h"
 #include "ANOMALY_DETECTION/DENSITY/densitymethod.h"
+#include "Alarms/subscriber.h"
 #include <QResizeEvent>
 #include <QProgressDialog>
 #include <QFileDialog>
 #include <GUI/dialogbusy.h>
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
+#include <QTreeWidgetItemIterator>
+#include <QStringList>
+#include <QDebug>
 
 namespace Ui {
 class MainWindow;
@@ -41,6 +47,7 @@ private:
     bool statusOfDatabaseConnection;
     bool statusOfObjectDataLoad;
     DialogBusy *dialogBusy;
+	QTreeWidgetItem *selectedSubscriber;
 
     void reloadParams();
     void changeBayesParams();
@@ -48,6 +55,10 @@ private:
     void changeNeighbourParams();
     void changeRBFParams();
     void changeSOMParams();
+	
+	void createSubscribersTree();
+    QTreeWidgetItem * getSelectedSubscriber();
+    void readSubscriberInfo();
 
 private slots:
     void chooseObject();
@@ -70,6 +81,13 @@ private slots:
     void changeMethodParams();
     void openMethodsHelpWindow();
     void generateReportFromDatabase();
+	void discardChanges();
+    void applyChanges();
+    void collapseSubscribers();
+    void expandSubscribers();
+    void deleteSubscriber();
+    void addSubscriber();
+    void on_treeWidget_itemClicked(QTreeWidgetItem *item, int column);
 };
 
 #endif // MAINWINDOW_H

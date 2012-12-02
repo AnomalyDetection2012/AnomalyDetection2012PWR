@@ -46,6 +46,21 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->lineEdit_2->setText(ct->configuration->getPropertyValue("Database", "Source").toString());
     ui->lineEdit_3->setText(ct->configuration->getPropertyValue("Database", "UserName").toString());
     ui->lineEdit_4->setText(ct->configuration->getPropertyValue("Database", "UserPassword").toString());
+	
+	QStringList headers;
+    headers.append("");
+    headers.append("");
+    ui->treeWidget->setHeaderLabels(headers);
+    ui->treeWidget->setColumnWidth(0, 196);
+    ui->treeWidget->setColumnWidth(1, 128);
+
+    ui->comboBox_3->addItem("poczta elektroniczna");
+    ui->comboBox_3->addItem("wiadomość SMS");
+    ui->comboBox_3->addItem("poczta oraz SMS");
+    ui->comboBox_3->addItem("nie powiadamiaj");
+
+    createSubscribersTree();
+    selectedSubscriber = NULL;
     // KONIEC USTAWIEN PÓL
 
     // TODO TEMP METODY DETEKCJI
@@ -623,6 +638,7 @@ void MainWindow::changeSOMParams(){
                                       map);
     ct->anomalyDetection->registerMethod(1, met);
 }
+
 void MainWindow::generateReportFromDatabase()
 {
     QString absolutePath = QFileDialog::getSaveFileName(this,"Zapisz raport", QString(), tr("Pdf document (*.pdf)"));
@@ -649,7 +665,206 @@ void MainWindow::generateReportFromDatabase()
     layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
 
     msgBox.exec();
-
 }
 
+void MainWindow::discardChanges()
+{
+    if (selectedSubscriber != NULL)
+    {
+        readSubscriberInfo();
+    }
+}
 
+void MainWindow::applyChanges()
+{
+    if (selectedSubscriber != NULL)
+    {
+        QString identifier = ui->lineEdit_5->text();
+        QString mail = ui->lineEdit_6->text();
+        QString phone = ui->lineEdit_7->text();
+        NotificationType notification = None;
+        if ((ui->comboBox_3->currentText()).compare("poczta elektroniczna") == 0)
+            notification = Mail;
+        else if ((ui->comboBox_3->currentText()).compare("wiadomość SMS") == 0)
+            notification = SMS;
+        else if ((ui->comboBox_3->currentText()).compare("poczta oraz SMS") == 0)
+            notification = Both;
+        else
+            notification = None;
+
+        //
+        //
+        //
+
+        Subscriber *sub = ct->sender->getSubscribersHandler()->getSubscriber(selectedSubscriber->text(0));
+        if (sub != NULL)
+        {
+            sub->identifier = identifier;
+            sub->mail = mail;
+            sub->phone = phone;
+            sub->notification = notification;
+        }
+        else
+        {
+            ct->sender->getSubscribersHandler()->addSubscriber(identifier, mail, phone, notification);
+        }
+
+        //
+        //
+        //
+
+        ui->treeWidget->clear();
+        createSubscribersTree();
+
+        ui->lineEdit_5->setText("");
+        ui->lineEdit_6->setText("");
+        ui->lineEdit_7->setText("");
+        ui->comboBox_3->setCurrentIndex(3);
+
+        selectedSubscriber = NULL;
+        ct->sender->getSubscribersHandler()->saveData();
+    }
+}
+
+void MainWindow::collapseSubscribers()
+{
+    ui->treeWidget->collapseAll();
+}
+
+void MainWindow::expandSubscribers()
+{
+    ui->treeWidget->expandAll();
+}
+
+void MainWindow::deleteSubscriber()
+{
+    if (selectedSubscriber != NULL)
+    {
+        Subscriber *sub = ct->sender->getSubscribersHandler()->getSubscriber(selectedSubscriber->text(0));
+        if (sub != NULL)
+        {
+            ct->sender->getSubscribersHandler()->removeSubscriber(sub);
+        }
+
+        //
+        //
+        //
+
+        ui->treeWidget->clear();
+        createSubscribersTree();
+
+        ui->lineEdit_5->setText("");
+        ui->lineEdit_6->setText("");
+        ui->lineEdit_7->setText("");
+        ui->comboBox_3->setCurrentIndex(3);
+
+        selectedSubscriber = NULL;
+        ct->sender->getSubscribersHandler()->saveData();
+    }
+}
+
+void MainWindow::addSubscriber()
+{
+    QTreeWidgetItemIterator it(ui->treeWidget);
+    while (*it)
+    {
+        (*it)->setSelected(false);
+        (*it)->setExpanded(false);
+        ++it;
+    }
+
+    QTreeWidgetItem *sub = new QTreeWidgetItem(ui->treeWidget);
+        sub->setText(0, QString("Brak identyfikatora #") + QString::number(ui->treeWidget->model()->rowCount()));
+    QTreeWidgetItem *id = new QTreeWidgetItem(sub);
+        id->setText(0, "#:");
+        id->setText(1, QString::number(ui->treeWidget->model()->rowCount()));
+    QTreeWidgetItem *mail = new QTreeWidgetItem(sub);
+        mail->setText(0, "E-mail:");
+        mail->setText(1, "brak");
+    QTreeWidgetItem *phone = new QTreeWidgetItem(sub);
+        phone->setText(0, "Telefon:");
+        phone->setText(1, "brak");
+    QTreeWidgetItem *notification = new QTreeWidgetItem(sub);
+        notification->setText(0, "Typ powiadomienia:");
+        notification->setText(1, "brak");
+
+    sub->setSelected(true);
+    sub->setExpanded(true);
+
+    ui->treeWidget->insertTopLevelItem(0, sub);
+    ui->treeWidget->scrollToBottom();
+
+    selectedSubscriber = NULL;
+}
+
+void MainWindow::createSubscribersTree()
+{
+    std::vector<Subscriber> *subscribers = ct->sender->getSubscribersHandler()->getSubscribers();
+    std::vector<Subscriber>::iterator i;
+    for (i = subscribers->begin(); i != subscribers->end(); ++i)
+    {
+        QTreeWidgetItem *sub = new QTreeWidgetItem(ui->treeWidget);
+            sub->setText(0, (*i).identifier);
+        QTreeWidgetItem *id = new QTreeWidgetItem(sub);
+            id->setText(0, "#:");
+            id->setText(1, QString::number(ui->treeWidget->model()->rowCount()));
+        QTreeWidgetItem *mail = new QTreeWidgetItem(sub);
+            mail->setText(0, "E-mail:");
+            mail->setText(1, (*i).mail);
+        QTreeWidgetItem *phone = new QTreeWidgetItem(sub);
+            phone->setText(0, "Telefon:");
+            phone->setText(1, (*i).phone);
+        QTreeWidgetItem *notification = new QTreeWidgetItem(sub);
+            notification->setText(0, "Typ powiadomienia:");
+            switch ((*i).notification)
+            {
+                case Mail:
+                    notification->setText(1, "poczta elektroniczna");
+                    break;
+                case SMS:
+                    notification->setText(1, "wiadomość SMS");
+                    break;
+                case Both:
+                    notification->setText(1, "poczta oraz SMS");
+                    break;
+                default:
+                    notification->setText(1, "nie powiadamiaj");
+            }
+    }
+}
+
+QTreeWidgetItem * MainWindow::getSelectedSubscriber()
+{
+    return selectedSubscriber;
+}
+
+void MainWindow::on_treeWidget_itemClicked(QTreeWidgetItem *item, int column)
+{
+    while (item->parent() != NULL)
+    {
+        item = item->parent();
+    }
+    selectedSubscriber = item;
+
+    readSubscriberInfo();
+}
+
+void MainWindow::readSubscriberInfo()
+{
+    QTreeWidgetItem *item = getSelectedSubscriber();
+
+    ui->lineEdit_5->setText(item->text(0));
+    ui->lineEdit_6->setText(item->child(1)->text(1));
+    ui->lineEdit_7->setText(item->child(2)->text(1));
+
+    int index = -1;
+    if ((item->child(3)->text(1)).compare("poczta elektroniczna") == 0)
+        index = 0;
+    else if ((item->child(3)->text(1)).compare("wiadomość SMS") == 0)
+        index = 1;
+    else if ((item->child(3)->text(1)).compare("poczta oraz SMS") == 0)
+        index = 2;
+    else
+        index = 3;
+    ui->comboBox_3->setCurrentIndex(index);
+}
