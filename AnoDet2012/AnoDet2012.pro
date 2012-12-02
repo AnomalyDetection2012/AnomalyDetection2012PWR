@@ -73,7 +73,8 @@ SOURCES += main.cpp \
     GUI/datasettableview.cpp \
     Reports/WebViewPrinter.cpp \
     Reports/ReportGenerator.cpp \
-    Reports/Report.cpp
+    Reports/Report.cpp \
+    GUI/dialogbusy.cpp
 
 HEADERS  += \
     Dataset/InfoTable.h \
@@ -139,11 +140,13 @@ HEADERS  += \
     GUI/datasettableview.h \
     Reports/WebViewPrinter.h \
     Reports/ReportGenerator.h \
-    Reports/Report.h
+    Reports/Report.h \
+    GUI/dialogbusy.h
 
 FORMS    += \
     GUI/mainwindow.ui \
-    GUI/dialogfilter.ui
+    GUI/dialogfilter.ui \
+    GUI/dialogbusy.ui
 
 OTHER_FILES += \
     GUI_COMPONENTS/Line.html

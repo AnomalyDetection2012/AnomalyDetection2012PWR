@@ -1,4 +1,4 @@
-﻿#include "mainwindow.h"
+#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "ConfigurationHandler/configurationhandler.h"
 #include "ANOMALY_DETECTION/algorithmcontroler.h"
@@ -17,6 +17,8 @@
 #include <QFileDialog>
 #include "GUI/datasettableview.h"
 #include "Reports/Report.h"
+#include <QProgressBar>
+#include <GUI/dialogbusy.h>
 
 #define CHECKBOX_CHECKED 2
 #define CHART_RECORDS_LIMIT 1000
@@ -353,6 +355,7 @@ void MainWindow::loadAllObjectRecords()
             ui->reportsTab->setEnabled(true);
             ui->subscriptionTab->setEnabled(true);
         }
+
     }
 }
 
@@ -622,5 +625,31 @@ void MainWindow::changeSOMParams(){
 }
 void MainWindow::generateReportFromDatabase()
 {
-    this->ct->reports->reportFromDatabase(QFileDialog::getSaveFileName(this));
+    QString absolutePath = QFileDialog::getSaveFileName(this,"Zapisz raport", QString(), tr("Pdf document (*.pdf)"));
+
+    DialogBusy dialogBusy;
+    dialogBusy.setModal(true);
+    dialogBusy.setLabelText("Trwa generowanie raportu...");
+    dialogBusy.show();
+
+    this->ct->reports->reportFromDatabase(absolutePath);
+
+    dialogBusy.close();
+
+    QMessageBox msgBox;
+    msgBox.setInformativeText(QString::fromUtf8("Raport został pomyślnie wygenerowany."));
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.setWindowTitle(QString::fromUtf8("Raport"));
+
+    // workaround for not working setMinimumWidth:
+    QSpacerItem* horizontalSpacer = new QSpacerItem(350, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QGridLayout* layout = (QGridLayout*)msgBox.layout();
+    layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
+
+    msgBox.exec();
+
 }
+
+
