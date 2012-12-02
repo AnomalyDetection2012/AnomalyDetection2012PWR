@@ -30,7 +30,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="livelogTab">
        <property name="enabled">
@@ -1620,6 +1620,58 @@
    <header>GUI_COMPONENTS/livelinechart.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>lineEdit_3</tabstop>
+  <tabstop>lineEdit_4</tabstop>
+  <tabstop>lineEdit_2</tabstop>
+  <tabstop>pushButton_6</tabstop>
+  <tabstop>comboBox_2</tabstop>
+  <tabstop>pushButton_5</tabstop>
+  <tabstop>pushButton_9</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>loadToSpinBox</tabstop>
+  <tabstop>pushButton_4</tabstop>
+  <tabstop>loadFromDateTime</tabstop>
+  <tabstop>loadToDateTime</tabstop>
+  <tabstop>pushButton_3</tabstop>
+  <tabstop>comboBox</tabstop>
+  <tabstop>methodsHelpButton</tabstop>
+  <tabstop>somSetButton</tabstop>
+  <tabstop>tabWidget_3</tabstop>
+  <tabstop>som_width</tabstop>
+  <tabstop>som_height</tabstop>
+  <tabstop>som_inputs</tabstop>
+  <tabstop>som_radius</tabstop>
+  <tabstop>som_alpha</tabstop>
+  <tabstop>som_iters</tabstop>
+  <tabstop>bayes_features</tabstop>
+  <tabstop>neighbour_features</tabstop>
+  <tabstop>neighbour_k</tabstop>
+  <tabstop>density_neighbours</tabstop>
+  <tabstop>density_deviation</tabstop>
+  <tabstop>fromProcessSpinBox</tabstop>
+  <tabstop>toProcessSpinBox</tabstop>
+  <tabstop>pushButton_7</tabstop>
+  <tabstop>pushButton_8</tabstop>
+  <tabstop>showAnomaliesFromDB</tabstop>
+  <tabstop>webView</tabstop>
+  <tabstop>filterValuesBtn</tabstop>
+  <tabstop>leftBtn</tabstop>
+  <tabstop>chartStepInterval</tabstop>
+  <tabstop>rightBtn</tabstop>
+  <tabstop>datasetTableView</tabstop>
+  <tabstop>refreshDatabaseTable</tabstop>
+  <tabstop>pushButton_10</tabstop>
+  <tabstop>changeRefreshTimeBtn</tabstop>
+  <tabstop>livelogChart</tabstop>
+  <tabstop>loadFromSpinBox</tabstop>
+  <tabstop>tabWidget_2</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>refreshIntervalSpin</tabstop>
+  <tabstop>filterValuesLivelogBtn</tabstop>
+  <tabstop>pushButton_2</tabstop>
+ </tabstops>
  <resources>
   <include location="../Resources/resources.qrc"/>
  </resources>

@@ -117,6 +117,7 @@ void Report::reportFromDatabase(QString outputAbsolutePath){
             barChartData[0].push_back(query.value(1).toDouble());
             pieChartsData.push_back(*(new vector<double>()));
             recordsSum+=query.value(1).toDouble();
+            qApp->processEvents();
         }
 
     }
@@ -154,6 +155,7 @@ void Report::reportFromDatabase(QString outputAbsolutePath){
                 currentTypeValue = query1.value(o+1).toString().contains("NULL")?0.0:query1.value(o+1).toDouble();
                 currentTypeSum += currentTypeValue;
                 pieChartsData[o].push_back(currentTypeValue);
+                qApp->processEvents();
             }
             pieChart3DData.push_back(currentTypeSum);
         }
@@ -208,6 +210,8 @@ void Report::reportFromDatabase(QString outputAbsolutePath){
         this->generator->addVariable("PIECHARTOBJECT"+QString::number(o+1), this->generator->pieChart(200, pieChartsData[o], labels, objLegend, colors));
         qDebug() <<"PIECHARTOBJECT"+QString::number(o)<< this->generator->pieChart(200, pieChartsData[o], labels, objLegend, colors);
         this->generator->addVariable("OBJECTNAME"+QString::number(o+1), "Obiekt "+QString::number(o+1));
+
+        qApp->processEvents();
     }
 
     this->generator->generatePDF("reportFromDatabase.html", outputAbsolutePath);

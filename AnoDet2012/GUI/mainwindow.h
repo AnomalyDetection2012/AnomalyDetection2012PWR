@@ -11,6 +11,7 @@
 #include <QResizeEvent>
 #include <QProgressDialog>
 #include <QFileDialog>
+#include <GUI/dialogbusy.h>
 
 namespace Ui {
 class MainWindow;
@@ -39,6 +40,7 @@ private:
     QTimer *timer;
     bool statusOfDatabaseConnection;
     bool statusOfObjectDataLoad;
+    DialogBusy *dialogBusy;
 
     void reloadParams();
     void changeBayesParams();
