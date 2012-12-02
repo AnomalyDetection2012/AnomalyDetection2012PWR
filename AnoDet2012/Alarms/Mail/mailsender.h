@@ -25,7 +25,11 @@ public:
 
 private:
     ConfigurationHandler *config;
-    SmtpClient *sender;
+
+    QString host;
+    int port;
+    QString user;
+    QString password;
 
     MimeMessageBuilder *builder;
 

@@ -14,14 +14,10 @@ MailSender::~MailSender()
 
 void MailSender::initialize(){
     QString category = QString("Mail");
-    QString host = (config->getPropertyValue(category, "Host")).toString();
-    int port = (config->getPropertyValue(category, "Port")).toInt();
-    QString user = (config->getPropertyValue(category, "User")).toString();
-    QString password = (config->getPropertyValue(category, "Password")).toString();
-
-    sender = new SmtpClient(host, port, SmtpClient::SslConnection);
-    sender->setUser(user);
-    sender->setPassword(password);
+    this->host = (config->getPropertyValue(category, "Host")).toString();
+    this->port = (config->getPropertyValue(category, "Port")).toInt();
+    this->user = (config->getPropertyValue(category, "User")).toString();
+    this->password = (config->getPropertyValue(category, "Password")).toString();
 }
 
 MimeMessageBuilder * MailSender::getMessageBuilder()
@@ -31,6 +27,10 @@ MimeMessageBuilder * MailSender::getMessageBuilder()
 
 bool MailSender::sendMail(MimeMessage *message)
 {
+    SmtpClient *sender = new SmtpClient(host, port, SmtpClient::SslConnection);
+    sender->setUser(user);
+    sender->setPassword(password);
+
     if (message != NULL)
     {
         bool result = sender->connectToHost() &&

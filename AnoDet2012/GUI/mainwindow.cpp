@@ -54,10 +54,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->treeWidget->setColumnWidth(0, 196);
     ui->treeWidget->setColumnWidth(1, 128);
 
-    ui->comboBox_3->addItem("poczta elektroniczna");
-    ui->comboBox_3->addItem("wiadomość SMS");
-    ui->comboBox_3->addItem("poczta oraz SMS");
-    ui->comboBox_3->addItem("nie powiadamiaj");
+    ui->comboBox_3->addItem(QString::fromUtf8("poczta elektroniczna"));
+    ui->comboBox_3->addItem(QString::fromUtf8("wiadomość SMS"));
+    ui->comboBox_3->addItem(QString::fromUtf8("poczta oraz SMS"));
+    ui->comboBox_3->addItem(QString::fromUtf8("nie powiadamiaj"));
 
     createSubscribersTree();
     selectedSubscriber = NULL;
@@ -766,11 +766,11 @@ void MainWindow::applyChanges()
         QString mail = ui->lineEdit_6->text();
         QString phone = ui->lineEdit_7->text();
         NotificationType notification = None;
-        if ((ui->comboBox_3->currentText()).compare("poczta elektroniczna") == 0)
+        if ((ui->comboBox_3->currentText()).compare(QString::fromUtf8("poczta elektroniczna")) == 0)
             notification = Mail;
-        else if ((ui->comboBox_3->currentText()).compare("wiadomość SMS") == 0)
+        else if ((ui->comboBox_3->currentText()).compare(QString::fromUtf8("wiadomość SMS")) == 0)
             notification = SMS;
-        else if ((ui->comboBox_3->currentText()).compare("poczta oraz SMS") == 0)
+        else if ((ui->comboBox_3->currentText()).compare(QString::fromUtf8("poczta oraz SMS")) == 0)
             notification = Both;
         else
             notification = None;
@@ -898,16 +898,16 @@ void MainWindow::createSubscribersTree()
             switch ((*i).notification)
             {
                 case Mail:
-                    notification->setText(1, "poczta elektroniczna");
+                    notification->setText(1, QString::fromUtf8("poczta elektroniczna"));
                     break;
                 case SMS:
-                    notification->setText(1, "wiadomość SMS");
+                    notification->setText(1, QString::fromUtf8("wiadomość SMS"));
                     break;
                 case Both:
-                    notification->setText(1, "poczta oraz SMS");
+                    notification->setText(1, QString::fromUtf8("poczta oraz SMS"));
                     break;
                 default:
-                    notification->setText(1, "nie powiadamiaj");
+                    notification->setText(1, QString::fromUtf8("nie powiadamiaj"));
             }
     }
 }
@@ -937,11 +937,11 @@ void MainWindow::readSubscriberInfo()
     ui->lineEdit_7->setText(item->child(2)->text(1));
 
     int index = -1;
-    if ((item->child(3)->text(1)).compare("poczta elektroniczna") == 0)
+    if ((item->child(3)->text(1)).compare(QString::fromUtf8("poczta elektroniczna")) == 0)
         index = 0;
-    else if ((item->child(3)->text(1)).compare("wiadomość SMS") == 0)
+    else if ((item->child(3)->text(1)).compare(QString::fromUtf8("wiadomość SMS")) == 0)
         index = 1;
-    else if ((item->child(3)->text(1)).compare("poczta oraz SMS") == 0)
+    else if ((item->child(3)->text(1)).compare(QString::fromUtf8("poczta oraz SMS")) == 0)
         index = 2;
     else
         index = 3;

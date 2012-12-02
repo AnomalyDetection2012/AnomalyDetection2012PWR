@@ -243,3 +243,45 @@ QVariant ConfigurationHandler::getAlgorithmParameter(const QString &algorithm, c
 {
     return getPropertyValue(QString("Algorithm.") + algorithm, key);
 }
+
+QString ConfigurationHandler::getSettingsFileLocation()
+{
+    return settings->fileName();
+}
+
+void ConfigurationHandler::importSettings(const QString &path)
+{
+    settings->clear();
+
+    //
+
+    QSettings *config = new QSettings(path, QSettings::IniFormat);
+
+    QStringList keys = config->allKeys();
+    QStringList::iterator i;
+    for (i = keys.begin(); i != keys.end(); ++i)
+    {
+        settings->setValue(*i, config->value(*i));
+    }
+
+    //
+
+    settings->sync();
+}
+
+void ConfigurationHandler::exportSettings(const QString &path)
+{
+    QSettings *config = new QSettings(path, QSettings::IniFormat);
+
+    if (config->isWritable())
+    {
+        QStringList keys = settings->allKeys();
+        QStringList::iterator i;
+        for (i = keys.begin(); i != keys.end(); ++i)
+        {
+            config->setValue(*i, settings->value(*i));
+        }
+
+        config->sync();
+    }
+}

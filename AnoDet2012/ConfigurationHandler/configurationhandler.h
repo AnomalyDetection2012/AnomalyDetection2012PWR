@@ -30,6 +30,10 @@ public:
 
     QVariant getAlgorithmParameter(const QString &algorithm, const QString &key);
 
+    QString getSettingsFileLocation();
+    void importSettings(const QString &path);
+    void exportSettings(const QString &path);
+
 
 private:
     void initialize();
