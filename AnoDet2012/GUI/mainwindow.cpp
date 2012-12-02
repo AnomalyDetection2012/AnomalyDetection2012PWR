@@ -622,5 +622,5 @@ void MainWindow::changeSOMParams(){
 }
 void MainWindow::generateReportFromDatabase()
 {
-    this->ct->reports->reportFromDatabase(QFileDialog::getSaveFileName(this));
+    this->ct->reports->reportFromDataRange(1000, 1200, "Object qrcze!", QFileDialog::getSaveFileName(this));
 }

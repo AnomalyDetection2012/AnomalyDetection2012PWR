@@ -17,8 +17,7 @@ public:
     void initialiseConnectors(ConnectorTracker* connectorTracker);
 
     void reportFromDatabase(QString outputAbsolutePath);
-    //void reportFromObject(int objectID, QString outputAbsolutePath);
-    void reportFromObjectNewRecords(int objectID, QString outputAbsPath);
+    void reportFromDataRange(int begin, int end, QString objectName, QString outputAbsolutePath);
 
 };
 

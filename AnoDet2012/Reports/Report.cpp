@@ -1,5 +1,11 @@
 #include "Report.h"
 #include "connectortracker.h"
+#include "Dataset/Dataset.h"
+#include "Dataset/DatasetConnector.h"
+#include "Dataset/datasetControler.h"
+#include "Dataset/DataRecord.h"
+#include "Dataset/DataRecordTable.h"
+#include "DataLoader/dataloader.h"
 #include <stdlib.h>
 #include <time.h>
 #include <QDebug>
@@ -18,6 +24,75 @@ Report::Report(QSqlDatabase* dbCon)
 void Report::initialiseConnectors(ConnectorTracker* connectorTracker)
 {
     this->ct = connectorTracker;
+}
+
+void Report::reportFromDataRange(int begin, int end, QString objectName, QString outputAbsolutePath)
+{
+    DataRecordTable *selData = this->ct->dataset->datasetControler->dataset->dataTable;
+    vector<vector<double> > selectedData = selData->getData(begin, end);
+    vector<bool> selectedDetectedAnomalies = selData->getAnomalies(begin, end);
+    vector<bool> selectedDatabaseAnomalies = selData->getDatabaseAnomalies(begin, end);
+    double min = selectedData[0][0];
+    double max = min;
+
+    vector<vector<double> >::iterator selectedDataIt;
+    vector<double>::iterator selectedDataRecordIt;
+    for(selectedDataIt = selectedData.begin(); selectedDataIt!= selectedData.end(); ++selectedDataIt)
+    {
+        for(selectedDataRecordIt = (*selectedDataIt).begin(); selectedDataRecordIt!=(*selectedDataIt).end(); ++selectedDataRecordIt)
+        {
+            if(*selectedDataRecordIt<min)
+            {
+                min = *selectedDataRecordIt;
+            }else if(*selectedDataRecordIt>max)
+            {
+                max = *selectedDataRecordIt;
+            }
+        }
+    }
+
+
+    this->generator->addVariable("ID_PIERWSZY_REKORD", QString::number(this->ct->loader->recordIds[begin]));
+    this->generator->addVariable("ID_OSTATNI_REKORD", QString::number(this->ct->loader->recordIds[end]));
+    this->generator->addVariable("NAZWA_OBIEKTU", objectName);
+    this->generator->addVariable("LICZBA_REKORDOW", QString::number(selectedData.size()));
+
+    this->generator->addVariable("TABELA_POMIAROW", this->generator->table(selectedData));
+
+    vector<bool>::iterator dbAnomaliesIt, detectedAnomaliesIt;
+    int amountOfDetectedAnomalies = 0;
+    int amountOfDatabaseAnomalies = 0;
+    selectedDataIt = selectedData.begin();
+    for(dbAnomaliesIt = selectedDatabaseAnomalies.begin(), detectedAnomaliesIt = selectedDetectedAnomalies.begin()
+        ;dbAnomaliesIt!=selectedDatabaseAnomalies.end(); ++dbAnomaliesIt, ++detectedAnomaliesIt)
+    {
+        amountOfDetectedAnomalies+=*detectedAnomaliesIt;
+        amountOfDatabaseAnomalies+=*dbAnomaliesIt;
+        (*selectedDataIt).insert((*selectedDataIt).begin(), *dbAnomaliesIt?max:min);
+        (*selectedDataIt).insert((*selectedDataIt).begin(), *detectedAnomaliesIt?max:min);
+        ++selectedDataIt;
+        //qDebug() << amountOfDetectedAnomalies;
+    }
+
+    this->generator->addVariable("LICZBA_ANOMALII_W_BAZIE", QString::number(amountOfDatabaseAnomalies));
+    this->generator->addVariable("LICZBA_WYKRYTYCH_ANOMALII", QString::number(amountOfDetectedAnomalies));
+
+    vector<QString> colors;
+    colors.push_back("ff0000");
+    colors.push_back("00ff00");
+    int recordSize = selectedData[0].size()-2;
+    for(int a=0; a<recordSize;++a)
+    {
+        QString color = QString::number(a*(256/recordSize), 16);
+        colors.push_back(color.size()==1?color.repeated(6):color.repeated(3));
+    }
+
+    this->generator->addVariable("WYKRESY_POMIAROW", this->generator->lineChart(600, 300, selectedData, *(new vector<QString>()), colors));
+
+    qDebug() << this->generator->lineChart(600, 300, selectedData, *(new vector<QString>()), colors);
+
+    this->generator->generatePDF("reportFromDataRange.html", outputAbsolutePath);
+
 }
 
 void Report::reportFromDatabase(QString outputAbsolutePath){
@@ -136,73 +211,4 @@ void Report::reportFromDatabase(QString outputAbsolutePath){
     }
 
     this->generator->generatePDF("reportFromDatabase.html", outputAbsolutePath);
-}
-
-void Report::reportFromObjectNewRecords(int objectID, QString outputAbsPath)
-{
-    vector<vector<double> > data;
-    for(int a=0; a<100; ++a)
-    {
-        data.push_back(*(new vector<double>(0)));
-
-        for(int b=0;b<33;++b)
-        {
-            data[a].push_back(static_cast<double>(rand()%100)/10.0);
-        }
-    }
-
-    vector<QString> headers;
-    for(int a=0;a<20;++a)
-    {
-        headers.push_back(QString::number(a));
-    }
-
-    vector<double> data1;
-    data1.push_back(45);
-    data1.push_back(5);
-
-    vector<QString> labels;
-    labels.push_back("21/10/2012");
-    labels.push_back("22/10/2012");
-    labels.push_back("23/10/2012");
-    labels.push_back("24/10/2012");
-
-    vector<QString> legend;
-    legend.push_back("Nie anomalie");
-    legend.push_back("Anomalie");
-
-    vector<QString> colors;
-    colors.push_back("000000");
-    colors.push_back("111111");
-    colors.push_back("222222");
-    colors.push_back("333333");
-    colors.push_back("444444");
-    colors.push_back("555555");
-    colors.push_back("666666");
-    colors.push_back("777777");
-    colors.push_back("888888");
-    colors.push_back("999999");
-    colors.push_back("aaaaaa");
-    colors.push_back("bbbbbb");
-    colors.push_back("cccccc");
-    colors.push_back("dddddd");
-    colors.push_back("eeeeee");
-    colors.push_back("0000ff");
-    colors.push_back("00ffff");
-    colors.push_back("ff0000");
-    colors.push_back("ffff00");
-    colors.push_back("00ff00");
-
-    this->generator->addVariable("OBJECTNAME", "Obiekt 01 - Monitoring");
-    this->generator->addVariable("RECORDSSUM", QString::number(data.size()));
-    this->generator->addVariable("ALARMSSUM", "5");
-    this->generator->addVariable("LINECHART", this->generator->lineChart(600, 300, data, labels, colors));
-
-    qDebug() << this->generator->lineChart(600, 300, data, labels, colors);
-
-    this->generator->addVariable("PIECHART3D",
-                                 this->generator->pieChart3D(300, data1, legend, legend, colors));
-    this->generator->addVariable("TABLE", this->generator->table(data, &headers));
-
-    this->generator->generatePDF("newRecords.html", outputAbsPath);
 }
