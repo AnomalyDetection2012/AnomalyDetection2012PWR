@@ -87,9 +87,9 @@ void Report::reportFromDataRange(int begin, int end, QString objectName, QString
         colors.push_back(color.size()==1?color.repeated(6):color.repeated(3));
     }
 
-    this->generator->addVariable("WYKRESY_POMIAROW", this->generator->lineChart(600, 300, selectedData, *(new vector<QString>()), colors));
+    this->generator->addVariable("WYKRESY_POMIAROW", this->generator->lineChart(600, 300, selectedData, *(new vector<QString>()), colors, "&chls="+this->generator->assemble(*(new vector<QString>(recordSize+2, "4")), "|")));
 
-    qDebug() << this->generator->lineChart(600, 300, selectedData, *(new vector<QString>()), colors);
+    //qDebug() << this->generator->lineChart(600, 300, selectedData, *(new vector<QString>()), colors);
 
     this->generator->generatePDF("reportFromDataRange.html", outputAbsolutePath);
 

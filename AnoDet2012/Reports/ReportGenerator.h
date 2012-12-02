@@ -22,11 +22,11 @@ public:
     QString& lineChart(int width, int height, std::vector<std::vector<double> > &data, std::vector<QString> &labels, std::vector<QString> &colors, QString additionalParameters = QString(""));
 
 
+    QString& assemble(std::vector<QString> &set, QString separator);
 private:
     QMap<QString, QString> vars;
     std::vector<QString>& convertToQStringList(std::vector<double> &set);
     QString& assemble(std::vector<double> &set, QString separator);
-    QString& assemble(std::vector<QString> &set, QString separator);
     
 signals:
     

@@ -70,6 +70,7 @@ private slots:
     void changeMethodParams();
     void openMethodsHelpWindow();
     void generateReportFromDatabase();
+    void generateReportFromDataRange();
 };
 
 #endif // MAINWINDOW_H

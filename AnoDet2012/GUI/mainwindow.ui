@@ -30,7 +30,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>5</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="livelogTab">
        <property name="enabled">
@@ -1159,6 +1159,56 @@
           </layout>
          </widget>
         </item>
+        <item row="1" column="0">
+         <widget class="QGroupBox" name="groupBox_6">
+          <property name="title">
+           <string> Wybrany obiekt</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_17">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_23">
+             <item>
+              <widget class="QLabel" name="label_33">
+               <property name="text">
+                <string>Od:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="reportDataRangeFrom"/>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_24">
+             <item>
+              <widget class="QLabel" name="label_34">
+               <property name="text">
+                <string>Do:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="reportDataRangeTo"/>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QPushButton" name="reportDataRangeGenerate">
+             <property name="text">
+              <string>Raport dla wybranego przedziału</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="subscriptionTab">
@@ -1948,6 +1998,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>reportDataRangeGenerate</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>generateReportFromDataRange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>320</x>
+     <y>613</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>321</x>
+     <y>338</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>chooseObject()</slot>
@@ -1968,5 +2034,6 @@
   <slot>changeMethodParams()</slot>
   <slot>openMethodsHelpWindow()</slot>
   <slot>generateReportFromDatabase()</slot>
+  <slot>generateReportFromDataRange()</slot>
  </slots>
 </ui>
