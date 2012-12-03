@@ -207,6 +207,9 @@ void MainWindow::loadDataStandard(){
         ui->loadFromDateTime->setDateTime(interval.first);
         ui->loadToDateTime->setDateTime(interval.second);
 
+        ui->fromProcessSpinBox->setValue(begin);
+        ui->toProcessSpinBox->setValue(end);
+
         redrawDataset();
     }
 
@@ -244,6 +247,9 @@ void MainWindow::loadDataDate(){
 
         ui->loadFromSpinBox->setValue(interval.first);
         ui->loadToSpinBox->setValue(interval.second);
+
+        ui->fromProcessSpinBox->setValue(interval.first);
+        ui->toProcessSpinBox->setValue(interval.second);
 
         redrawDataset();
     }
