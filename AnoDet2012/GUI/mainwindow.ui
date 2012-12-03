@@ -30,7 +30,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>5</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="livelogTab">
        <property name="enabled">
@@ -443,27 +443,12 @@
                 </item>
                 <item>
                  <property name="text">
-                  <string>Metoda gęstościowa</string>
+                  <string>Metoda gęstościowa LOF</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
                   <string>Sieć neuronowa radialna - RBF</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Sieć neuronowa zwykła - Neural Network</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Lokalny czynnik odbiegania - LOF</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>K najbliższych sąsiadów - KNN</string>
                  </property>
                 </item>
                </widget>

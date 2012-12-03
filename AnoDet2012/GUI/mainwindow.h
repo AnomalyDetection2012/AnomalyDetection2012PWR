@@ -90,6 +90,8 @@ private slots:
     void deleteSubscriber();
     void addSubscriber();
     void on_treeWidget_itemClicked(QTreeWidgetItem *item, int column);
+    void on_actionWczytaj_konfiguracj_triggered();
+    void on_actionZapisz_konfiguracj_triggered();
 };
 
 #endif // MAINWINDOW_H

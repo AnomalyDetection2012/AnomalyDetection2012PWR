@@ -394,6 +394,20 @@ void MainWindow::loadAllObjectRecords()
             ui->reportDataRangeTo->setMaximum(this->ct->dataset->datasetControler->dataset->dataTable->getLength()-1);
             ui->reportDataRangeTo->setValue(this->ct->dataset->datasetControler->dataset->dataTable->getLength()-1);
 
+
+            QMessageBox msgBoxOK;
+            msgBoxOK.setInformativeText(QString::fromUtf8("Dane zostały pobrane."));
+            msgBoxOK.setStandardButtons(QMessageBox::Ok);
+            msgBoxOK.setDefaultButton(QMessageBox::Ok);
+            msgBoxOK.setIcon(QMessageBox::Information);
+            msgBoxOK.setWindowTitle(QString::fromUtf8("Pobrano"));
+
+            // workaround for not working setMinimumWidth:
+            QSpacerItem* horizontalSpacer = new QSpacerItem(350, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+            QGridLayout* layout = (QGridLayout*)msgBoxOK.layout();
+            layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
+
+            msgBoxOK.exec();
         }
 
     }
@@ -573,6 +587,20 @@ void MainWindow::changeMethodParams(){
     default:
         break;
     }
+
+    QMessageBox msgBox;
+    msgBox.setInformativeText(QString::fromUtf8("Nowe parametry dla wybranej metody zostały zastosowane."));
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.setWindowTitle(QString::fromUtf8("Parametry"));
+
+    // workaround for not working setMinimumWidth:
+    QSpacerItem* horizontalSpacer = new QSpacerItem(350, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QGridLayout* layout = (QGridLayout*)msgBox.layout();
+    layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
+
+    msgBox.exec();
 }
 
 void MainWindow::openMethodsHelpWindow(){//TODO trzeba jakis opis walnac
@@ -742,7 +770,7 @@ void MainWindow::generateReportFromDataRange()
     dialogBusy.close();
 
     QMessageBox msgBox;
-    msgBox.setInformativeText(QString::fromUtf8("Raport zosta� pomy�lnie wygenerowany."));
+    msgBox.setInformativeText(QString::fromUtf8("Raport został pomyślnie wygenerowany."));
     msgBox.setStandardButtons(QMessageBox::Ok);
     msgBox.setDefaultButton(QMessageBox::Ok);
     msgBox.setIcon(QMessageBox::Information);
@@ -952,4 +980,50 @@ void MainWindow::readSubscriberInfo()
     else
         index = 3;
     ui->comboBox_3->setCurrentIndex(index);
+}
+
+void MainWindow::on_actionWczytaj_konfiguracj_triggered()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, QString::fromUtf8("Wskaż plik konfiguracji"), QString(), tr("Pliki konfiguracji (*.ini)"));
+    if(fileName != NULL)
+    {
+        ct->configuration->importSettings(fileName);
+
+        QMessageBox msgBox;
+        msgBox.setInformativeText(QString::fromUtf8("Konfiguracja została wczytana."));
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.setWindowTitle(QString::fromUtf8("Konfiguracja"));
+
+        // workaround for not working setMinimumWidth:
+        QSpacerItem* horizontalSpacer = new QSpacerItem(350, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        QGridLayout* layout = (QGridLayout*)msgBox.layout();
+        layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
+
+        msgBox.exec();
+    }
+}
+
+void MainWindow::on_actionZapisz_konfiguracj_triggered()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, QString::fromUtf8("Zapisz plik konfiguracji"), QString(),  tr("Pliki konfiguracji (*.ini)"));
+    if(fileName != NULL)
+    {
+        ct->configuration->exportSettings(fileName);
+
+        QMessageBox msgBox;
+        msgBox.setInformativeText(QString::fromUtf8("Aktualna konfiguracja została zapisana."));
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.setWindowTitle(QString::fromUtf8("Plik konfiguracji"));
+
+        // workaround for not working setMinimumWidth:
+        QSpacerItem* horizontalSpacer = new QSpacerItem(350, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        QGridLayout* layout = (QGridLayout*)msgBox.layout();
+        layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
+
+        msgBox.exec();
+    }
 }
