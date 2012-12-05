@@ -10,4 +10,7 @@
         <file>Reports/queries/countingAlarmsGroupedByTypeForObject.sql</file>
         <file>Reports/reportFromDataRange.html</file>
     </qresource>
+    <qresource prefix="/help">
+        <file>methodParametersHelp.html</file>
+    </qresource>
 </RCC>

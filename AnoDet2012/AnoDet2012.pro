@@ -21,7 +21,6 @@ SOURCES += main.cpp \
     Dataset/DataRecord.cpp \
     ANOMALY_DETECTION/method.cpp \
     INCOMING_DATA_TRACKING/IncomingDataController.cpp \
-    INCOMING_DATA_TRACKING/IncomingDataConnector.cpp \
     ANOMALY_DETECTION/BAYES/naive_bayes.cpp \
     ANOMALY_DETECTION/BAYES/class_variable.cpp \
     ANOMALY_DETECTION/DENSITY/neighbor.cpp \
@@ -85,7 +84,6 @@ HEADERS  += \
     Dataset/DataRecord.h \
     ANOMALY_DETECTION/method.h \
     INCOMING_DATA_TRACKING/IncomingDataController.h \
-    INCOMING_DATA_TRACKING/IncomingDataConnector.h \
     ANOMALY_DETECTION/BAYES/naive_bayes.h \
     ANOMALY_DETECTION/BAYES/class_variable.h \
     ANOMALY_DETECTION/DENSITY/neighbor.h \
@@ -148,8 +146,7 @@ FORMS    += \
     GUI/dialogfilter.ui \
     GUI/dialogbusy.ui
 
-OTHER_FILES += \
-    GUI_COMPONENTS/Line.html
+OTHER_FILES +=
 
 RESOURCES += \
     Resources/resources.qrc

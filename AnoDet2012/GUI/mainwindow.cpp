@@ -15,6 +15,7 @@
 #include <QGridLayout>
 #include <QStandardItemModel>
 #include <QFileDialog>
+#include <QDesktopServices>
 #include "GUI/datasettableview.h"
 #include "Reports/Report.h"
 #include <QProgressBar>
@@ -118,6 +119,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //updateSize();
 
     //qDebug() << ui->webView->geometry().height();
+    ui->anomalyDetectionTab->setEnabled(true);
 }
 
 MainWindow::~MainWindow()
@@ -603,8 +605,9 @@ void MainWindow::changeMethodParams(){
     msgBox.exec();
 }
 
-void MainWindow::openMethodsHelpWindow(){//TODO trzeba jakis opis walnac
-
+void MainWindow::openMethodsHelpWindow(){
+    ui->webView->settings()->setDefaultTextEncoding("iso-8859-2");
+    ui->webView->load(QUrl("qrc:///help/methodParametersHelp.html"));
 }
 
 void MainWindow::reloadParams(){

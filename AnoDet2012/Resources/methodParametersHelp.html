@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<style>
+			body{
+				font-family: "Times New Roman";
+			}
+		</style>
+	</head>
+	<body>
+		<h2></h2>
+		<p></p>
+		</br>
+		<h1>Metody wykrywania anomalii</h1>
+		<p>Aplikacja do wykrywania anomalii mo¿e wykorzystywaæ jedn± z poni¿szych metod. 
+		Ka¿da z tych metod mo¿e byæ przydatna do wykrywania anomalii w danych o innym charakterze.</p>
+		</br>
+		<h2>Sieæ Kohonena - Self-Organizing Map</h2>
+		<p>Sieæ neuronowa tworz±ca ogólne wzorce na podstawie danych wej¶ciowych. 
+		Uczenie w tej metodzie odbywa sie w sposób nienadzorowany, tote¿ nie jest 
+		konieczne wskazywanie algorytmowi oczekiwanych rezultatów. 
+		W przypadku detekcji anomalii pod uwagê brany jest stopieñ niedopasowania (b³±d kwantyzacji)
+		do ¿adnego z istniej±cych, wcze¶niej wyznaczonych przez algorytm wzorców. 
+		Sieæ SOM potrafi znajdywaæ wysoce z³o¿one powi±zania i zale¿no¶ci wystepuj±ce pomiêdzy danymi. 
+		Dziêki temu jako¶æ detekcji nie jest uzale¿niona wy³±cznie od stopnia odbiegania anomalii 
+		od poprawnych danych pomiarowych. Potrafi ona wykryæ tak¿e zmiany w relacjach pomiedzy 
+		danymi pomiarowymi. Metoda ta cechuje sie wysok± skutecznooci±, niezale¿nie od charakteru danych.</p>
+		</br>
+		<h2>Naiwny klasyfikator bayesowski - Naive Bayes classifier</h2>
+		<p>Metoda probabilistyczna opieraj±ca siê na za³o¿eniu niezale¿no¶ci zmiennych. 
+		Uczenie w tej metodzie odbywa siê w sposób nadzorowany, to znaczy w taki sposób, 
+		¿e algorytmowi wskazywane s± pary dana wej¶ciowa oraz oczekiwana warto¶æ wyj¶cia. 
+		Na dzia³anie tego algorytmu oraz jego skuteczno¶æ ma znaczny wp³yw charakter danych.</p>
+		</br>
+		<h2>Metoda najbli¿szego s±siada - Nearest Neighbour</h2>
+		<p>Metoda, której ide± w detekcji anomalii jest badanie odleg³o¶ci euklidesowej 
+		wektorów pomiarów. Na podstawie owej odleg³o¶ci podejmowana jest decyzja o ewentualnej 
+		anomalii w danych pomiarowych. W metodzie tej wp³yw na detekcjê anomalii ma ich wielko¶æ 
+		odleg³o¶ci od poprawnych danych pomiarowych. Ma³e zmiany warto¶ci pomiarów, choæ 
+		mog³y by z pewnych wzglêdów zostaæ zakwalifikowane jako anomalie, mog± nie zostaæ 
+		rozpoznane jako anomalie poprzez owy algorytm.</p>
+		</br>
+		<h2>Lokalny czynnik odbiegania - Local outlier factor</h2>
+		<p>Algorytm ten opiera siê gêsto¶ciowym rozmieszczeniu wektorów pomiarów. 
+		Lokalno¶æ gêsto¶ci okre¶lana jest za pomoc± algorytmu k-najbli¿szych s±siadów. 
+		Jako anomalie uznawane s± wektory pomiarów odstaj±ce znacznie od skupisk 
+		gêsto¶ciowych warto¶ci pomiarów, wyznaczonych podczas procesu uczenia.</p>
+		</br>
+		<h2>Sieæ radialna RBF z klasteryzacj± K-¶rednich - Radial Basis Function</h2>
+		<p>Dziêki wykorzystaniu dodatkowo algorytmu klasteryzacji K-¶rednich 
+		algorytm ten tworzy klastry zawieraj±ce pogrupowane klasy pomiarów. 
+		W podstawowej wersji detekcji tworzone s± dwie klasy warto¶ci pomiarowych: 
+		klasa danych poprawnych oraz klasa anomalii. Na podstawie rozmytego stopnia 
+		przynale¿no¶ci do danej klasy podejmowana jest decyzja o wyst±pieniu anomalii.</p>
+		</br>
+	</body>
+</html>

@@ -2497,6 +2497,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>methodsHelpButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openMethodsHelpWindow()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>496</x>
+     <y>102</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>321</x>
+     <y>338</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>chooseObject()</slot>
