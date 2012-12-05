@@ -20,6 +20,8 @@
 #include "Reports/Report.h"
 #include <QProgressBar>
 #include <GUI/dialogbusy.h>
+#include <GUI/dialoghelp.h>
+
 
 #define CHECKBOX_CHECKED 2
 #define CHART_RECORDS_LIMIT 1000
@@ -606,8 +608,14 @@ void MainWindow::changeMethodParams(){
 }
 
 void MainWindow::openMethodsHelpWindow(){
-    ui->webView->settings()->setDefaultTextEncoding("iso-8859-2");
-    ui->webView->load(QUrl("qrc:///help/methodParametersHelp.html"));
+    //ui->webView->settings()->setDefaultTextEncoding("iso-8859-2");
+    //ui->webView->load(QUrl("qrc:///help/methodParametersHelp.html"));
+
+    DialogHelp dialogHelp;
+    dialogHelp.setContentUrl("qrc:///help/methodParametersHelp.html");
+    dialogHelp.setModal(false);
+    dialogHelp.exec();
+
 }
 
 void MainWindow::reloadParams(){
