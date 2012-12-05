@@ -24,19 +24,18 @@
 		Sieæ SOM potrafi znajdywaæ wysoce z³o¿one powi±zania i zale¿no¶ci wystepuj±ce pomiêdzy danymi. 
 		Dziêki temu jako¶æ detekcji nie jest uzale¿niona wy³±cznie od stopnia odbiegania anomalii 
 		od poprawnych danych pomiarowych. Potrafi ona wykryæ tak¿e zmiany w relacjach pomiedzy 
-		danymi pomiarowymi. Metoda ta cechuje sie wysok± skutecznooci±, niezale¿nie od charakteru danych.
+		danymi pomiarowymi. Metoda ta cechuje sie wysok± skuteczno¶ci±, niezale¿nie od charakteru danych.
 		<br />
 		<br />
 		<h3>Parametry:</h3>
 
-			<p><i>Uwaga. Wszystkie poni¿sze parametry s¹ ¶ciœle ze sob¹ skorelowane. Zmiana ka¿dego z nich wymaga zazwyczaj korekty wszystkich pozosta³ych. </i></p>
+			<p><i>Uwaga. Wszystkie poni¿sze parametry s± ¶ciœ¶le ze sob± skorelowane. Zmiana ka¿dego z nich wymaga zazwyczaj korekty wszystkich pozosta³ych. </i></p>
 		<ul>
-			<li><b>Szeroko¶æ</b> - liczba neuronów mapy w poziomie, razem z wysokoœæi¹ wyznacza wielkoœæ mapy, na której powstaj¹ klastry odwzorowuj¹ce dane wejœciowe (pomiary), zbyt ma³a mapa przy zbyt du¿ym promieniu mo¿e spowodowaæ rozmycie klastrów lub stworzenie jednego dominuj¹cego klastra zawieraj¹cego wszystkie typy wartoœci pomiarów<br /><br /></li>
+			<li><b>Szeroko¶æ</b> - liczba neuronów mapy w poziomie, razem z wysokoœ¶ci± wyznacza wielkoœ¶æ mapy, na której powstaj± klastry odwzorowuj±ce dane wejœ¶ciowe (pomiary), zbyt ma³a mapa przy zbyt du¿ym promieniu mo¿e spowodowaæ rozmycie klastrów lub stworzenie jednego dominuj±cego klastra zawieraj±cego wszystkie typy warto¶œci pomiarów<br /><br /></li>
 			<li><b>Wysoko¶æ</b> - liczba neuronów mapy w pionie<br /><br /></li>
-			<li><b>Liczba wej¶æ</b> - liczba cech w wektorze danych, w tym wypadku liczba pomiarów przypadaj¹ca na dany rekord, ustawiana automatycznie przez aplikacjê<br /><br /></li>
-			<li><b>Promieñ</b> - podczas procesu uczenia wp³ywa na budowê klastrów, w przypadku wiêkszych wartoœci klastry zostan¹ nakreœlone nieostro, w przypadku ma³ych wielkoœci zostan¹ stworzone ma³e, ostro nakreœlone klastry nie nachodz¹ce na siebie, co mo¿e spowodowaæ w skrajnym wypadku dla dostatecznie du¿ej mapy stworzenie klastrów zawieraj¹cych pojedyncze pomiary<br /><br /></li>
-			<li><b>Alpha</b> - parametr uczenia, wp³ywa na szybkoœæ i si³ê uczenia, ma decyduj¹cy wp³yw na proces klasteryzacji<br /><br /></li>
-			<li><b>Liczba iteracji</b> - liczba iteracji podczas uczenia sieci neuronowej SOM, zbyt ma³a liczba mo¿e nie wystarczyæ, aby sieæ zosta³a prawid³owo nauczona, zbyt du¿a wartoœæ mo¿e spowodowaæ zbytnie rozmycie klastrów, szczególnie przy sporym promieniu oraz za du¿ej wartoœci parametru alfa<br /><br /></li>
+			<li><b>Promieñ</b> - podczas procesu uczenia wp³ywa na budowê klastrów, w przypadku wiêkszych warto¶œci klastry zostan± nakreœ¶lone nieostro, w przypadku ma³ych wielkoœ¶ci zostan± stworzone ma³e, ostro nakreœ¶lone klastry nie nachodz±ce na siebie, co mo¿e spowodowaæ w skrajnym wypadku dla dostatecznie du¿ej mapy stworzenie klastrów zawieraj±cych pojedyncze pomiary<br /><br /></li>
+			<li><b>Alpha</b> - parametr uczenia, wp³ywa na szybkoœ¶æ i si³ê uczenia, ma decyduj±cy wp³yw na proces klasteryzacji<br /><br /></li>
+			<li><b>Liczba iteracji</b> - liczba iteracji podczas uczenia sieci neuronowej SOM, zbyt ma³a liczba mo¿e nie wystarczyæ, aby sieæ zosta³a prawid³owo nauczona, zbyt du¿a wartoœ¶æ mo¿e spowodowaæ zbytnie rozmycie klastrów, szczególnie przy sporym promieniu oraz za du¿ej wartoœ¶ci parametru alfa<br /><br /></li>
 		</ul>
 		</p>
 		
@@ -48,10 +47,7 @@
 		Na dzia³anie tego algorytmu oraz jego skuteczno¶æ ma znaczny wp³yw charakter danych.
 		<br />
 		<br />
-		<b>Parametry</b>
-		<ul>
-			<li>Liczba w³aœciwoœci </li>
-		</ul>
+		<h3>Brak parametrów do modyfikacji przez u¿ytkownika</h3>
 		</p>
 		
 		<br />
@@ -64,10 +60,10 @@
 		rozpoznane jako anomalie poprzez owy algorytm.
 		<br />
 		<br />
-		<b>Parametry</b>
+		<h3>Parametry:</h3>
+
 		<ul>
-			<li>Liczba w³aœciwoœci: </li>
-			<li>Parametr K: </li>
+			<li><b>Parametr K</b> - okre¶la ilo¶æ obiektów, które branê s± pod uwagê podczas umiejscowiania w przestrzeni cech aktualnie badanego obiektu (ilo¶æ punktów znajduj±cych siê najbli¿ej analizowanego obiektu)<br /><br /></li>
 		</ul>
 		</p>
 		
@@ -76,14 +72,36 @@
 		<p>Algorytm ten opiera siê gêsto¶ciowym rozmieszczeniu wektorów pomiarów. 
 		Lokalno¶æ gêsto¶ci okre¶lana jest za pomoc± algorytmu k-najbli¿szych s±siadów. 
 		Jako anomalie uznawane s± wektory pomiarów odstaj±ce znacznie od skupisk 
-		gêsto¶ciowych warto¶ci pomiarów, wyznaczonych podczas procesu uczenia.</p>
+		gêsto¶ciowych warto¶ci pomiarów, wyznaczonych podczas procesu uczenia.
 		<br />
+		<br />
+		<h3>Parametry:</h3>
+
+		<ul>
+			<li><b>Liczba s±siadów</b> - liczba mówi±ca ilu s±siadów bierzemy pod uwagê obliczaj± wspó³czynnik LOF (im wiêcej s±siadów tym wiêksze prawdopodobieñstwo, ¿e punkt jest podobny do innych)<br /><br /></li>
+			<li><b>Rozrzut wyników</b> - okre¶la tolerancjê w ocenie czy punkt jest anomali± (1.0 +- rozrzut)<br /><br /></li>
+		</ul>
+		</p>
 		<h2>Sieæ radialna RBF z klasteryzacj± K-¶rednich - Radial Basis Function</h2>
 		<p>Dziêki wykorzystaniu dodatkowo algorytmu klasteryzacji K-¶rednich 
 		algorytm ten tworzy klastry zawieraj±ce pogrupowane klasy pomiarów. 
 		W podstawowej wersji detekcji tworzone s± dwie klasy warto¶ci pomiarowych: 
 		klasa danych poprawnych oraz klasa anomalii. Na podstawie rozmytego stopnia 
-		przynale¿no¶ci do danej klasy podejmowana jest decyzja o wyst±pieniu anomalii.</p>
+		przynale¿no¶ci do danej klasy podejmowana jest decyzja o wyst±pieniu anomalii.
 		<br />
+		<br />
+		<h3>Parametry:</h3>
+
+		<ul>
+			<li><b>Alpha</b> - wspó³czynnik uczenia sieci RBF (wp³ywa na uczenie wag miedzy warstw± ukryt± a warstw± wyj¶ciow±)<br /><br /></li>
+			<li><b>Beta</b> - parametr funkcji aktywacji (Sigmoidalnej funkcji unipolarnej)<br /><br /></li>
+			<li><b>Iteracji</b> - ilo¶æ generacji podczas uczenia sieci (ile razy sieæ bêdzie uczona zbiorem ucz±cym)<br /><br /></li>
+			<li><b>Pocz. rozrzut</b> - pocz±tkowy rozrzut okre¶la przedzia³ losowych warto¶ci pocz±tkowych dla wag sieci RBF, miedzy warstw± ukryt± a warstw± wyj¶ciow±<br /><br /></li>
+			<li><b>Klastrów</b> - okre¶la ilo¶æ o¶rodków do których odbêdzie siê grupowanie przy pomocy algorytmu k-¶rednich<br /><br /></li>
+			<li><b>Min. promieñ</b> - okre¶la minimaln± odleg³o¶æ punktu od centroidu (przy aproksymacji funkcji gêsto¶ci centroidu)<br /><br /></li>
+			<li><b>Max. promieñ</b> - okresla maksymaln± odleg³o¶æ punktu od centroidu (przy aproksymacji funkcji gêsto¶ci centroidu)<br /><br /></li>
+			<li><b>Min. postêp</b> - jest to warto¶æ okre¶laj±ca minimaln± wzglêdn± poprawê grupowania w algorytmie k-¶rednich<br /><br /></li>
+		</ul>
+		</p>
 	</body>
 </html>

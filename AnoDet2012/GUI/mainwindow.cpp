@@ -121,7 +121,6 @@ MainWindow::MainWindow(QWidget *parent) :
     //updateSize();
 
     //qDebug() << ui->webView->geometry().height();
-    ui->anomalyDetectionTab->setEnabled(true);
 }
 
 MainWindow::~MainWindow()
@@ -608,14 +607,10 @@ void MainWindow::changeMethodParams(){
 }
 
 void MainWindow::openMethodsHelpWindow(){
-    //ui->webView->settings()->setDefaultTextEncoding("iso-8859-2");
-    //ui->webView->load(QUrl("qrc:///help/methodParametersHelp.html"));
-
     DialogHelp dialogHelp;
     dialogHelp.setContentUrl("qrc:///help/methodParametersHelp.html");
     dialogHelp.setModal(false);
     dialogHelp.exec();
-
 }
 
 void MainWindow::reloadParams(){
