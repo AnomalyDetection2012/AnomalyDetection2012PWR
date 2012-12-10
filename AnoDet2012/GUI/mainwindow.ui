@@ -534,32 +534,6 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLabel" name="label_24">
-                    <property name="minimumSize">
-                     <size>
-                      <width>70</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>Liczba wejść</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QSpinBox" name="som_inputs">
-                    <property name="minimumSize">
-                     <size>
-                      <width>70</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="maximum">
-                     <number>999</number>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
                    <spacer name="horizontalSpacer_14">
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
@@ -845,28 +819,9 @@
                 <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_17">
                   <item>
-                   <widget class="QLabel" name="label_28">
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
+                   <widget class="QLabel" name="label_24">
                     <property name="text">
-                     <string>Ilość właściwości</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QSpinBox" name="bayes_features">
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="maximum">
-                     <number>999</number>
+                     <string>Brak konfigurowalnych parametrów</string>
                     </property>
                    </widget>
                   </item>
@@ -914,32 +869,6 @@
                <layout class="QVBoxLayout" name="verticalLayout_13">
                 <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_19">
-                  <item>
-                   <widget class="QLabel" name="label_29">
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>Ilość własciwości</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QSpinBox" name="neighbour_features">
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="maximum">
-                     <number>999</number>
-                    </property>
-                   </widget>
-                  </item>
                   <item>
                    <widget class="QLabel" name="label_30">
                     <property name="minimumSize">
@@ -2157,12 +2086,9 @@
   <tabstop>tabWidget_3</tabstop>
   <tabstop>som_width</tabstop>
   <tabstop>som_height</tabstop>
-  <tabstop>som_inputs</tabstop>
   <tabstop>som_radius</tabstop>
   <tabstop>som_alpha</tabstop>
   <tabstop>som_iters</tabstop>
-  <tabstop>bayes_features</tabstop>
-  <tabstop>neighbour_features</tabstop>
   <tabstop>neighbour_k</tabstop>
   <tabstop>density_neighbours</tabstop>
   <tabstop>density_deviation</tabstop>

@@ -17,6 +17,7 @@ ConnectorTracker::ConnectorTracker()
     anomalyDetection = new AlgorithmControler();
     guiController = new GUIController(); // remember to set components
     isConnected = false;
+    dataRecordSize = 0;
 }
 
 void ConnectorTracker::initialise(){

@@ -60,6 +60,7 @@ private:
 	void createSubscribersTree();
     QTreeWidgetItem * getSelectedSubscriber();
     void readSubscriberInfo();
+    void registerMethods();
 
 private slots:
     void chooseObject();
