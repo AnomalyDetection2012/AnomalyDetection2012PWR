@@ -43,8 +43,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->livelogChart->setLiveMode(true);
 
     // USTAWIENIA PÓL
-    //ui->comboBox_2->setCurrentIndex(choosenObjectId);
-    //ui->label_12->setText(ui->comboBox_2->currentText());
     ui->lineEdit->setText(ct->configuration->getPropertyValue("Database", "Server").toString());
     ui->lineEdit_2->setText(ct->configuration->getPropertyValue("Database", "Source").toString());
     ui->lineEdit_3->setText(ct->configuration->getPropertyValue("Database", "UserName").toString());
@@ -66,62 +64,9 @@ MainWindow::MainWindow(QWidget *parent) :
     selectedSubscriber = NULL;
     // KONIEC USTAWIEN PÓL
 
-    // TODO TEMP METODY DETEKCJI
-    AlgorithmControler* algorithm = ct->anomalyDetection;
-    QString *name;
-    Method *met = new RandomMethod();
-    algorithm->registerMethod(0, met);
-    name = new QString("SOM");
-    TopologyMap map(this,ct->configuration->getAlgorithmParameter(*name, "Width").toInt(),
-                    ct->configuration->getAlgorithmParameter(*name, "Height").toInt(),
-                    10);
-    met = new SOMNetwork(ct->configuration->getAlgorithmParameter(*name, "Width").toInt(),
-                                      ct->configuration->getAlgorithmParameter(*name, "Height").toInt(),
-                                      ct->configuration->getAlgorithmParameter(*name, "Inputs").toInt(),
-                                      ct->configuration->getAlgorithmParameter(*name, "MaxRadius").toDouble(),
-                                      ct->configuration->getAlgorithmParameter(*name, "MaxAlpha").toDouble(),
-                                      ct->configuration->getAlgorithmParameter(*name, "MaxIterations").toDouble(),
-                                      map);
-    algorithm->registerMethod(1, met);
-    name = new QString("BAYES");
-    met = new NaiveBayes(ct->configuration->getAlgorithmParameter(*name, "FeaturesCount").toInt());
-    algorithm->registerMethod(2, met);
-    name = new QString("NEIGHBOUR");
-    met = new NearestNeighbor(ct->configuration->getAlgorithmParameter(*name, "FeaturesCount").toInt(),
-                              ct->configuration->getAlgorithmParameter(*name, "K").toInt());
-    algorithm->registerMethod(3, met);
-    name = new QString("DENSITY");
-    met = new DensityMethod(ct->configuration->getAlgorithmParameter(*name, "LOFResultDeviation").toDouble(),
-                            ct->configuration->getAlgorithmParameter(*name, "Neighbors").toInt());
-    algorithm->registerMethod(4, met);
-
-    name = new QString("RBF");
-    met = new RBFNetwork(ct->configuration->getAlgorithmParameter(*name, "LearnFactor").toDouble(),
-                         ct->configuration->getAlgorithmParameter(*name, "SigmoidalActivationFunctionBeta").toDouble(),
-                         ct->configuration->getAlgorithmParameter(*name, "QuantizationErrorThreshold").toDouble(),
-                         ct->configuration->getAlgorithmParameter(*name, "Generations").toInt(),
-                         ct->configuration->getAlgorithmParameter(*name, "RandomWeightScaleFactor").toDouble(),
-                         ct->configuration->getAlgorithmParameter(*name, "ClustersNumber").toInt(),
-                         ct->configuration->getAlgorithmParameter(*name, "MinSigmaSquare").toDouble(),
-                         ct->configuration->getAlgorithmParameter(*name, "MaxSigmaSquare").toDouble(),
-                         ct->configuration->getAlgorithmParameter(*name, "StepImprovement").toDouble(),
-                         ct->configuration->getAlgorithmParameter(*name, "Iterations").toInt()
-                         );
-    algorithm->registerMethod(5, met);
-
-    reloadParams();
     ct->mainWindow = this;
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), SLOT(updateSize()));
-
-    /*int w = ui->webView->geometry().width() * 1.11;
-    int h = ui->webView->geometry().height() * 1.72;
-
-    ui->webView->setSize(w,h);*/
-    //updateSize();
-
-    //qDebug() << ui->webView->geometry().height();
-    //ui->anomalyDetectionTab->setEnabled(true);
 }
 
 MainWindow::~MainWindow()
@@ -325,7 +270,6 @@ void MainWindow::on_filterValuesBtn_clicked()
         items.push_back(item);
     }
 
-
     dialogFilter.addCheckboxesToList(items);
     dialogFilter.setModal(true);
 
@@ -398,6 +342,8 @@ void MainWindow::loadAllObjectRecords()
             ui->reportDataRangeTo->setMaximum(this->ct->dataset->datasetControler->dataset->dataTable->getLength()-1);
             ui->reportDataRangeTo->setValue(this->ct->dataset->datasetControler->dataset->dataTable->getLength()-1);
 
+            ct->dataRecordSize = ct->dataset->datasetControler->dataset->dataTable->dataNames.size();
+            registerMethods();
 
             QMessageBox msgBoxOK;
             msgBoxOK.setInformativeText(QString::fromUtf8("Dane zostały pobrane."));
@@ -413,7 +359,6 @@ void MainWindow::loadAllObjectRecords()
 
             msgBoxOK.exec();
         }
-
     }
 }
 
@@ -427,7 +372,6 @@ void MainWindow::startLivelog()
 {
     ui->livelogChart->setDataset(ct->dataset->datasetControler->dataset);
     ct->guiController->setLiveLineChart(ui->livelogChart);
-    //ct->guiController->refreshLiveLineChart();
     ct->incomingData->startListening();
 
     ui->livelogStatusLabel->setText(QString::fromUtf8("<b><font color='green'>Uruchomiony</font></b>"));
@@ -466,7 +410,6 @@ void MainWindow::filterValuesLivelog()
         items.push_back(item);
     }
 
-
     dialogFilter.addCheckboxesToList(items);
     dialogFilter.setModal(true);
 
@@ -480,7 +423,6 @@ void MainWindow::filterValuesLivelog()
         ct->guiController->refreshLiveLineChart();
     }
 }
-
 
 void MainWindow::setRefreshInterval()
 {
@@ -505,7 +447,6 @@ void MainWindow::updateSize()
         ui->livelogChart->reloadData();
     }
 }
-
 
 void MainWindow::resizeEvent(QResizeEvent * event)
 {
@@ -608,14 +549,10 @@ void MainWindow::changeMethodParams(){
 }
 
 void MainWindow::openMethodsHelpWindow(){
-    //ui->webView->settings()->setDefaultTextEncoding("iso-8859-2");
-    //ui->webView->load(QUrl("qrc:///help/methodParametersHelp.html"));
-
     DialogHelp dialogHelp;
     dialogHelp.setContentUrl("qrc:///help/methodParametersHelp.html");
     dialogHelp.setModal(false);
     dialogHelp.exec();
-
 }
 
 void MainWindow::reloadParams(){
@@ -624,7 +561,6 @@ void MainWindow::reloadParams(){
     name = new QString("SOM");
     ui->som_width->setValue(ct->configuration->getAlgorithmParameter(*name, "Width").toInt());
     ui->som_height->setValue(ct->configuration->getAlgorithmParameter(*name, "Height").toInt());
-    ui->som_inputs->setValue(ct->configuration->getAlgorithmParameter(*name, "Inputs").toInt());
     ui->som_radius->setValue(ct->configuration->getAlgorithmParameter(*name, "MaxRadius").toDouble());
     ui->som_alpha->setValue(ct->configuration->getAlgorithmParameter(*name, "MaxAlpha").toDouble());
     ui->som_iters->setValue(ct->configuration->getAlgorithmParameter(*name, "MaxIterations").toDouble());
@@ -640,17 +576,9 @@ void MainWindow::reloadParams(){
     ui->rbf_maxSquare->setValue(ct->configuration->getAlgorithmParameter(*name, "MaxSigmaSquare").toDouble());
     ui->rbf_minStepImprovement->setValue(ct->configuration->getAlgorithmParameter(*name, "StepImprovement").toDouble());
 
-
-    //Bayes
-    name = new QString("BAYES");
-    ui->bayes_features->setValue(ct->configuration->getAlgorithmParameter(*name, "FeaturesCount").toInt());
-
-
     //Neighbour
     name = new QString("NEIGHBOUR");
-    ui->neighbour_features->setValue(ct->configuration->getAlgorithmParameter(*name,"FeaturesCount").toInt());
     ui->neighbour_k->setValue(ct->configuration->getAlgorithmParameter(*name,"K").toInt());
-
 
     //Density
     name = new QString("DENSITY");
@@ -659,10 +587,7 @@ void MainWindow::reloadParams(){
 }
 
 void MainWindow::changeBayesParams(){
-    QString *name = new QString("Algorithm.BAYES");
-    ct->configuration->setPropertyValue(*name,"FeaturesCount",ui->bayes_features->value());
-
-    Method *met = new NaiveBayes(ct->configuration->getPropertyValue(*name, "FeaturesCount").toInt());
+    Method *met = new NaiveBayes(ct->dataRecordSize);
     ct->anomalyDetection->registerMethod(2, met);
 }
 
@@ -678,10 +603,9 @@ void MainWindow::changeDensityParams(){
 
 void MainWindow::changeNeighbourParams(){
     QString *name = new QString("Algorithm.NEIGHBOUR");
-    ct->configuration->setPropertyValue(*name,"FeaturesCount",ui->neighbour_features->value());
     ct->configuration->setPropertyValue(*name,"K",ui->neighbour_k->value());
 
-    Method *met = new NearestNeighbor(ct->configuration->getPropertyValue(*name, "FeaturesCount").toInt(),
+    Method *met = new NearestNeighbor(ct->dataRecordSize,
                               ct->configuration->getPropertyValue(*name, "K").toInt());
     ct->anomalyDetection->registerMethod(3, met);
 }
@@ -715,7 +639,6 @@ void MainWindow::changeSOMParams(){
     QString *name = new QString("Algorithm.SOM");
     ct->configuration->setPropertyValue(*name,"Width",ui->som_width->value());
     ct->configuration->setPropertyValue(*name,"Height",ui->som_height->value());
-    ct->configuration->setPropertyValue(*name,"Inputs",ui->som_inputs->value());
     ct->configuration->setPropertyValue(*name,"MaxRadius",ui->som_radius->value());
     ct->configuration->setPropertyValue(*name,"MaxAlpha",ui->som_alpha->value());
     ct->configuration->setPropertyValue(*name,"MaxIterations",ui->som_iters->value());
@@ -725,7 +648,7 @@ void MainWindow::changeSOMParams(){
                     10);
     Method *met = new SOMNetwork(ct->configuration->getPropertyValue(*name, "Width").toInt(),
                                       ct->configuration->getPropertyValue(*name, "Height").toInt(),
-                                      ct->configuration->getPropertyValue(*name, "Inputs").toInt(),
+                                      ct->dataRecordSize,
                                       ct->configuration->getPropertyValue(*name, "MaxRadius").toDouble(),
                                       ct->configuration->getPropertyValue(*name, "MaxAlpha").toDouble(),
                                       ct->configuration->getPropertyValue(*name, "MaxIterations").toDouble(),
@@ -820,10 +743,6 @@ void MainWindow::applyChanges()
         else
             notification = None;
 
-        //
-        //
-        //
-
         Subscriber *sub = ct->sender->getSubscribersHandler()->getSubscriber(selectedSubscriber->text(0));
         if (sub != NULL)
         {
@@ -836,10 +755,6 @@ void MainWindow::applyChanges()
         {
             ct->sender->getSubscribersHandler()->addSubscriber(identifier, mail, phone, notification);
         }
-
-        //
-        //
-        //
 
         ui->treeWidget->clear();
         createSubscribersTree();
@@ -1037,4 +952,50 @@ void MainWindow::on_actionZapisz_konfiguracj_triggered()
 
         msgBox.exec();
     }
+}
+
+void MainWindow::registerMethods(){
+    AlgorithmControler* algorithm = ct->anomalyDetection;
+    QString *name;
+    Method *met = new RandomMethod();
+    algorithm->registerMethod(0, met);
+    name = new QString("SOM");
+    TopologyMap map(this,ct->configuration->getAlgorithmParameter(*name, "Width").toInt(),
+                    ct->configuration->getAlgorithmParameter(*name, "Height").toInt(),
+                    10);
+    met = new SOMNetwork(ct->configuration->getAlgorithmParameter(*name, "Width").toInt(),
+                                      ct->configuration->getAlgorithmParameter(*name, "Height").toInt(),
+                                      ct->dataRecordSize,
+                                      ct->configuration->getAlgorithmParameter(*name, "MaxRadius").toDouble(),
+                                      ct->configuration->getAlgorithmParameter(*name, "MaxAlpha").toDouble(),
+                                      ct->configuration->getAlgorithmParameter(*name, "MaxIterations").toDouble(),
+                                      map);
+    algorithm->registerMethod(1, met);
+    name = new QString("BAYES");
+    met = new NaiveBayes(ct->dataRecordSize);
+    algorithm->registerMethod(2, met);
+    name = new QString("NEIGHBOUR");
+    met = new NearestNeighbor(ct->dataRecordSize,
+                              ct->configuration->getAlgorithmParameter(*name, "K").toInt());
+    algorithm->registerMethod(3, met);
+    name = new QString("DENSITY");
+    met = new DensityMethod(ct->configuration->getAlgorithmParameter(*name, "LOFResultDeviation").toDouble(),
+                            ct->configuration->getAlgorithmParameter(*name, "Neighbors").toInt());
+    algorithm->registerMethod(4, met);
+
+    name = new QString("RBF");
+    met = new RBFNetwork(ct->configuration->getAlgorithmParameter(*name, "LearnFactor").toDouble(),
+                         ct->configuration->getAlgorithmParameter(*name, "SigmoidalActivationFunctionBeta").toDouble(),
+                         ct->configuration->getAlgorithmParameter(*name, "QuantizationErrorThreshold").toDouble(),
+                         ct->configuration->getAlgorithmParameter(*name, "Generations").toInt(),
+                         ct->configuration->getAlgorithmParameter(*name, "RandomWeightScaleFactor").toDouble(),
+                         ct->configuration->getAlgorithmParameter(*name, "ClustersNumber").toInt(),
+                         ct->configuration->getAlgorithmParameter(*name, "MinSigmaSquare").toDouble(),
+                         ct->configuration->getAlgorithmParameter(*name, "MaxSigmaSquare").toDouble(),
+                         ct->configuration->getAlgorithmParameter(*name, "StepImprovement").toDouble(),
+                         ct->configuration->getAlgorithmParameter(*name, "Iterations").toInt()
+                         );
+    algorithm->registerMethod(5, met);
+
+    reloadParams();
 }

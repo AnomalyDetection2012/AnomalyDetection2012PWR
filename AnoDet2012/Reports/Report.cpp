@@ -57,7 +57,7 @@ void Report::reportFromDataRange(int begin, int end, QString objectName, QString
     this->generator->addVariable("NAZWA_OBIEKTU", objectName);
     this->generator->addVariable("LICZBA_REKORDOW", QString::number(selectedData.size()));
 
-    this->generator->addVariable("TABELA_POMIAROW", this->generator->table(selectedData));
+    this->generator->addVariable("TABELA_POMIAROW", this->generator->table(selectedData, &(selData->dataNames)));
 
     vector<bool>::iterator dbAnomaliesIt, detectedAnomaliesIt;
     int amountOfDetectedAnomalies = 0;
@@ -68,8 +68,8 @@ void Report::reportFromDataRange(int begin, int end, QString objectName, QString
     {
         amountOfDetectedAnomalies+=*detectedAnomaliesIt;
         amountOfDatabaseAnomalies+=*dbAnomaliesIt;
-        (*selectedDataIt).insert((*selectedDataIt).begin(), *dbAnomaliesIt?max:min);
         (*selectedDataIt).insert((*selectedDataIt).begin(), *detectedAnomaliesIt?max:min);
+        (*selectedDataIt).insert((*selectedDataIt).begin(), *dbAnomaliesIt?max:min);
         ++selectedDataIt;
         //qDebug() << amountOfDetectedAnomalies;
     }
@@ -81,15 +81,34 @@ void Report::reportFromDataRange(int begin, int end, QString objectName, QString
     colors.push_back("ff0000");
     colors.push_back("00ff00");
     int recordSize = selectedData[0].size()-2;
+    int colorStep = 256*256*256/recordSize;
     for(int a=0; a<recordSize;++a)
     {
-        QString color = QString::number(a*(256/recordSize), 16);
-        colors.push_back(color.size()==1?color.repeated(6):color.repeated(3));
+        QString color = QString::number(a*colorStep, 16);
+        while(color.size()<6)
+        {
+            color.prepend('0');
+        }
+        colors.push_back(color);
     }
 
-    this->generator->addVariable("WYKRESY_POMIAROW", this->generator->lineChart(600, 300, selectedData, *(new vector<QString>()), colors, "&chls="+this->generator->assemble(*(new vector<QString>(recordSize+2, "4")), "|")));
+    vector<QString> legend;
+    legend.push_back("Anomalia z bazy danych");
+    legend.push_back("Wykryta anomalia");
+    for(int a=0; a<selData->dataNames.size();++a)
+    {
+        legend.push_back(selData->dataNames[a]);
+    }
 
-    //qDebug() << this->generator->lineChart(600, 300, selectedData, *(new vector<QString>()), colors);
+    vector<QString> lineSize(recordSize+2, "3");
+    lineSize[0] = "6";
+
+    QString additionalParameters = "&chls="+this->generator->assemble(lineSize, "|");
+    additionalParameters+="&chdl="+this->generator->assemble(legend, "|");
+
+    this->generator->addVariable("WYKRESY_POMIAROW", this->generator->lineChart(600, 500, selectedData, *(new vector<QString>()), colors, additionalParameters));
+
+    //qDebug() << this->generator->lineChart(1000, 300, selectedData, *(new vector<QString>()), colors, additionalParameters);
 
     this->generator->generatePDF("reportFromDataRange.html", outputAbsolutePath);
 

@@ -36,6 +36,7 @@ public:
     GUIController *guiController;
     bool isConnected;
     MainWindow *mainWindow;
+    int dataRecordSize;
 
 
 
