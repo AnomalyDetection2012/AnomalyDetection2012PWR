@@ -121,7 +121,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //updateSize();
 
     //qDebug() << ui->webView->geometry().height();
-    ui->anomalyDetectionTab->setEnabled(true);
+    //ui->anomalyDetectionTab->setEnabled(true);
 }
 
 MainWindow::~MainWindow()
