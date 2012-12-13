@@ -1072,13 +1072,6 @@
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QPushButton" name="showAnomaliesFromDB">
-            <property name="text">
-             <string>Pokaż anomalie z bazy danych</string>
-            </property>
-           </widget>
-          </item>
          </layout>
         </item>
         <item row="3" column="0">
@@ -2096,7 +2089,6 @@
   <tabstop>toProcessSpinBox</tabstop>
   <tabstop>pushButton_7</tabstop>
   <tabstop>pushButton_8</tabstop>
-  <tabstop>showAnomaliesFromDB</tabstop>
   <tabstop>webView</tabstop>
   <tabstop>filterValuesBtn</tabstop>
   <tabstop>leftBtn</tabstop>
@@ -2227,22 +2219,6 @@
     <hint type="destinationlabel">
      <x>321</x>
      <y>338</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>showAnomaliesFromDB</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>showAnomaliesFromDB()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>563</x>
-     <y>236</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>494</x>
-     <y>360</y>
     </hint>
    </hints>
   </connection>

@@ -395,6 +395,9 @@ void MainWindow::loadAllObjectRecords()
             ui->reportDataRangeTo->setValue(this->ct->dataset->datasetControler->dataset->dataTable->getLength()-1);
 
             ct->dataRecordSize = ct->dataset->datasetControler->dataset->dataTable->dataNames.size();
+
+            ui->webView->initFilter(ct->dataRecordSize);
+
             registerMethods();
 
             QMessageBox msgBoxOK;
