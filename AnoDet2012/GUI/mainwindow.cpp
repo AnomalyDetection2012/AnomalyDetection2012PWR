@@ -146,7 +146,7 @@ void MainWindow::loadDataStandard(){
 
         msgBox.exec();
     }
-    else
+    else if(count > 0)
     {
         ui->webView->setDataset(ct->dataset->datasetControler->dataset);
         ui->webView->setInterval(begin, end);
@@ -160,6 +160,9 @@ void MainWindow::loadDataStandard(){
         ui->toProcessSpinBox->setValue(end);
 
         redrawDataset();
+
+        ui->leftBtn->setEnabled(true);
+        ui->rightBtn->setEnabled(true);
     }
 
 
@@ -173,7 +176,23 @@ void MainWindow::loadDataDate(){
 
 
     int count = interval.second - interval.first;
-    if(count > CHART_RECORDS_LIMIT)
+    if(endDate <= beginDate)
+    {
+        QMessageBox msgBox;;
+        msgBox.setInformativeText(QString::fromUtf8("Data końca musi być późniejsza niż początku"));
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setWindowTitle(QString::fromUtf8("Błędny zakres dat"));
+
+        // workaround for not working setMinimumWidth:
+        QSpacerItem* horizontalSpacer = new QSpacerItem(350, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        QGridLayout* layout = (QGridLayout*)msgBox.layout();
+        layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
+
+        msgBox.exec();
+    }
+    else if(count > CHART_RECORDS_LIMIT)
     {
         QMessageBox msgBox;;
         msgBox.setInformativeText(QString::fromUtf8("Wybrany przedział zawiera ") + QString::number(count) + QString::fromUtf8(" rekordów.\nMaksymalna liczba rekordów do wyświetlenia to ") + QString::number(CHART_RECORDS_LIMIT) + ".");
@@ -181,6 +200,22 @@ void MainWindow::loadDataDate(){
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.setIcon(QMessageBox::Warning);
         msgBox.setWindowTitle(QString::fromUtf8("Przekroczono limit"));
+
+        // workaround for not working setMinimumWidth:
+        QSpacerItem* horizontalSpacer = new QSpacerItem(350, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        QGridLayout* layout = (QGridLayout*)msgBox.layout();
+        layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
+
+        msgBox.exec();
+    }
+    else if(count <= 0)
+    {
+        QMessageBox msgBox;;
+        msgBox.setInformativeText(QString::fromUtf8("Brak pomiarów w wybranym przedziale czasu"));
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setWindowTitle(QString::fromUtf8("Brak rekordów"));
 
         // workaround for not working setMinimumWidth:
         QSpacerItem* horizontalSpacer = new QSpacerItem(350, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
@@ -201,6 +236,9 @@ void MainWindow::loadDataDate(){
         ui->toProcessSpinBox->setValue(interval.second);
 
         redrawDataset();
+
+        ui->leftBtn->setEnabled(true);
+        ui->rightBtn->setEnabled(true);
     }
 
 }
@@ -260,6 +298,12 @@ void MainWindow::on_filterValuesBtn_clicked()
     std::vector<QListWidgetItem *> items;
 
     std::vector<bool> currFilter = ui->webView->getFilter();
+    if(!currFilter.size())
+    {
+        ui->webView->initFilter(ct->dataset->datasetControler->dataset->dataTable->dataNames.size());
+        currFilter = ui->webView->getFilter();
+    }
+
     QListWidgetItem *item;
     for(unsigned i=0;i<ct->dataset->datasetControler->dataset->dataTable->dataNames.size();i++)
     {
@@ -329,7 +373,15 @@ void MainWindow::loadAllObjectRecords()
         {
             this->statusOfObjectDataLoad = true;
             ui->livelogTab->setEnabled(true);
+            ui->changeRefreshTimeBtn->setEnabled(false);
+            ui->refreshIntervalSpin->setEnabled(false);
+            ui->filterValuesLivelogBtn->setEnabled(false);
+            ui->startLivelogBtn->setEnabled(true);
+            ui->stopLivelogBtn->setEnabled(false);
+
             ui->anomalyDetectionTab->setEnabled(true);
+            ui->leftBtn->setEnabled(false);
+            ui->rightBtn->setEnabled(false);
 
             ui->dataOverviewTab->setEnabled(true);
             ui->refreshDatabaseTable->setEnabled(true);
@@ -381,6 +433,12 @@ void MainWindow::startLivelog()
     ui->newAnomaliesNumLabel->setText("0");
     ui->newRecordsNumLabel->setText("0");
 
+    ui->changeRefreshTimeBtn->setEnabled(true);
+    ui->refreshIntervalSpin->setEnabled(true);
+    ui->filterValuesLivelogBtn->setEnabled(true);
+    ui->startLivelogBtn->setEnabled(false);
+    ui->stopLivelogBtn->setEnabled(true);
+
     updateSize();
 }
 
@@ -391,6 +449,12 @@ void MainWindow::stopLivelog()
     ui->livelogStartTimeLabel->setText("-");
     ui->filterValuesLivelogBtn->setEnabled(false);
     ui->refreshIntervalLabel->setText("-");
+
+    ui->changeRefreshTimeBtn->setEnabled(false);
+    ui->refreshIntervalSpin->setEnabled(false);
+    ui->filterValuesLivelogBtn->setEnabled(false);
+    ui->startLivelogBtn->setEnabled(true);
+    ui->stopLivelogBtn->setEnabled(false);
 }
 
 void MainWindow::filterValuesLivelog()

@@ -196,14 +196,14 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="startLivelogBtn">
             <property name="text">
              <string>Start</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="stopLivelogBtn">
             <property name="text">
              <string>Stop</string>
             </property>
@@ -300,7 +300,7 @@
         <item row="0" column="0">
          <widget class="QTabWidget" name="tabWidget_2">
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab_5">
            <attribute name="title">
@@ -2109,10 +2109,10 @@
   <tabstop>livelogChart</tabstop>
   <tabstop>loadFromSpinBox</tabstop>
   <tabstop>tabWidget_2</tabstop>
-  <tabstop>pushButton</tabstop>
+  <tabstop>stopLivelogBtn</tabstop>
   <tabstop>refreshIntervalSpin</tabstop>
   <tabstop>filterValuesLivelogBtn</tabstop>
-  <tabstop>pushButton_2</tabstop>
+  <tabstop>startLivelogBtn</tabstop>
  </tabstops>
  <resources>
   <include location="../Resources/resources.qrc"/>
@@ -2247,7 +2247,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_2</sender>
+   <sender>startLivelogBtn</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>startLivelog()</slot>
@@ -2263,7 +2263,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
+   <sender>stopLivelogBtn</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>stopLivelog()</slot>
