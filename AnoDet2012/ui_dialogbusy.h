@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dialogbusy.ui'
 **
-** Created: Thu 13. Dec 02:56:11 2012
+** Created: Tue 18. Dec 00:19:02 2012
 **      by: Qt User Interface Compiler version 4.8.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

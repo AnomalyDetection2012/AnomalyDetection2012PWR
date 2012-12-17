@@ -93,6 +93,8 @@ private slots:
     void on_treeWidget_itemClicked(QTreeWidgetItem *item, int column);
     void on_actionWczytaj_konfiguracj_triggered();
     void on_actionZapisz_konfiguracj_triggered();
+    void changeChartScale();
+    void changeLiveChartScale();
 };
 
 #endif // MAINWINDOW_H

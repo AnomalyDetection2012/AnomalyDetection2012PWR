@@ -20,6 +20,7 @@ public:
     void reloadData();
     void setLogScale();
     void setLinearScale();
+    bool isLogScale();
     void setSize(int width, int height);
     void setFilter(std::vector<bool> filter);
     void removeFilter();

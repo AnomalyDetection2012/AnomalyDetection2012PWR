@@ -42,6 +42,11 @@ void LiveLineChart::setLinearScale()
     this->loadData();
 }
 
+bool LiveLineChart::isLogScale()
+{
+    return this->logScale;
+}
+
 void LiveLineChart::setSize(int width, int height)
 {
     this->width = width;

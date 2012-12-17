@@ -163,6 +163,8 @@ void MainWindow::loadDataStandard(){
 
         ui->leftBtn->setEnabled(true);
         ui->rightBtn->setEnabled(true);
+        ui->linearScaleRadioButton->setEnabled(true);
+        ui->logScaleRadioButton->setEnabled(true);
     }
 
 
@@ -239,6 +241,8 @@ void MainWindow::loadDataDate(){
 
         ui->leftBtn->setEnabled(true);
         ui->rightBtn->setEnabled(true);
+        ui->linearScaleRadioButton->setEnabled(true);
+        ui->logScaleRadioButton->setEnabled(true);
     }
 
 }
@@ -378,10 +382,14 @@ void MainWindow::loadAllObjectRecords()
             ui->filterValuesLivelogBtn->setEnabled(false);
             ui->startLivelogBtn->setEnabled(true);
             ui->stopLivelogBtn->setEnabled(false);
+            ui->linearScaleLivelogRadioButton->setEnabled(false);
+            ui->logScaleLivelogRadioButton->setEnabled(false);
 
             ui->anomalyDetectionTab->setEnabled(true);
             ui->leftBtn->setEnabled(false);
             ui->rightBtn->setEnabled(false);
+            ui->linearScaleRadioButton->setEnabled(false);
+            ui->logScaleRadioButton->setEnabled(false);
 
             ui->dataOverviewTab->setEnabled(true);
             ui->refreshDatabaseTable->setEnabled(true);
@@ -441,6 +449,8 @@ void MainWindow::startLivelog()
     ui->filterValuesLivelogBtn->setEnabled(true);
     ui->startLivelogBtn->setEnabled(false);
     ui->stopLivelogBtn->setEnabled(true);
+    ui->linearScaleLivelogRadioButton->setEnabled(true);
+    ui->logScaleLivelogRadioButton->setEnabled(true);
 
     updateSize();
 }
@@ -458,6 +468,8 @@ void MainWindow::stopLivelog()
     ui->filterValuesLivelogBtn->setEnabled(false);
     ui->startLivelogBtn->setEnabled(true);
     ui->stopLivelogBtn->setEnabled(false);
+    ui->linearScaleLivelogRadioButton->setEnabled(false);
+    ui->logScaleLivelogRadioButton->setEnabled(false);
 }
 
 void MainWindow::filterValuesLivelog()
@@ -1065,4 +1077,34 @@ void MainWindow::registerMethods(){
     algorithm->registerMethod(5, met);
 
     reloadParams();
+}
+
+
+void MainWindow::changeChartScale()
+{
+
+    bool logScaleStatus = ui->webView->isLogScale();
+
+    if(ui->linearScaleRadioButton->isChecked() && logScaleStatus)
+    {
+        ui->webView->setLinearScale();
+    }
+    else if(ui->logScaleRadioButton->isChecked() && !logScaleStatus)
+    {
+        ui->webView->setLogScale();
+    }
+}
+
+void MainWindow::changeLiveChartScale()
+{
+    bool logScaleStatus = ui->livelogChart->isLogScale();
+
+    if(ui->linearScaleLivelogRadioButton->isChecked() && logScaleStatus)
+    {
+        ui->livelogChart->setLinearScale();
+    }
+    else if(ui->logScaleLivelogRadioButton->isChecked() && !logScaleStatus)
+    {
+        ui->livelogChart->setLogScale();
+    }
 }
